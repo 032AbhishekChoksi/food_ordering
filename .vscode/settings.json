@@ -1,0 +1,4 @@
+{
+    "phpcs.executablePath": "http://127.0.0.1/",
+    "phpcs.standard": null
+}
