@@ -19,7 +19,7 @@ include("header.php");
                                         <input type="email" name="user_email" placeholder="Email" required>
                                         <div class="button-box">
                                             <div class="login-toggle-btn">
-                                                <a href="login_register.php">Login</a>
+                                                <a href="<?php echo FRONT_SITE_PATH?>login_register">Login</a>
                                             </div>
                                             <button type="submit" id="forgot_submit"><span>Submit</span></button>
                                             <input type="hidden" name="type" value="forgot" />

@@ -4,7 +4,7 @@ jQuery('#frmRegister').on('submit', function (e) {
     jQuery('#register_submit').attr('disabled', true);
     jQuery('#form_msg').html('Please Wait ...');
     jQuery.ajax({
-        url: 'login_register_submit.php',
+        url: FRONT_SITE_PATH + 'login_register_submit',
         type: 'post',
         data: jQuery('#frmRegister').serialize(),
         success: function (result) {
@@ -28,7 +28,7 @@ jQuery('#frmLogin').on('submit', function (e) {
     jQuery('#login_submit').attr('disabled', true);
     jQuery('#form_login_msg').html('Please Wait ...');
     jQuery.ajax({
-        url: 'login_register_submit.php',
+        url: FRONT_SITE_PATH + 'login_register_submit',
         type: 'post',
         data: jQuery('#frmLogin').serialize(),
         success: function (result) {
@@ -41,7 +41,7 @@ jQuery('#frmLogin').on('submit', function (e) {
             }
             if (data.status == 'success') {
                 // jQuery('#form_login_msg').html(data.msg);
-                window.location.href = 'shop.php';
+                window.location.href = 'shop';
             }
         }
     });
@@ -52,7 +52,7 @@ jQuery('#frmForgotPassword').on('submit', function (e) {
     jQuery('#forgot_submit').attr('disabled', true);
     jQuery('#form_forgot_msg').html('Please wait...');
     jQuery.ajax({
-        url: 'login_register_submit.php',
+        url: FRONT_SITE_PATH + 'login_register_submit',
         type: 'post',
         data: jQuery('#frmForgotPassword').serialize(),
         success: function (result) {
