@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 03, 2021 at 09:21 AM
+-- Generation Time: Oct 07, 2021 at 12:44 PM
 -- Server version: 8.0.21
 -- PHP Version: 7.4.9
 
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `category` (
   `status` int NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `category`
@@ -96,7 +96,8 @@ INSERT INTO `category` (`id`, `category`, `order_number`, `status`, `added_on`) 
 (1, 'Chart & Snacks', 1, 1, '2021-07-23 06:57:14'),
 (2, 'Chinese', 2, 1, '2021-07-23 06:57:33'),
 (3, 'South Indian', 3, 1, '2021-07-23 06:58:08'),
-(4, 'Desserts', 4, 1, '2021-07-23 06:58:26');
+(4, 'Desserts', 4, 1, '2021-07-23 06:58:26'),
+(9, 'Murg', 5, 1, '2021-10-03 11:04:10');
 
 -- --------------------------------------------------------
 
@@ -181,20 +182,23 @@ CREATE TABLE IF NOT EXISTS `dish` (
   `dish` varchar(100) NOT NULL,
   `dish_detail` text NOT NULL,
   `image` varchar(100) NOT NULL,
+  `type` enum('veg','non-veg') NOT NULL,
   `status` int NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dish`
 --
 
-INSERT INTO `dish` (`id`, `category_id`, `dish`, `dish_detail`, `image`, `status`, `added_on`) VALUES
-(1, 4, 'Gulab Jamun', 'Gulab Jamun', '977945963_862169053_gulab-jamun.jpg', 1, '2021-08-11 10:43:59'),
-(2, 1, 'Raj Kachori', 'Raj Kachori', '495788285_325195312_raj-kachori.jpeg', 1, '2021-08-11 10:46:06'),
-(3, 2, 'Chow mein', 'Chow mein', '836724175_Chowmein.jpg', 1, '2021-08-11 10:47:26'),
-(73, 4, 'Ice Cream', 'Chocolate Scoop', '123403715_ice_cream.jpg', 1, '2021-09-28 11:08:35');
+INSERT INTO `dish` (`id`, `category_id`, `dish`, `dish_detail`, `image`, `type`, `status`, `added_on`) VALUES
+(1, 4, 'Gulab Jamun', 'Gulab Jamun', '977945963_862169053_gulab-jamun.jpg', 'veg', 1, '2021-08-11 10:43:59'),
+(2, 1, 'Raj Kachori', 'Raj Kachori', '495788285_325195312_raj-kachori.jpg', 'veg', 1, '2021-08-11 10:46:06'),
+(3, 2, 'Chow mein', 'Chow mein', '836724175_Chowmein.jpg', 'veg', 1, '2021-08-11 10:47:26'),
+(4, 4, 'Ice Cream', 'Chocolate Scoop', '123403715_ice_cream.jpg', 'veg', 1, '2021-09-28 11:08:35'),
+(74, 2, 'Noodels', 'Non-Veg chinese item', '768342928_chinese_non_veg.jpg', 'non-veg', 1, '2021-10-03 11:01:13'),
+(75, 9, 'Butter Chicken', 'Butter Chicken or murgh makhani is a curry of chicken in a spiced tomato, butter and cream sauce.', '373591432_Butter-Chicken.jpg', 'non-veg', 1, '2021-10-03 11:08:55');
 
 -- --------------------------------------------------------
 
@@ -211,7 +215,7 @@ CREATE TABLE IF NOT EXISTS `dish_details` (
   `status` int NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dish_details`
@@ -222,7 +226,12 @@ INSERT INTO `dish_details` (`id`, `dish_id`, `attribute`, `price`, `status`, `ad
 (2, 3, 'Half', 170, 1, '2020-06-19 10:49:45'),
 (6, 1, 'Per Piece', 40, 1, '2021-08-11 10:46:06'),
 (7, 2, 'Per Piece', 110, 1, '2021-08-11 10:47:26'),
-(8, 73, 'Per Piece', 40, 1, '2021-09-28 11:08:35');
+(8, 73, 'Per Piece', 40, 1, '2021-09-28 11:08:35'),
+(9, 74, 'Half', 200, 1, '2021-10-03 11:01:13'),
+(10, 74, 'Full', 350, 1, '2021-10-03 11:01:13'),
+(11, 75, 'Half', 250, 1, '2021-10-03 11:08:55'),
+(12, 75, 'Full', 400, 1, '2021-10-03 11:08:55'),
+(13, 4, 'Per Piece ', 20, 1, '2021-10-04 05:04:20');
 
 -- --------------------------------------------------------
 

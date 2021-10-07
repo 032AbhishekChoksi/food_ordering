@@ -37,6 +37,8 @@ include('constant.inc.php');
                         <div class="welcome-area">
                         </div>
                     </div>
+                    <?php
+                                        if (isset($_SESSION['FOOD_USER_NAME'])) {?>
                     <div class="col-lg-8 col-md-8 col-12 col-sm-8">
                         <div class="account-curr-lang-wrap f-right">
                             <ul>
@@ -50,6 +52,9 @@ include('constant.inc.php');
                             </ul>
                         </div>
                     </div>
+                    <?php }else{
+                        echo "<br>";
+                    } ?>
                 </div>
             </div>
         </div>

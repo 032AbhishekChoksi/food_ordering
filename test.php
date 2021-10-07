@@ -1,4 +1,5 @@
 <?php
+/*
 $password = "admin";
 
 // echo password_hash($password,PASSWORD_BCRYPT);
@@ -8,3 +9,15 @@ if (password_verify($password, $str)) {
 } else {
     echo 'No';
 }
+
+
+include('function.inc.php');
+include('smtp/PHPMailerAutoload.php');
+
+$email = "19bmiit032@gmail.com";
+$subject  = "Name Testing";
+$html = "<b>Hello Abhishek</b>";
+
+send_email($email, $html, $subject);
+echo "Successfully";
+*/
