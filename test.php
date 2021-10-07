@@ -10,7 +10,9 @@ if (password_verify($password, $str)) {
     echo 'No';
 }
 
+*/
 
+/*
 include('function.inc.php');
 include('smtp/PHPMailerAutoload.php');
 
