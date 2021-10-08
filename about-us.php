@@ -11,7 +11,7 @@ include("header.php");
         </div>
     </div>
 </div>
-<div class="about-us-area pt-50 pb-100">
+<div class="about-us-area pt-25 pb-25">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 col-md-7 d-flex align-items-center">

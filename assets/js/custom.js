@@ -71,3 +71,47 @@ jQuery('#frmForgotPassword').on('submit', function (e) {
     });
     e.preventDefault();
 });
+
+jQuery('#frmProfile').on('submit', function (e) {
+    // alert("Hello! I am an alert box!!");
+    jQuery('#profile_submit').attr('disabled', true);
+    jQuery('#form_msg').html('Please Wait ...');
+    jQuery.ajax({
+        url: FRONT_SITE_PATH + 'update_profile',
+        type: 'post',
+        data: jQuery('#frmProfile').serialize(),
+        success: function (result) {
+            jQuery('#profile_submit').attr('disabled', false);
+            jQuery('#form_msg').html('');
+            var data = jQuery.parseJSON(result);
+            if (data.status == 'success') {
+                // swal("Profile Updated",data.msg,"Success");
+                jQuery('#form_msg').html(data.msg);
+            }
+        }
+    });
+    e.preventDefault();
+});
+jQuery('#frmPassword').on('submit', function (e) {
+    jQuery('#password_submit').attr('disabled', true);
+    jQuery('#password_form_msg').html('Please wait...');
+    jQuery.ajax({
+        url: FRONT_SITE_PATH + 'update_profile',
+        type: 'post',
+        data: jQuery('#frmPassword').serialize(),
+        success: function (result) {
+            jQuery('#password_form_msg').html('');
+            jQuery('#password_submit').attr('disabled', false);
+            var data = jQuery.parseJSON(result);
+            if (data.status == 'success') {
+                jQuery('#password_form_msg').html(data.msg);
+                // swal("Success Message", data.msg, "success");
+            }
+            if (data.status == 'error') {
+                // swal("Error Message", data.msg, "error");
+                jQuery('#password_form_msg').html(data.msg);
+            }
+        }
+    });
+    e.preventDefault();
+});

@@ -58,4 +58,19 @@ function rand_str(){
 	return $str=substr($str,0,15);
 	
 }
+
+function getUserDetailsByid(){
+	global $con;
+	$data['name']='';
+	$data['email']='';
+	$data['moblie']='';
+
+	if(isset($_SESSION['FOOD_USER_ID'])){
+		$row = mysqli_fetch_assoc(mysqli_query($con,"select * from user where id=".$_SESSION['FOOD_USER_ID']));
+		$data['name']=$row['name'];
+		$data['email']=$row['email'];
+		$data['moblie']=$row['mobile'];
+	}
+	return $data;
+}
 ?>

@@ -45,14 +45,14 @@ $arrType = array("veg", "non-veg", "both");
                 </div>
                 <?php
                 $cat_id = 0;
-                $product_sql = "select dish.*,category.category from dish,category where dish.category_id=category.id and category.status=1 and dish.status=1";
+                $product_sql = "select * from dish where status=1";
                 if (isset($_GET['cat_dish']) && $_GET['cat_dish'] != '') {
-                    $product_sql .= " and dish.category_id in ($cat_dish_str)";
+                    $product_sql .= " and category_id in ($cat_dish_str)";
                 }
                 if ($dish_type != '' && $dish_type != 'both') {
-                    $product_sql .= " and dish.type ='$dish_type'";
+                    $product_sql .= " and type ='$dish_type'";
                 }
-                $product_sql .= " order by dish.dish desc";
+                $product_sql .= " order by dish desc";
                 $product_res = mysqli_query($con, $product_sql);
                 $product_count = mysqli_num_rows($product_res);
                 ?>

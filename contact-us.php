@@ -11,7 +11,7 @@ include ("header.php");
                 </div>
             </div>
         </div>
-        <div class="contact-area pt-100 pb-100">
+        <div class="contact-area pt-25 pb-25">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-4 col-md-6 col-12">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 07, 2021 at 12:44 PM
+-- Generation Time: Oct 08, 2021 at 01:05 PM
 -- Server version: 8.0.21
 -- PHP Version: 7.4.9
 
@@ -303,14 +303,15 @@ CREATE TABLE IF NOT EXISTS `user` (
   `rand_str` varchar(20) NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `mobile`, `password`, `status`, `email_verify`, `rand_str`, `added_on`) VALUES
-(2, 'Abhishek Choksi', '19bmiit032@gmail.com', '7874376579', '$2y$10$jhrgzxQ0FnItLCk3Zpg4P.ESlC2ta/9w.2MZgJ3fvz0y5rrXt1rrS', 1, 1, 'oruvcbmuekjpwms', '2021-10-03 08:58:30');
+(2, 'Abhishek Choksi', '19bmiit032@gmail.com', '7874376579', '$2y$10$VAhr59i4HuU6FELpyu2XAOTX0RIKVqC.fLObfDjFLHxL0ZHqdHWLG', 1, 1, 'oruvcbmuekjpwms', '2021-10-03 08:58:30'),
+(3, 'harsh', '19bmiit103@gmail.com', '9512768979', '$2y$10$Oh0Qe.ncAWIbAF1sZB7QYONWOD4VLfmTKNcl7tfW0.xSFY.9oMGfS', 1, 1, 'mvedywkbetlgpxq', '2021-10-08 08:24:47');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
