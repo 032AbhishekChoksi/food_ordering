@@ -45,14 +45,14 @@ $arrType = array("veg", "non-veg", "both");
                 </div>
                 <?php
                 $cat_id = 0;
-                $product_sql = "select * from dish where status=1";
+                $product_sql = "select dish.*,category.category from dish,category where dish.category_id=category.id and category.status=1 and dish.status=1";
                 if (isset($_GET['cat_dish']) && $_GET['cat_dish'] != '') {
-                    $product_sql .= " and category_id in ($cat_dish_str)";
+                    $product_sql .= " and dish.category_id in ($cat_dish_str)";
                 }
                 if ($dish_type != '' && $dish_type != 'both') {
-                    $product_sql .= " and type ='$dish_type'";
+                    $product_sql .= " and dish.type ='$dish_type'";
                 }
-                $product_sql .= " order by dish desc";
+                $product_sql .= " order by dish.dish desc";
                 $product_res = mysqli_query($con, $product_sql);
                 $product_count = mysqli_num_rows($product_res);
                 ?>
@@ -66,7 +66,7 @@ $arrType = array("veg", "non-veg", "both");
                                     <div class="product-width col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12 mb-30">
                                         <div class="product-wrapper">
                                             <div class="product-img">
-                                                <a href="product-details.html">
+                                            <a target="_blank" href="<?php echo SITE_DISH_IMAGE . $product_row['image'] ?>">
                                                     <img src="<?php echo SITE_DISH_IMAGE . $product_row['image']; ?>" alt="">
                                                 </a>
                                             </div>
@@ -90,7 +90,7 @@ $arrType = array("veg", "non-veg", "both");
                                                         echo "<input type='radio' style='width: 16px;height: 12px;margin-right: 5px;margin-left: 5px;' name='radio_" . $product_row['id'] . "' value='" . $dish_attr_row['id'] . "'/>";
                                                         echo $dish_attr_row['attribute'];
                                                         echo "&nbsp;&nbsp;";
-                                                        echo "<span>(" . $dish_attr_row['price'] . ")</span>";
+                                                        echo "<span>(₹" . $dish_attr_row['price'] . ")</span>";
                                                     }
                                                     ?>
                                                 </div>
