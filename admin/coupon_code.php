@@ -35,9 +35,9 @@ $res=mysqli_query($con,$sql);
                       <thead>
                         <tr>
                             <th width="10%">S.No #</th>
-                            <th width="10%">Code/Value</th>
+                            <th width="15%">Code/Value</th>
                             <th width="10%">Type</th>
-							<th width="15%">Cart Min</th>
+							<th width="10%">Cart Min</th>
 							<th width="15%">Expired On</th>
 							<th width="15%">Added On</th>
 							<th width="25%">Actions</th>
@@ -52,7 +52,7 @@ $res=mysqli_query($con,$sql);
                             <td><?php echo $i?></td>
                             <td>
 								<?php echo $row['coupon_code']?> /<br/>
-								<?php echo $row['coupon_value']?>
+								<?php echo "₹" . $row['coupon_value']?>
 							</td>
 							<td><?php echo $row['coupon_type']?></td>
 							<td><?php echo $row['cart_min_value']?></td>

@@ -23,9 +23,9 @@ include("header.php");
                                         <input type="password" name="user_password" placeholder="Password" required>
                                         <div class="button-box">
                                             <div class="login-toggle-btn">
-                                                <input type="checkbox">
-                                                <label>Remember me</label>
-                                                <a href="<?php echo FRONT_SITE_PATH?>forgot_password">Forgot Password?</a>
+                                                <!-- <input type="checkbox"> -->
+                                                <!-- <label>Remember me</label> -->
+                                                <a href="<?php echo FRONT_SITE_PATH ?>forgot_password">Forgot Password?</a>
                                             </div>
                                             <button type="submit" id="login_submit"><span>Login</span></button>
                                             <input type="hidden" name="type" value="login" />

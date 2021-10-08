@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 08, 2021 at 01:05 PM
+-- Generation Time: Oct 08, 2021 at 04:28 PM
 -- Server version: 8.0.21
 -- PHP Version: 7.4.9
 
@@ -69,8 +69,8 @@ CREATE TABLE IF NOT EXISTS `banner` (
 --
 
 INSERT INTO `banner` (`id`, `image`, `heading`, `sub_heading`, `link`, `link_txt`, `order_number`, `added_on`, `status`) VALUES
-(1, '437902525_slider-1.jpg', 'Drink & Heathy Food', 'Fresh Heathy and Organic.', 'shop', 'Order Now', 1, '2021-08-28 07:47:49', 1),
-(2, '124663692_slider-2.jpg', 'Drink & Heathy Food', 'Fresh Heathy and Organic.', 'shop', 'Order Now', 2, '2021-08-28 08:28:44', 1);
+(1, '614929677_slider-1.jpg', 'Drink & Heathy Food', 'Fresh Heathy and Organic.', 'shop', 'Order Now', 1, '2021-08-28 07:47:49', 1),
+(2, '860175038_slider-2.jpg', 'Drink & Heathy Food', 'Fresh Heathy and Organic.', 'shop', 'Order Now', 2, '2021-08-28 08:28:44', 1);
 
 -- --------------------------------------------------------
 
@@ -142,7 +142,7 @@ CREATE TABLE IF NOT EXISTS `coupon_code` (
   `status` int NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -303,7 +303,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `rand_str` varchar(20) NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
@@ -311,7 +311,8 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 INSERT INTO `user` (`id`, `name`, `email`, `mobile`, `password`, `status`, `email_verify`, `rand_str`, `added_on`) VALUES
 (2, 'Abhishek Choksi', '19bmiit032@gmail.com', '7874376579', '$2y$10$VAhr59i4HuU6FELpyu2XAOTX0RIKVqC.fLObfDjFLHxL0ZHqdHWLG', 1, 1, 'oruvcbmuekjpwms', '2021-10-03 08:58:30'),
-(3, 'harsh', '19bmiit103@gmail.com', '9512768979', '$2y$10$Oh0Qe.ncAWIbAF1sZB7QYONWOD4VLfmTKNcl7tfW0.xSFY.9oMGfS', 1, 1, 'mvedywkbetlgpxq', '2021-10-08 08:24:47');
+(3, 'harsh', '19bmiit103@gmail.com', '9512768979', '$2y$10$Oh0Qe.ncAWIbAF1sZB7QYONWOD4VLfmTKNcl7tfW0.xSFY.9oMGfS', 1, 1, 'mvedywkbetlgpxq', '2021-10-08 08:24:47'),
+(6, 'Abhi Choksi', 'a.p.choksi420@gmail.com', '7874376579', '$2y$10$oxdTUdd3FA.AHktohWOzjuExm.6Y7nKMpysxa1fVB.LHKAhIDYdgy', 1, 1, 'nstykrouydapbkw', '2021-10-08 02:55:54');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

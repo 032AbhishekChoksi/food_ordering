@@ -47,16 +47,15 @@ if(isset($_POST['submit'])){
                     <div class="form-group">
                       <label for="exampleInputName1">Name</label>
                       <input type="text" class="form-control" placeholder="Name" name="name" required value="<?php echo $name?>">
-					  <div class="error mt8"><?php echo $msg?></div>
                     </div>
 					<div class="form-group">
                       <label for="exampleInputPassword1">Password</label>
                       <input type="password" class="form-control" placeholder="Password" name="password" required value="<?php echo $password?>">
-					  <div class="error mt8"><?php echo $msg?></div>
                     </div>
                     <div class="form-group">
                       <label for="exampleInputMobilel3" required>Mobile Number</label>
                       <input type="text" class="form-control" placeholder="Mobile Number" name="mobile"  value="<?php echo $mobile?>">
+					  <div class="error mt8"><?php echo $msg?></div>
                     </div>                    
                     <button type="submit" class="btn btn-primary mr-2" name="submit">Submit</button>
                   </form>

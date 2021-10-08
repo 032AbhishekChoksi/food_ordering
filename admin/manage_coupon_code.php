@@ -74,15 +74,15 @@ if(isset($_POST['submit'])){
                     </div>
                     <div class="form-group">
                       <label for="exampleInputName3" required>Coupon Value</label>
-                      <input type="text" class="form-control" placeholder="Coupon Value" name="coupon_value"  value="<?php echo $coupon_value?>">
+                      <input type="text" class="form-control" placeholder="Coupon Value" name="coupon_value" required value="<?php echo $coupon_value?>">
                     </div>  
 					<div class="form-group">
                       <label for="exampleInputName4" required>Cart Minimum Value</label>
-                      <input type="text" class="form-control" placeholder="Cart Minimum Value" name="cart_min_value"  value="<?php echo $cart_min_value?>">
+                      <input type="text" class="form-control" placeholder="Cart Minimum Value" name="cart_min_value" required value="<?php echo $cart_min_value?>">
                     </div>
 					<div class="form-group">
                       <label for="exampleInputDate1" required>Expired On</label>
-                      <input type="date" class="form-control" placeholder="Expired On" name="expired_on"  value="<?php echo $expired_on?>">
+                      <input type="date" class="form-control" placeholder="Expired On" name="expired_on" required value="<?php echo $expired_on?>">
                     </div>                
                     <button type="submit" class="btn btn-primary mr-2" name="submit">Submit</button>
                   </form>
