@@ -3,6 +3,8 @@ session_start();
 include('database.inc.php');
 include('function.inc.php');
 include('constant.inc.php');
+$cartArr = getUserFullCart();
+// prx($cartArr);
 ?>
 <!doctype html>
 <html class="no-js" lang="zxx">

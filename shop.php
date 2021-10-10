@@ -66,7 +66,7 @@ $arrType = array("veg", "non-veg", "both");
                                     <div class="product-width col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12 mb-30">
                                         <div class="product-wrapper">
                                             <div class="product-img">
-                                            <a target="_blank" href="<?php echo SITE_DISH_IMAGE . $product_row['image'] ?>">
+                                                <a target="_blank" href="<?php echo SITE_DISH_IMAGE . $product_row['image'] ?>">
                                                     <img src="<?php echo SITE_DISH_IMAGE . $product_row['image']; ?>" alt="">
                                                 </a>
                                             </div>
@@ -87,14 +87,32 @@ $arrType = array("veg", "non-veg", "both");
                                                 <div class="product-price-wrapper">
                                                     <?php
                                                     while ($dish_attr_row = mysqli_fetch_assoc($dish_attr_res)) {
-                                                        echo "<input type='radio' style='width: 16px;height: 12px;margin-right: 5px;margin-left: 5px;' name='radio_" . $product_row['id'] . "' value='" . $dish_attr_row['id'] . "'/>";
+                                                        echo "<input type='radio' style='width: 16px;height: 12px;margin-right: 5px;margin-left: 5px;' name='radio_" . $product_row['id'] . "' id='radio_" . $product_row['id'] . "' value='" . $dish_attr_row['id'] . "'/>";
                                                         echo $dish_attr_row['attribute'];
-                                                        echo "&nbsp;&nbsp;";
+                                                        echo "&nbsp;";
+                                                        echo "&nbsp;";
                                                         echo "<span>(₹" . $dish_attr_row['price'] . ")</span>";
+                                                        $added_msg = "";
+                                                        if (array_key_exists($dish_attr_row['id'], $cartArr)) {
+                                                            $added_qty = getUserFullCart($dish_attr_row['id']);
+                                                            $added_msg = "(Added - $added_qty)";
+                                                        }
+                                                        echo "<span style='font-size: 12px;color:#e02c2b !important;' id='shop_added_msg_" . $dish_attr_row['id'] . "'>" . $added_msg . "</span>";
                                                     }
                                                     ?>
                                                 </div>
+                                                <div class="product-price-wrapper">
+                                                    <select style=" height: 24px; width: 50%; border: 1px solid #626262; margin-top: 7px;" id="qty<?php echo $product_row['id'] ?>">
+                                                        <option value="0">Qty</option>
+                                                        <?php
+                                                        for ($i = 1; $i <= 15; $i++) {
+                                                            echo "<option value=" . $i . ">$i</option>";
+                                                        }
+                                                        ?>
 
+                                                    </select>
+                                                    <i class="fa fa-cart-plus" aria-hidden="true" style="font-size: 25px;margin-left: 5px;cursor: pointer;" onclick="add_to_cart('<?php echo $product_row['id'] ?>','add')"></i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -160,6 +178,29 @@ $arrType = array("veg", "non-veg", "both");
         jQuery('#dish_type').val(dish_type);
         jQuery('#frmCatDish')[0].submit();
 
+    }
+
+    function add_to_cart(id, type) {
+        var qty = jQuery('#qty' + id).val();
+        var attr = jQuery('input[name="radio_' + id + '"]:checked').val();
+        var is_attr_checked = 'yes';
+        if (typeof attr === 'undefined') {
+            is_attr_checked = 'no';
+        }
+        if (qty > 0 && is_attr_checked != 'no') {
+            jQuery.ajax({
+                url: FRONT_SITE_PATH + 'manage_cart',
+                type: 'post',
+                data: 'qty=' + qty + '&attr=' + attr + '&type=' + type,
+                success: function(result) {
+                    swal("Congratulations!", "Dish added successfully", "success");
+                    jQuery('#shop_added_msg_' + attr).html('(Added - ' + qty + ')');
+                }
+            });
+        } else {
+            swal("Error", "Please select qty and dish item", "error");
+        }
+        // alert(attr);
     }
 </script>
 <?php
