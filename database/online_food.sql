@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 08, 2021 at 04:28 PM
+-- Generation Time: Oct 10, 2021 at 03:06 PM
 -- Server version: 8.0.21
 -- PHP Version: 7.4.9
 
@@ -142,7 +142,14 @@ CREATE TABLE IF NOT EXISTS `coupon_code` (
   `status` int NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `coupon_code`
+--
+
+INSERT INTO `coupon_code` (`id`, `coupon_code`, `coupon_type`, `coupon_value`, `cart_min_value`, `expired_on`, `status`, `added_on`) VALUES
+(6, 'Summer_2021', 'F', 100, 300, '2021-10-08', 1, '2021-10-08 04:57:44');
 
 -- --------------------------------------------------------
 
@@ -199,6 +206,31 @@ INSERT INTO `dish` (`id`, `category_id`, `dish`, `dish_detail`, `image`, `type`,
 (4, 4, 'Ice Cream', 'Chocolate Scoop', '123403715_ice_cream.jpg', 'veg', 1, '2021-09-28 11:08:35'),
 (74, 2, 'Noodels', 'Non-Veg chinese item', '768342928_chinese_non_veg.jpg', 'non-veg', 1, '2021-10-03 11:01:13'),
 (75, 9, 'Butter Chicken', 'Butter Chicken or murgh makhani is a curry of chicken in a spiced tomato, butter and cream sauce.', '373591432_Butter-Chicken.jpg', 'non-veg', 1, '2021-10-03 11:08:55');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dish_cart`
+--
+
+DROP TABLE IF EXISTS `dish_cart`;
+CREATE TABLE IF NOT EXISTS `dish_cart` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `dish_detail_id` int NOT NULL,
+  `qty` int NOT NULL,
+  `added_on` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `dish_cart`
+--
+
+INSERT INTO `dish_cart` (`id`, `user_id`, `dish_detail_id`, `qty`, `added_on`) VALUES
+(3, 2, 7, 3, '2021-10-10 02:59:49'),
+(4, 2, 13, 11, '2021-10-10 03:00:24'),
+(5, 2, 6, 2, '2021-10-10 03:02:23');
 
 -- --------------------------------------------------------
 
@@ -310,7 +342,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `mobile`, `password`, `status`, `email_verify`, `rand_str`, `added_on`) VALUES
-(2, 'Abhishek Choksi', '19bmiit032@gmail.com', '7874376579', '$2y$10$VAhr59i4HuU6FELpyu2XAOTX0RIKVqC.fLObfDjFLHxL0ZHqdHWLG', 1, 1, 'oruvcbmuekjpwms', '2021-10-03 08:58:30'),
+(2, 'Abhishek Choksi', '19bmiit032@gmail.com', '7874376579', '$2y$10$HGCyLoxDOjWVIgeG/Q.Yk.8W8ECSly2yDnFD1lPiQcBN0z7qGA1W2', 1, 1, 'oruvcbmuekjpwms', '2021-10-03 08:58:30'),
 (3, 'harsh', '19bmiit103@gmail.com', '9512768979', '$2y$10$Oh0Qe.ncAWIbAF1sZB7QYONWOD4VLfmTKNcl7tfW0.xSFY.9oMGfS', 1, 1, 'mvedywkbetlgpxq', '2021-10-08 08:24:47'),
 (6, 'Abhi Choksi', 'a.p.choksi420@gmail.com', '7874376579', '$2y$10$oxdTUdd3FA.AHktohWOzjuExm.6Y7nKMpysxa1fVB.LHKAhIDYdgy', 1, 1, 'nstykrouydapbkw', '2021-10-08 02:55:54');
 COMMIT;

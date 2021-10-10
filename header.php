@@ -3,8 +3,15 @@ session_start();
 include('database.inc.php');
 include('function.inc.php');
 include('constant.inc.php');
+$totalPrice = 0;
 $cartArr = getUserFullCart();
+$totalCartDish = count($cartArr);
 // prx($cartArr);
+foreach ($cartArr as $list) {
+    $totalPrice = $totalPrice + ($list['qty'] * $list['price']);
+}
+$totalCartDish = count($cartArr);
+
 ?>
 <!doctype html>
 <html class="no-js" lang="zxx">
@@ -100,13 +107,52 @@ $cartArr = getUserFullCart();
                                 <a href="#">
                                     <div class="header-icon-style">
                                         <i class="icon-handbag icons"></i>
-                                        <span class="count-style">0</span>
+                                        <span class="count-style" id="totalCartDish"><?php echo $totalCartDish; ?></span>
                                     </div>
                                     <div class="cart-text">
                                         <span class="digit">My Cart</span>
-                                        <span class="cart-digit-bold"></span>
+                                        <span class="cart-digit-bold" id="totalPrice">
+                                            <?php
+                                            if ($totalPrice != 0) {
+                                                echo $totalPrice . ' Rs';
+                                            }
+                                            ?>
+                                        </span>
                                     </div>
                                 </a>
+                                <?php if ($totalPrice != 0) { ?>
+                                    <div class="shopping-cart-content">
+                                        <ul id="cart_ul">
+                                            <?php foreach ($cartArr as $key => $list) { ?>
+                                                <li class="single-shopping-cart" id="attr_<?php echo $key ?>">
+                                                    <div class="shopping-cart-img">
+                                                        <a href="javascript:void(0)"><img alt="" src="<?php echo SITE_DISH_IMAGE . $list['image'] ?>" style="width:100%;"></a>
+                                                    </div>
+                                                    <div class="shopping-cart-title">
+                                                        <h4><a href="javascript:void(0)">
+                                                                <?php echo $list['dish'] ?>
+                                                            </a></h4>
+                                                        <h6>Qty: <?php echo $list['qty'] ?></h6>
+                                                        <span><?php echo
+                                                                $list['qty'] * $list['price']; ?> Rs</span>
+                                                    </div>
+                                                    <div class="shopping-cart-delete">
+                                                        <a href="javascript:void(0)" onclick="delete_cart('<?php echo $key ?>')"><i class="ion ion-close"></i></a>
+                                                    </div>
+                                                </li>
+                                            <?php } ?>
+                                        </ul>
+                                        <div class="shopping-cart-total">
+                                            <h4>Total : <span class="shop-total" id="shopTotal">
+                                                    <?php echo $totalPrice ?> Rs
+                                                </span></h4>
+                                        </div>
+                                        <div class="shopping-cart-btn">
+                                            <a href="<?php echo FRONT_SITE_PATH ?>cart">view cart</a>
+                                            <a href="<?php echo FRONT_SITE_PATH ?>checkout">checkout</a>
+                                        </div>
+                                    </div>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>

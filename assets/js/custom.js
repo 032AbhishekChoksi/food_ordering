@@ -85,8 +85,9 @@ jQuery('#frmProfile').on('submit', function (e) {
             jQuery('#form_msg').html('');
             var data = jQuery.parseJSON(result);
             if (data.status == 'success') {
-                // swal("Profile Updated",data.msg,"Success");
-                jQuery('#form_msg').html(data.msg);
+                jQuery('#user_top_name').html(jQuery('#uname').val());
+				swal("Success Message", data.msg, "success");
+                // jQuery('#form_msg').html(data.msg);
             }
         }
     });
@@ -104,12 +105,12 @@ jQuery('#frmPassword').on('submit', function (e) {
             jQuery('#password_submit').attr('disabled', false);
             var data = jQuery.parseJSON(result);
             if (data.status == 'success') {
-                jQuery('#password_form_msg').html(data.msg);
-                // swal("Success Message", data.msg, "success");
+                // jQuery('#password_form_msg').html(data.msg);
+                swal("Success Message", data.msg, "success");
             }
             if (data.status == 'error') {
-                // swal("Error Message", data.msg, "error");
-                jQuery('#password_form_msg').html(data.msg);
+                swal("Error Message", data.msg, "error");
+                // jQuery('#password_form_msg').html(data.msg);
             }
         }
     });

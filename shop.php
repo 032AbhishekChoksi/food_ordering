@@ -193,14 +193,57 @@ $arrType = array("veg", "non-veg", "both");
                 type: 'post',
                 data: 'qty=' + qty + '&attr=' + attr + '&type=' + type,
                 success: function(result) {
+                    var data = jQuery.parseJSON(result);
                     swal("Congratulations!", "Dish added successfully", "success");
                     jQuery('#shop_added_msg_' + attr).html('(Added - ' + qty + ')');
+                    jQuery('#totalCartDish').html(data.totalCartDish);
+                    jQuery('#totalPrice').html(data.totalPrice + ' Rs');
+                    var tp1=data.totalPrice;
+                    if (data.totalCartDish == 1) {
+                        var tp = qty * data.price;
+                        var html = '<div class="shopping-cart-content"><ul id="cart_ul"><li class="single-shopping-cart" id="attr_' + attr + '"><div class="shopping-cart-img"><a href="javascript:void(0)"><img alt="" src="' + SITE_DISH_IMAGE + data.image + '" style="width:100%;"></a></div><div class="shopping-cart-title"><h4><a href="javascript:void(0)">' + data.dish + '</a></h4><h6>Qty: ' + qty + '</h6><span>' + tp + ' Rs</span></div><div class="shopping-cart-delete"><a href="javascript:void(0)" onclick=delete_cart("' + attr + '")><i class="ion ion-close"></i></a></div></li></ul> <div class="shopping-cart-total"><h4>Total : <span class="shop-total" id="shopTotal">' + tp + ' Rs</span></h4></div><div class="shopping-cart-btn"><a href="cart">view cart</a><a href="checkout">checkout</a></div></div>';
+                        jQuery('.header-cart').append(html);
+                    } else {
+                        var tp = qty * data.price;
+                        jQuery('#attr_' + attr).remove();
+                        var html = '<li class="single-shopping-cart" id="attr_' + attr + '"><div class="shopping-cart-img"><a href="#"><img alt="" src="' + SITE_DISH_IMAGE + data.image + '" style="width:100%;"></a></div><div class="shopping-cart-title"><h4><a href="javascript:void(0)">' + data.dish + '</a></h4><h6>Qty: ' + qty + '</h6><span>' + tp + ' Rs</span></div><div class="shopping-cart-delete"><a href="javascript:void(0)" onclick=delete_cart("' + attr + '")><i class="ion ion-close"></i></a></div></li>';
+                        jQuery('#cart_ul').append(html);
+                        jQuery('#shopTotal').html(tp1 + 'Rs');
+                    }
                 }
             });
         } else {
             swal("Error", "Please select qty and dish item", "error");
         }
         // alert(attr);
+    }
+
+    function delete_cart(id, is_type) {
+        jQuery.ajax({
+            url: FRONT_SITE_PATH + 'manage_cart',
+            type: 'post',
+            data: 'attr=' + id + '&type=delete',
+            success: function(result) {
+                if (is_type == 'load') {
+                    window.location.href = window.location.href;
+                } else {
+                    var data = jQuery.parseJSON(result);
+                    jQuery('#totalCartDish').html(data.totalCartDish);
+                    jQuery('#shop_added_msg_' + id).html('');
+
+                    if (data.totalCartDish == 0) {
+                        jQuery('.shopping-cart-content').remove();
+                        jQuery('#totalPrice').html('');
+                    } else {
+                        var tp1 = data.totalPrice;
+                        jQuery('#shopTotal').html(tp1 + 'Rs');
+                        jQuery('#attr_' + id).remove();
+                        jQuery('#totalPrice').html(data.totalPrice + ' Rs');
+                    }
+                }
+
+            }
+        });
     }
 </script>
 <?php
