@@ -29,6 +29,7 @@ include("header.php");
                                             </div>
                                             <button type="submit" id="login_submit"><span>Login</span></button>
                                             <input type="hidden" name="type" value="login" />
+                                            <input type="hidden" name="is_checkout" id="is_checkout" value=""/>
                                             <div id="form_login_msg" style="margin-top: 18px; margin-bottom: 3px; color: green;font: bolder;font-size: larger;"></div>
                                         </div>
                                     </form>

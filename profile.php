@@ -33,7 +33,7 @@ $getUserDetailsByid = getUserDetailsByid();
                                                 <div class="col-lg-6 col-md-6">
                                                     <div class="billing-info">
                                                         <label>Mobile Number</label>
-                                                        <input type="tel" name="mobile" required value="<?php echo $getUserDetailsByid['moblie'] ?>">
+                                                        <input type="tel" name="mobile" required value="<?php echo $getUserDetailsByid['mobile'] ?>">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-12 col-md-12">
