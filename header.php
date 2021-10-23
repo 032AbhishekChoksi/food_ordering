@@ -151,6 +151,7 @@ $totalCartDish = count($cartArr);
                                                         <h4><a href="javascript:void(0)">
                                                                 <?php echo $list['dish'] ?>
                                                             </a></h4>
+                                                        <h6>Price: <?php echo $list['price'] ?> Rs</h6>
                                                         <h6>Qty: <?php echo $list['qty'] ?></h6>
                                                         <span><?php echo
                                                                 $list['qty'] * $list['price']; ?> Rs</span>

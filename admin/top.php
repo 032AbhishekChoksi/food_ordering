@@ -30,6 +30,9 @@ if($cur_path=='' || $cur_path=='index.php'){
 elseif($cur_path=='contact_us.php'){
 	$page_title='Contact Us';
 }
+elseif($cur_path=='order.php' || $cur_path=='order_detail.php'){
+	$page_title='Order Master';
+}
 
 ?>
 <!DOCTYPE html>
@@ -40,6 +43,7 @@ elseif($cur_path=='contact_us.php'){
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title><?php echo $page_title?></title>
   <!-- plugins:css -->
+  <!-- https://pictogrammers.github.io/@mdi/font/1.0.62/ -->
   <link rel="stylesheet" href="assets/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="assets/css/vendor.bundle.base.css">
   <link rel="stylesheet" href="assets/css/dataTables.bootstrap4.css">
@@ -101,6 +105,12 @@ elseif($cur_path=='contact_us.php'){
             <a class="nav-link" href="index.php">
               <i class="mdi mdi-view-quilt menu-icon"></i>
               <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="order.php">
+              <i class="mdi mdi-cart menu-icon"></i>
+              <span class="menu-title">Order</span>
             </a>
           </li>
           <li class="nav-item">

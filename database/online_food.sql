@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 20, 2021 at 04:28 AM
+-- Generation Time: Oct 23, 2021 at 08:11 AM
 -- Server version: 8.0.21
 -- PHP Version: 7.4.9
 
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `banner` (
 --
 
 INSERT INTO `banner` (`id`, `image`, `heading`, `sub_heading`, `link`, `link_txt`, `order_number`, `added_on`, `status`) VALUES
-(1, '837668366_slider-3.jpg', 'Drink & Heathy Food', 'Fresh Heathy and Organic.', 'shop', 'Order Now', 1, '2021-08-28 07:47:49', 1),
+(1, '540851464_slider-1.jpg', 'Drink & Heathy Food', 'Fresh Heathy and Organic.', 'shop', 'Order Now', 1, '2021-08-28 07:47:49', 1),
 (2, '860175038_slider-2.jpg', 'Drink & Heathy Food', 'Fresh Heathy and Organic.', 'shop', 'Order Now', 2, '2021-08-28 08:28:44', 1);
 
 -- --------------------------------------------------------
@@ -221,7 +221,7 @@ CREATE TABLE IF NOT EXISTS `dish_cart` (
   `qty` int NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -270,15 +270,18 @@ CREATE TABLE IF NOT EXISTS `order_detail` (
   `price` float NOT NULL,
   `qty` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `order_detail`
 --
 
 INSERT INTO `order_detail` (`id`, `order_id`, `dish_details_id`, `price`, `qty`) VALUES
-(1, 1, 13, 20, 2),
-(2, 1, 6, 40, 2);
+(1, 1, 6, 40, 3),
+(2, 1, 13, 20, 1),
+(3, 2, 12, 400, 1),
+(4, 3, 13, 20, 2),
+(5, 3, 7, 110, 2);
 
 -- --------------------------------------------------------
 
@@ -301,14 +304,16 @@ CREATE TABLE IF NOT EXISTS `order_master` (
   `order_status` int NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `order_master`
 --
 
 INSERT INTO `order_master` (`id`, `user_id`, `name`, `email`, `mobile`, `address`, `total_price`, `zipcode`, `delivery_boy_id`, `payment_status`, `order_status`, `added_on`) VALUES
-(1, 2, 'Abhishek', '19bmiit032@gmail.com', '9825445283', 'Testing', 120, 390111, 0, 'pending', 1, '2021-10-20 04:22:13');
+(1, 2, 'Abhishek', '19bmiit032@gmail.com', '9825445283', 'Bardoli', 140, 390111, 0, 'success', 3, '2021-10-23 06:22:43'),
+(2, 2, 'Abhishek Choksi', '19bmiit032@gmail.com', '9825445283', 'Surat', 400, 390190, 0, 'pending', 1, '2021-10-23 07:16:32'),
+(3, 2, 'Abhishek Choksi', '19bmiit032@gmail.com', '9825445283', '348, Laxmi Villa Dhamdod Lumba Road, Opp. Rang Avdhut Temple Bardoli - 394355.', 260, 394355, 0, 'pending', 1, '2021-10-23 07:58:05');
 
 -- --------------------------------------------------------
 
@@ -321,14 +326,18 @@ CREATE TABLE IF NOT EXISTS `order_status` (
   `id` int NOT NULL AUTO_INCREMENT,
   `order_status` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `order_status`
 --
 
 INSERT INTO `order_status` (`id`, `order_status`) VALUES
-(1, 'pending');
+(1, 'Pending'),
+(2, 'Cooking'),
+(3, 'On the Way'),
+(4, 'Delivered'),
+(5, 'Cancel');
 
 -- --------------------------------------------------------
 
@@ -355,7 +364,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `mobile`, `password`, `status`, `email_verify`, `rand_str`, `added_on`) VALUES
-(2, 'Abhishek', '19bmiit032@gmail.com', '9825445283', '$2y$10$nVtOuz1W3o0BLYegLIaRYe2GXHRNp9E7jTj7QRgBUfUy5RmDbJQpy', 1, 1, 'oruvcbmuekjpwms', '2021-10-03 08:58:30'),
+(2, 'Abhishek Choksi', '19bmiit032@gmail.com', '9825445283', '$2y$10$nVtOuz1W3o0BLYegLIaRYe2GXHRNp9E7jTj7QRgBUfUy5RmDbJQpy', 1, 1, 'oruvcbmuekjpwms', '2021-10-03 08:58:30'),
 (3, 'harsh', '19bmiit103@gmail.com', '9512768979', '$2y$10$Oh0Qe.ncAWIbAF1sZB7QYONWOD4VLfmTKNcl7tfW0.xSFY.9oMGfS', 1, 1, 'mvedywkbetlgpxq', '2021-10-08 08:24:47'),
 (6, 'Abhi Choksi', 'a.p.choksi420@gmail.com', '7874376579', '$2y$10$HOvgg00N0vQNLmDGpgF.5./QRbmKMtx03RLLfh5dVd7q9tc.W8pgy', 1, 1, 'nstykrouydapbkw', '2021-10-08 02:55:54'),
 (7, 'Deep Patel', '19bmiit015@gmail.com', '7874376579', '$2y$10$NKF.nlrUblMdet2dah3UDO10fOnNKlFYLSnIvSWgyiRX9iMmDRPTq', 0, 0, 'cszkogcrejukhve', '2021-10-11 04:27:51');

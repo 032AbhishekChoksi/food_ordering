@@ -39,13 +39,13 @@ jQuery('#frmLogin').on('submit', function (e) {
                 jQuery('#form_login_msg').css("color", "#e02c2b");
                 jQuery('#form_login_msg').html(data.msg);
             }
-            var is_checkout=jQuery('#is_checkout').val();
-            if(is_checkout=='yes'){
-				window.location.href='checkout';
-			}else if(data.status=='success'){
-				//jQuery('#form_login_msg').html(data.msg);
-				window.location.href='shop';
-			}
+            var is_checkout = jQuery('#is_checkout').val();
+            if (is_checkout == 'yes') {
+                window.location.href = 'checkout';
+            } else if (data.status == 'success') {
+                //jQuery('#form_login_msg').html(data.msg);
+                window.location.href = 'shop';
+            }
         }
     });
     e.preventDefault();
@@ -89,7 +89,7 @@ jQuery('#frmProfile').on('submit', function (e) {
             var data = jQuery.parseJSON(result);
             if (data.status == 'success') {
                 jQuery('#user_top_name').html(jQuery('#uname').val());
-				swal("Success Message", data.msg, "success");
+                swal("Success Message", data.msg, "success");
                 // jQuery('#form_msg').html(data.msg);
             }
         }
@@ -133,13 +133,13 @@ function add_to_cart(id, type) {
             url: FRONT_SITE_PATH + 'manage_cart',
             type: 'post',
             data: 'qty=' + qty + '&attr=' + attr + '&type=' + type,
-            success: function(result) {
+            success: function (result) {
                 var data = jQuery.parseJSON(result);
                 swal("Congratulations!", "Dish added successfully", "success");
                 jQuery('#shop_added_msg_' + attr).html('(Added - ' + qty + ')');
                 jQuery('#totalCartDish').html(data.totalCartDish);
                 jQuery('#totalPrice').html(data.totalPrice + ' Rs');
-                var tp1=data.totalPrice;
+                var tp1 = data.totalPrice;
                 if (data.totalCartDish == 1) {
                     var tp = qty * data.price;
                     var html = '<div class="shopping-cart-content"><ul id="cart_ul"><li class="single-shopping-cart" id="attr_' + attr + '"><div class="shopping-cart-img"><a href="javascript:void(0)"><img alt="" src="' + SITE_DISH_IMAGE + data.image + '" style="width:100%;"></a></div><div class="shopping-cart-title"><h4><a href="javascript:void(0)">' + data.dish + '</a></h4><h6>Qty: ' + qty + '</h6><span>' + tp + ' Rs</span></div><div class="shopping-cart-delete"><a href="javascript:void(0)" onclick=delete_cart("' + attr + '")><i class="ion ion-close"></i></a></div></li></ul> <div class="shopping-cart-total"><h4>Total : <span class="shop-total" id="shopTotal">' + tp + ' Rs</span></h4></div><div class="shopping-cart-btn"><a href="cart">view cart</a><a href="checkout">checkout</a></div></div>';
@@ -164,7 +164,7 @@ function delete_cart(id, is_type) {
         url: FRONT_SITE_PATH + 'manage_cart',
         type: 'post',
         data: 'attr=' + id + '&type=delete',
-        success: function(result) {
+        success: function (result) {
             if (is_type == 'load') {
                 window.location.href = window.location.href;
             } else {

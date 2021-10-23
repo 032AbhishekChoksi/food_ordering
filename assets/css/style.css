@@ -6389,3 +6389,17 @@ h5.panel-title span {
 .category_list .active {
     color: #e02c2b;
 }
+
+.payment_status{
+	padding: 10px;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+}
+
+.payment_status_pending{
+	background-color:red;
+}
+.payment_status_success{
+	background-color:green;
+}

@@ -38,11 +38,11 @@ if (isset($_POST['place_order'])) {
 	}
 	// die();
 	emptyCart();
-	// $getUserDetailsBy = getUserDetailsByid();
-	// $email = $getUserDetailsBy['email'];
-	// $emailHTML = orderEmail($insert_id);
-	// include('smtp/PHPMailerAutoload.php');
-	// send_email($email, $emailHTML, 'Order Placed');
+	$getUserDetailsBy = getUserDetailsByid();
+	$email = $getUserDetailsBy['email'];
+	$emailHTML = orderEmail($insert_id);
+	include('smtp/PHPMailerAutoload.php');
+	send_email($email, $emailHTML, 'Order Placed');	
 	redirect(FRONT_SITE_PATH . 'success');
 }
 ?>
@@ -157,7 +157,7 @@ if (isset($_POST['place_order'])) {
 				</div>
 			</div>
 			<div class="col-lg-3">
-				<div class="checkout-progress">
+				<div class="checkout-progress" style="padding: 10px;">
 					<div class="shopping-cart-content-box">
 						<h4 class="checkout_title">Cart Details</h4>
 						<ul>
@@ -168,6 +168,7 @@ if (isset($_POST['place_order'])) {
 									</div>
 									<div class="shopping-cart-title">
 										<h4><a href="#">Phantom Remote </a></h4>
+										<h6>Price: <?php echo $list['price'] ?> Rs</h6>
 										<h6>Qty: <?php echo $list['qty'] ?></h6>
 										<span><?php echo
 												$list['qty'] * $list['price']; ?> Rs</span>
