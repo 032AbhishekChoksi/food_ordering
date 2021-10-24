@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 23, 2021 at 08:11 AM
+-- Generation Time: Oct 24, 2021 at 02:34 PM
 -- Server version: 8.0.21
 -- PHP Version: 7.4.9
 
@@ -193,7 +193,7 @@ CREATE TABLE IF NOT EXISTS `dish` (
   `status` int NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dish`
@@ -205,7 +205,8 @@ INSERT INTO `dish` (`id`, `category_id`, `dish`, `dish_detail`, `image`, `type`,
 (3, 2, 'Chow mein', 'Chow mein', '836724175_Chowmein.jpg', 'veg', 1, '2021-08-11 10:47:26'),
 (4, 4, 'Ice Cream', 'Chocolate Scoop', '123403715_ice_cream.jpg', 'veg', 1, '2021-09-28 11:08:35'),
 (74, 2, 'Noodels', 'Non-Veg chinese item', '768342928_chinese_non_veg.jpg', 'non-veg', 1, '2021-10-03 11:01:13'),
-(75, 9, 'Butter Chicken', 'Butter Chicken or murgh makhani is a curry of chicken in a spiced tomato, butter and cream sauce.', '373591432_Butter-Chicken.jpg', 'non-veg', 1, '2021-10-03 11:08:55');
+(75, 9, 'Butter Chicken', 'Butter Chicken or murgh makhani is a curry of chicken in a spiced tomato, butter and cream sauce.', '373591432_Butter-Chicken.jpg', 'non-veg', 1, '2021-10-03 11:08:55'),
+(76, 3, 'Idle', 'Ideli with sambar and  Coccnut Chatni', '231207756_Idle.jpg', 'veg', 0, '2021-10-24 01:58:36');
 
 -- --------------------------------------------------------
 
@@ -221,7 +222,7 @@ CREATE TABLE IF NOT EXISTS `dish_cart` (
   `qty` int NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -238,7 +239,7 @@ CREATE TABLE IF NOT EXISTS `dish_details` (
   `status` int NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dish_details`
@@ -253,8 +254,10 @@ INSERT INTO `dish_details` (`id`, `dish_id`, `attribute`, `price`, `status`, `ad
 (9, 74, 'Half', 200, 1, '2021-10-03 11:01:13'),
 (10, 74, 'Full', 350, 1, '2021-10-03 11:01:13'),
 (11, 75, 'Half', 250, 1, '2021-10-03 11:08:55'),
-(12, 75, 'Full', 400, 1, '2021-10-03 11:08:55'),
-(13, 4, 'Per Piece ', 20, 1, '2021-10-04 05:04:20');
+(13, 4, 'Per Piece ', 20, 1, '2021-10-04 05:04:20'),
+(15, 75, 'Full', 450, 1, '2021-10-24 01:49:48'),
+(16, 76, 'Full', 20, 1, '2021-10-24 01:58:36'),
+(17, 76, 'Half', 10, 0, '2021-10-24 01:58:36');
 
 -- --------------------------------------------------------
 

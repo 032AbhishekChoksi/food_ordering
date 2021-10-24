@@ -5,6 +5,8 @@ include('function.inc.php');
 include('constant.inc.php');
 $totalPrice = 0;
 
+getDishCartStatus();
+
 if(isset($_POST['update_cart'])){
 	foreach($_POST['qty'] as $key=>$val){
 		if(isset($_SESSION['FOOD_USER_ID'])){

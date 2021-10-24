@@ -56,12 +56,14 @@ if (isset($_POST['submit'])) {
 
 				$attributeArr = $_POST['attribute'];
 				$priceArr = $_POST['price'];
+				$statusArr = $_POST['status'];
 
 				foreach ($attributeArr as $key => $val) {
 					$attribute = $val;
 					$price = $priceArr[$key];
-					mysqli_query($con, "insert into dish_details(dish_id,attribute,price,status,added_on) values('$did','$attribute','$price',1,'$added_on')");
-					//echo "insert into dish_details(dish_id,attribute,price,status,added_on) values('$did','$attribute','$price',1,'$added_on')";
+					$status = $statusArr[$key];
+					mysqli_query($con, "insert into dish_details(dish_id,attribute,price,status,added_on) values('$did','$attribute','$price','$status','$added_on')");
+					//echo "insert into dish_details(dish_id,attribute,price,status,added_on) values('$did','$attribute','$price','$status','$added_on')";
 				}
 
 				redirect('dish.php');
@@ -88,17 +90,18 @@ if (isset($_POST['submit'])) {
 
 				$attributeArr = $_POST['attribute'];
 				$priceArr = $_POST['price'];
+				$statusArr = $_POST['status'];
 				$dishDetailsIdArr = $_POST['dish_details_id'];
 
 				foreach ($attributeArr as $key => $val) {
 					$attribute = $val;
 					$price = $priceArr[$key];
-
+					$status = $statusArr[$key];
 					if (isset($dishDetailsIdArr[$key])) {
 						$did = $dishDetailsIdArr[$key];
-						mysqli_query($con, "update dish_details set attribute='$attribute',price='$price' where id='$did'");
+						mysqli_query($con, "update dish_details set attribute='$attribute',price='$price',status='$status' where id='$did'");
 					} else {
-						mysqli_query($con, "insert into dish_details(dish_id,attribute,price,status,added_on) values('$id','$attribute','$price',1,'$added_on')");
+						mysqli_query($con, "insert into dish_details(dish_id,attribute,price,status,added_on) values('$id','$attribute','$price','$status','$added_on')");
 					}
 
 
@@ -170,11 +173,17 @@ $arrType = array("veg", "non-veg");
 						<label for="exampleInputEmail3">Dish Attributes</label>
 						<?php if ($id == 0) { ?>
 							<div class="row">
-								<div class="col-5">
+								<div class="col-4">
 									<input type="text" class="form-control" placeholder="Attribute" name="attribute[]" required>
 								</div>
-								<div class="col-5">
+								<div class="col-3">
 									<input type="text" class="form-control" placeholder="Price" name="price[]" required>
+								</div>
+								<div class="col-3">
+									<select name="status[]" class="form-control" required>
+										<option value="1">Active</option>
+										<option value="0">Deactive</option>
+									</select>
 								</div>
 							</div>
 							<?php } else {
@@ -183,12 +192,23 @@ $arrType = array("veg", "non-veg");
 							while ($dish_details_row = mysqli_fetch_assoc($dish_details_res)) {
 							?>
 								<div class="row mt8">
-									<div class="col-5">
+									<div class="col-4">
 										<input type="hidden" name="dish_details_id[]" value="<?php echo $dish_details_row['id'] ?>">
 										<input type="text" class="form-control" placeholder="Attribute" name="attribute[]" required value="<?php echo $dish_details_row['attribute'] ?>">
 									</div>
-									<div class="col-5">
+									<div class="col-3">
 										<input type="text" class="form-control" placeholder="Price" name="price[]" required value="<?php echo $dish_details_row['price'] ?>">
+									</div>
+									<div class="col-3">
+										<select name="status[]" class="form-control" required>
+											<?php if ($dish_details_row['status'] == 1) { ?>
+												<option value="1" selected>Active</option>
+												<option value="0">Deactive</option>
+											<?php } else { ?>
+												<option value="1">Active</option>
+												<option value="0" selected>Deactive</option>
+											<?php } ?>
+										</select>
 									</div>
 									<?php if ($ii != 1) {
 									?>
@@ -219,7 +239,7 @@ $arrType = array("veg", "non-veg");
 		var add_more = jQuery('#add_more').val();
 		add_more++;
 		jQuery('#add_more').val(add_more);
-		var html = '<div class="row mt8" id="box' + add_more + '"><div class="col-5"><input type="text" class="form-control" placeholder="Attribute" name="attribute[]" required></div><div class="col-5"><input type="text" class="form-control" placeholder="Price" name="price[]" required></div><div class="col-2"><button type="button" class="btn badge-danger mr-2" onclick=remove_more("' + add_more + '")>Remove</button></div></div>';
+		var html = '<div class="row mt8" id="box' + add_more + '"><div class="col-4"><input type="text" class="form-control" placeholder="Attribute" name="attribute[]" required></div><div class="col-3"><input type="text" class="form-control" placeholder="Price" name="price[]" required></div><div class="col-3"><select name="status[]" class="form-control" required><option value="1">Active</option><option value="0">Deactive</option></select></div><div class="col-2"><button type="button" class="btn badge-danger mr-2" onclick=remove_more("' + add_more + '")>Remove</button></div></div>';
 		jQuery('#dish_box1').append(html);
 	}
 
