@@ -1,5 +1,31 @@
 <?php 
 include('top.php');
+if(isset($_GET['id']) && $_GET['id']>0){
+	
+	$id=get_safe_value($_GET['id']);
+	
+	if(isset($_GET['order_status'])){
+		$order_status=get_safe_value($_GET['order_status']);
+		mysqli_query($con,"update order_master set order_status='$order_status' where id='$id'");
+		redirect(FRONT_SITE_PATH.'admin/order_detail.php?id='.$id);
+	}
+	
+	if(isset($_GET['delivery_boy'])){
+		$delivery_boy=get_safe_value($_GET['delivery_boy']);
+		mysqli_query($con,"update order_master set delivery_boy_id='$delivery_boy' where id='$id'");
+		redirect(FRONT_SITE_PATH.'admin/order_detail.php?id='.$id);
+	}
+	
+	$sql="select order_master.*,order_status.order_status as order_status_str from order_master,order_status where order_master.order_status=order_status.id and order_master.id='$id' order by order_master.id desc";
+	$res=mysqli_query($con,$sql);
+	if(mysqli_num_rows($res)>0){
+		$orderRow=mysqli_fetch_assoc($res);
+	}else{
+		redirect('index.php');
+	}
+}else{
+	redirect('index.php');
+}
 ?>
   <div class="page-header">
               <h3 class="page-title"> Invoice </h3>
@@ -10,30 +36,33 @@ include('top.php');
                 <div class="card px-2">
                   <div class="card-body">
                     <div class="container-fluid">
-                      <h3 class="text-right my-5">Invoice&nbsp;&nbsp;#INV-17</h3>
+                      <h3 class="text-right my-5">Order ID&nbsp;&nbsp;<?php echo $id?></h3>
                       <hr>
                     </div>
                     <div class="container-fluid d-flex justify-content-between">
                       <div class="col-lg-3 pl-0">
-                        <p class="mt-5 mb-2"><b>Plus Admin</b></p>
-                        <p>104,<br>Minare SK,<br>Canada, K1A 0G9.</p>
+                        <p class="mt-5 mb-2"><br/><b>Customer Name</b></p>
+                        <p>Customer Address</p>
                       </div>
                       <div class="col-lg-3 pr-0">
                         <p class="mt-5 mb-2 text-right"><b>Invoice to</b></p>
-                        <p class="text-right">Gaala & Sons,<br> C-201, Beykoz-34800,<br> Canada, K1A 0G9.</p>
+                        <p class="text-right">
+							<?php  echo $orderRow['name']?><br/>
+							<?php  echo $orderRow['address']?><br/>
+							<?php  echo $orderRow['zipcode']?><br/>
+						</p>
                       </div>
                     </div>
                     <div class="container-fluid d-flex justify-content-between">
                       <div class="col-lg-3 pl-0">
-                        <p class="mb-0 mt-5">Invoice Date : 23rd Jan 2016</p>
-                        <p>Due Date : 25th Jan 2017</p>
+					  <p class="mb-0 mt-5">Order Date : <?php  echo dateFormat($orderRow['added_on'])?></p>
                       </div>
                     </div>
                     <div class="container-fluid mt-5 d-flex justify-content-center w-100">
                       <div class="table-responsive w-100">
                         <table class="table">
                           <thead>
-                            <tr class="bg-dark text-white">
+                            <tr class="bg-dark">
                               <th>#</th>
                               <th>Description</th>
                               <th class="text-right">Quantity</th>
@@ -42,49 +71,88 @@ include('top.php');
                             </tr>
                           </thead>
                           <tbody>
+                            <?php
+							$getOrderDetails=getOrderDetails($id);
+							$pp=0;
+							$i=1;
+							foreach($getOrderDetails as $list){
+							$pp=$pp+($list['price']*$list['qty']);	
+							?>
+                            
                             <tr class="text-right">
-                              <td class="text-left">1</td>
-                              <td class="text-left">Brochure Design</td>
-                              <td>2</td>
-                              <td>$20</td>
-                              <td>$40</td>
+                              <td class="text-left"><?php echo $i?></td>
+                              <td class="text-left"><?php echo $list['dish']?>(<?php echo $list['attribute']?>)</td>
+                              <td><?php echo $list['qty']?></td>
+                              <td><?php echo $list['price']?></td>
+                              <td><?php echo $list['price']*$list['qty']?></td>
                             </tr>
-                            <tr class="text-right">
-                              <td class="text-left">2</td>
-                              <td class="text-left">Web Design Packages(Template) - Basic</td>
-                              <td>05</td>
-                              <td>$25</td>
-                              <td>$125</td>
-                            </tr>
-                            <tr class="text-right">
-                              <td class="text-left">3</td>
-                              <td class="text-left">Print Ad - Basic - Color</td>
-                              <td>08</td>
-                              <td>$500</td>
-                              <td>$4000</td>
-                            </tr>
-                            <tr class="text-right">
-                              <td class="text-left">4</td>
-                              <td class="text-left">Down Coat</td>
-                              <td>1</td>
-                              <td>$5</td>
-                              <td>$5</td>
-                            </tr>
+							<?php 
+							$i++;
+							} ?>
                           </tbody>
                         </table>
                       </div>
                     </div>
                     <div class="container-fluid mt-5 w-100">
-                      <p class="text-right mb-2">Sub - Total amount: $12,348</p>
-                      <p class="text-right">vat (10%) : $138</p>
-                      <h4 class="text-right mb-5">Total : $13,986</h4>
+                      <h4 class="text-right mb-5">Total : <?php echo $pp?></h4>
                       <hr>
                     </div>
                     <div class="container-fluid w-100">
-                      <a href="#" class="btn btn-primary float-right mt-4 ml-2"><i class="mdi mdi-printer mr-1"></i>Print</a>
-                      <a href="#" class="btn btn-success float-right mt-4"><i class="mdi mdi-telegram mr-1"></i>Send Invoice</a>
+                      <a href="../download_invoice.php?id=<?php echo $id?>" class="btn btn-primary float-right mt-4 ml-2"><i class="mdi mdi-printer mr-1"></i>PDF</a>
                     </div>
+					<?php
+					$orderStatusRes=mysqli_query($con,"select * from order_status order by order_status");
+					
+					$orderDeliveryBoyRes=mysqli_query($con,"select * from delivery_boy where status=1 order by name");
+					
+					?>
+					<div>
+						<?php
+							echo "<h4>Order Status:- ".$orderRow['order_status_str']."</h4>";
+						?>
+						<select class="form-control wSelect200" name="order_status" id="order_status" onchange="updateOrderStatus()">
+							<option val=''>Update Order Status</option>
+							<?php 
+							while($orderStatusRow=mysqli_fetch_assoc($orderStatusRes)){
+								echo "<option value=".$orderStatusRow['id'].">".$orderStatusRow['order_status']."</option>";
+							}
+							?>
+						</select>
+						<br/>
+						<?php
+							echo "<h4>Delivery Boy:- ".getDeliveryBoyNameById($orderRow['delivery_boy_id'])."</h4>";
+						?>
+						<select class="form-control wSelect200" name="delivery_boy" id="delivery_boy" onchange="updateDeliveryBoy()">
+							<option val=''>Assign Delivery Boy</option>
+							<?php 
+							while($orderDeliveryBoyRow=mysqli_fetch_assoc($orderDeliveryBoyRes)){
+								echo "<option value=".$orderDeliveryBoyRow['id'].">".$orderDeliveryBoyRow['name']."</option>";
+							}
+							?>
+						</select>
+					</div>
+					
                   </div>
+				  
                 </div>
-              </div>      
+              </div>     
+<script>
+function updateOrderStatus(){
+	var order_status=jQuery('#order_status').val();
+	if(order_status!=''){
+		var oid="<?php echo $id?>";
+		window.location.href='<?php echo FRONT_SITE_PATH?>admin/order_detail.php?id='+oid+'&order_status='+order_status;
+	}
+}
+
+function updateDeliveryBoy(){
+	var delivery_boy=jQuery('#delivery_boy').val();
+	if(delivery_boy!=''){
+		var oid="<?php echo $id?>";
+		window.location.href='<?php echo FRONT_SITE_PATH?>admin/order_detail.php?id='+oid+'&delivery_boy='+delivery_boy;
+	}
+}
+
+
+</script>			  
 <?php include('footer.php');?>

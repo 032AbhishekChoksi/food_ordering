@@ -29676,3 +29676,13 @@ div.tagsinput span.tag a {
 .payment_status_success{
 	background-color:green;
 }
+
+.div_order_id{
+  background-color: #999;
+  padding: 10px;
+  text-align: center;
+}
+
+.div_order_id a{
+  color: #fff;
+}

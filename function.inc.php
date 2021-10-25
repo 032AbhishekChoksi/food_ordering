@@ -19,6 +19,11 @@ function get_safe_value($str)
   return $str;
 }
 
+function dateFormat($date){
+	$str=strtotime($date);
+	return date('d-m-Y',$str);
+}
+
 function redirect($link)
 {
 ?>
@@ -84,11 +89,13 @@ function getUserDetailsByid()
   $data['mobile'] = '';
 
   if (isset($_SESSION['FOOD_USER_ID'])) {
-    $row = mysqli_fetch_assoc(mysqli_query($con, "select * from user where id=" . $_SESSION['FOOD_USER_ID']));
+    $uid=$_SESSION['FOOD_USER_ID'];
+  }
+    $row = mysqli_fetch_assoc(mysqli_query($con, "select * from user where id='$uid'"));
     $data['name'] = $row['name'];
     $data['email'] = $row['email'];
     $data['mobile'] = $row['mobile'];
-  }
+  
   return $data;
 }
 
@@ -776,5 +783,16 @@ function orderEmail($oid)
   return $html;
 }
 
-
+function getDeliveryBoyNameById($id){
+	global $con;
+	$sql="select name,mobile from delivery_boy where id='$id'";
+	$data=array();
+	$res=mysqli_query($con,$sql);
+	if(mysqli_num_rows($res)>0){
+		$row=mysqli_fetch_assoc($res);
+		return $row['name'].'('.$row['mobile'].')';	
+	}else{
+		return 'Not Assign';
+	}
+}
 ?>
