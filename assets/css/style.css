@@ -6403,3 +6403,11 @@ h5.panel-title span {
 .payment_status_success{
 	background-color:green;
 }
+
+#coupon_code_msg{
+	margin-top:-10px;
+	color:red;
+}
+.coupon_price_box{
+	display:none;
+}

@@ -43,7 +43,15 @@ $res = mysqli_query($con, $sql);
 											<p><?php echo $row['address'] ?></p>
 											<p><?php echo $row['zipcode'] ?></p>
 										</td>
-										<td><?php echo $row['total_price'] ?></td>
+										<td style="font-size:14px;"><?php echo $row['total_price'] ?><br />
+											<?php
+											if ($row['coupon_code'] != '') {
+											?>
+												<?php echo $row['coupon_code'] ?><br />
+												<?php echo $row['final_price'] ?>
+											<?php } ?>
+
+										</td>
 										<td>
 											<div class="payment_status payment_status_<?php echo $row['payment_status'] ?>"><?php echo ucfirst($row['payment_status']) ?></div>
 										</td>

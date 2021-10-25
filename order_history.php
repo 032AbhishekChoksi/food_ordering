@@ -37,8 +37,14 @@ $res=mysqli_query($con,$sql);
                                             <td><?php echo $row['id']?>
 											<br/>
 											<a href="<?php echo FRONT_SITE_PATH?>download_invoice?id=<?php echo $row['id']?>"><img src='<?php echo FRONT_SITE_PATH?>assets/img/icon-img/pdf.png' width="30px" title="Download Invoice"/></a>
-											</td>
-                                            <td><?php echo $row['total_price']?></td>
+											</td style="font-size:14px;">
+                                            <td>Total:- <?php echo $row['total_price']?> Rs
+											<?php
+											if($row['coupon_code']!=''){
+											?>
+											Coupon Code:- <?php echo $row['coupon_code']?><br/>
+											Final Price:- <?php echo $row['final_price']?> Rs
+											<?php } ?></td>
                                             <td><?php echo $row['address']?><br/>
 											<?php echo $row['zipcode']?></td>
 											<td>
@@ -56,7 +62,7 @@ $res=mysqli_query($con,$sql);
 														<tr>
 															<td><?php echo $list['dish']?></td>
 															<td><?php echo $list['attribute']?></td>
-															<td><?php echo $list['price']?></td>
+															<td><?php echo $list['price']?> Rs</td>
 															<td><?php echo $list['qty']?></td>
 														</tr>
 													<?php
@@ -69,7 +75,9 @@ $res=mysqli_query($con,$sql);
 												<div class="payment_status payment_status_<?php echo $row['payment_status']?>"><?php echo ucfirst($row['payment_status'])?></div>
 											</td>
                                         </tr>
-										<?php }} ?>
+										<?php }}else{
+											redirect('shop');
+										} ?>
                                     </tbody>
                                 </table>
 								

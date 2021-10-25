@@ -28,9 +28,10 @@ if(isset($_POST['update_cart'])){
 $cartArr = getUserFullCart();
 // $totalCartDish = count($cartArr);
 // prx($cartArr);
-foreach ($cartArr as $list) {
-    $totalPrice = $totalPrice + ($list['qty'] * $list['price']);
-}
+// foreach ($cartArr as $list) {
+//     $totalPrice = $totalPrice + ($list['qty'] * $list['price']);
+// }
+$totalPrice=getcartTotalPrice();
 $totalCartDish = count($cartArr);
 
 ?>

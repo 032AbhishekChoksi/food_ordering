@@ -27,8 +27,17 @@ if (isset($_POST['place_order'])) {
 	$checkout_address = get_safe_value($_POST['checkout_address']);
 	$payment_type = get_safe_value($_POST['payment_type']);
 
+	if(isset($_SESSION['COUPON_CODE']) && isset($_SESSION['FINAL_PRICE'])){
+		$coupon_code=get_safe_value($_SESSION['COUPON_CODE']);
+		$final_price=get_safe_value($_SESSION['FINAL_PRICE']);
+	}else{
+		$coupon_code='';
+		$final_price=$totalPrice;
+	}
+
+
 	$added_on = date('Y-m-d h:i:s');
-	$sql = "insert into order_master(user_id,name,email,mobile,address,zipcode,total_price,order_status,payment_status,added_on) values('" . $_SESSION['FOOD_USER_ID'] . "','$checkout_name','$checkout_email','$checkout_mobile','$checkout_address','$checkout_zip','$totalPrice','1','pending','$added_on')";
+	$sql = "insert into order_master(user_id,name,email,mobile,address,zipcode,total_price,final_price,coupon_code,order_status,payment_status,added_on) values('" . $_SESSION['FOOD_USER_ID'] . "','$checkout_name','$checkout_email','$checkout_mobile','$checkout_address','$checkout_zip','$totalPrice','$final_price','$coupon_code','1','pending','$added_on')";
 	mysqli_query($con, $sql);
 	$insert_id = mysqli_insert_id($con);
 	$_SESSION['ORDER_ID'] = $insert_id;
@@ -42,7 +51,7 @@ if (isset($_POST['place_order'])) {
 	$email = $getUserDetailsBy['email'];
 	$emailHTML = orderEmail($insert_id);
 	include('smtp/PHPMailerAutoload.php');
-	send_email($email, $emailHTML, 'Order Placed');	
+	send_email($email, $emailHTML, 'Order Placed');
 	redirect(FRONT_SITE_PATH . 'success');
 }
 ?>
@@ -130,7 +139,20 @@ if (isset($_POST['place_order'])) {
 														<input type="text" name="checkout_address" required>
 													</div>
 												</div>
-
+												<div class="col-lg-3 col-md-12">
+													<div class="billing-info">
+														<label>Coupon Code</label>
+														<input type="text" name="coupon_code" id="coupon_code" required>
+													</div>
+													<div id="coupon_code_msg"></div>
+												</div>
+												<div class="col-lg-5 col-md-12">
+													<div class="billing-back-btn">
+														<div class="billing-btn">
+															<button type="button" name="place_order" onclick="apply_coupon()">Apply Coupon</button>
+														</div>
+													</div>
+												</div>
 											</div>
 											<div class="ship-wrapper">
 												<div class="single-ship">
@@ -180,7 +202,12 @@ if (isset($_POST['place_order'])) {
 						<div class="shopping-cart-total">
 							<h4>Total : <span class="shop-total"><?php echo $totalPrice ?> Rs</span></h4>
 						</div>
-
+						<div class="shopping-cart-total coupon_price_box">
+							<h4>Coupon Code : <span class="shop-total coupon_code_str"></span></h4>
+						</div>
+						<div class="shopping-cart-total coupon_price_box">
+							<h4>Final Price : <span class="shop-total final_price"></span></h4>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -190,5 +217,9 @@ if (isset($_POST['place_order'])) {
 
 
 <?php
+if(isset($_SESSION['COUPON_CODE'])){
+	unset($_SESSION['COUPON_CODE']);
+	unset($_SESSION['FINAL_PRICE']);
+}
 include("footer.php");
 ?>

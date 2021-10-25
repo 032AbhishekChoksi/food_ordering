@@ -81,7 +81,7 @@ function getUserCart()
 }
 
 
-function getUserDetailsByid()
+function getUserDetailsByid($uid='')
 {
   global $con;
   $data['name'] = '';
@@ -145,6 +145,15 @@ function getDishCartStatus(){
 			removeDishFromCartByid($id);
 		}
 	}
+}
+
+function getcartTotalPrice(){
+	$cartArr=getUserFullCart();
+	$totalPrice=0;
+	foreach($cartArr as $list){
+		$totalPrice=$totalPrice+($list['qty']*$list['price']);
+	}
+	return $totalPrice;
 }
 
 function getUserFullCart($attr_id = '')
@@ -234,9 +243,9 @@ function getOrderById($oid)
   return $data;
 }
 
-function orderEmail($oid)
+function orderEmail($oid,$uid='')
 {
-  $getUserDetailsBy = getUserDetailsByid();
+  $getUserDetailsBy = getUserDetailsByid($uid);
   $name = $getUserDetailsBy['name'];
   $email = $getUserDetailsBy['email'];
 

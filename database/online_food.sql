@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 24, 2021 at 02:34 PM
+-- Generation Time: Oct 25, 2021 at 05:18 PM
 -- Server version: 8.0.21
 -- PHP Version: 7.4.9
 
@@ -142,14 +142,15 @@ CREATE TABLE IF NOT EXISTS `coupon_code` (
   `status` int NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `coupon_code`
 --
 
 INSERT INTO `coupon_code` (`id`, `coupon_code`, `coupon_type`, `coupon_value`, `cart_min_value`, `expired_on`, `status`, `added_on`) VALUES
-(6, 'Summer_2021', 'F', 100, 300, '2021-10-08', 1, '2021-10-08 04:57:44');
+(6, 'FIRST50', 'F', 50, 50, '2021-10-26', 1, '2021-10-25 17:52:44'),
+(7, 'Monday', 'P', 10, 60, '2021-10-27', 1, '2021-10-25 04:45:50');
 
 -- --------------------------------------------------------
 
@@ -222,7 +223,7 @@ CREATE TABLE IF NOT EXISTS `dish_cart` (
   `qty` int NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -273,7 +274,7 @@ CREATE TABLE IF NOT EXISTS `order_detail` (
   `price` float NOT NULL,
   `qty` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `order_detail`
@@ -284,7 +285,9 @@ INSERT INTO `order_detail` (`id`, `order_id`, `dish_details_id`, `price`, `qty`)
 (2, 1, 13, 20, 1),
 (3, 2, 12, 400, 1),
 (4, 3, 13, 20, 2),
-(5, 3, 7, 110, 2);
+(5, 3, 7, 110, 2),
+(7, 5, 13, 20, 4),
+(8, 6, 6, 40, 2);
 
 -- --------------------------------------------------------
 
@@ -301,22 +304,26 @@ CREATE TABLE IF NOT EXISTS `order_master` (
   `mobile` varchar(50) NOT NULL,
   `address` text NOT NULL,
   `total_price` float NOT NULL,
+  `final_price` float NOT NULL,
+  `coupon_code` varchar(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `zipcode` int NOT NULL,
   `delivery_boy_id` int NOT NULL,
   `payment_status` varchar(20) NOT NULL,
   `order_status` int NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `order_master`
 --
 
-INSERT INTO `order_master` (`id`, `user_id`, `name`, `email`, `mobile`, `address`, `total_price`, `zipcode`, `delivery_boy_id`, `payment_status`, `order_status`, `added_on`) VALUES
-(1, 2, 'Abhishek', '19bmiit032@gmail.com', '9825445283', 'Bardoli', 140, 390111, 0, 'success', 3, '2021-10-23 06:22:43'),
-(2, 2, 'Abhishek Choksi', '19bmiit032@gmail.com', '9825445283', 'Surat', 400, 390190, 0, 'pending', 1, '2021-10-23 07:16:32'),
-(3, 2, 'Abhishek Choksi', '19bmiit032@gmail.com', '9825445283', '348, Laxmi Villa Dhamdod Lumba Road, Opp. Rang Avdhut Temple Bardoli - 394355.', 260, 394355, 0, 'pending', 1, '2021-10-23 07:58:05');
+INSERT INTO `order_master` (`id`, `user_id`, `name`, `email`, `mobile`, `address`, `total_price`, `final_price`, `coupon_code`, `zipcode`, `delivery_boy_id`, `payment_status`, `order_status`, `added_on`) VALUES
+(1, 2, 'Abhishek', '19bmiit032@gmail.com', '9825445283', 'Bardoli', 140, 0, '', 390111, 1, 'success', 4, '2021-10-23 06:22:43'),
+(2, 2, 'Abhishek Choksi', '19bmiit032@gmail.com', '9825445283', 'Surat', 400, 0, '', 390190, 0, 'pending', 1, '2021-10-23 07:16:32'),
+(3, 2, 'Abhishek Choksi', '19bmiit032@gmail.com', '9825445283', '348, Laxmi Villa Dhamdod Lumba Road, Opp. Rang Avdhut Temple Bardoli - 394355.', 260, 0, '', 394355, 1, 'success', 4, '2021-10-23 07:58:05'),
+(5, 6, 'Abhi Choksi', 'a.p.choksi420@gmail.com', '7874376579', 'Tetstststtstst', 80, 30, 'FIRST50', 395009, 0, 'pending', 1, '2021-10-25 05:04:10'),
+(6, 2, 'Abhishek Choksi', '19bmiit032@gmail.com', '9825445283', 'Vapi', 80, 30, 'FIRST50', 395009, 0, 'pending', 1, '2021-10-25 05:16:57');
 
 -- --------------------------------------------------------
 
