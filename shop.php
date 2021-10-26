@@ -24,6 +24,13 @@ $arrType = array("veg", "non-veg", "both");
         </div>
     </div>
 </div>
+<?php
+		if($website_close==1){
+			echo '<div style="text-align: center;margin-top: 50px;"><h3>';
+			echo $website_close_msg;
+			echo '</h3></div>';
+		}
+		?>
 <div class="shop-page-area pt-25 pb-25">
     <div class="container">
         <div class="row flex-row-reverse">
@@ -87,7 +94,9 @@ $arrType = array("veg", "non-veg", "both");
                                                 <div class="product-price-wrapper">
                                                     <?php
                                                     while ($dish_attr_row = mysqli_fetch_assoc($dish_attr_res)) {
-                                                        echo "<input type='radio' style='width: 16px;height: 12px;margin-right: 5px;margin-left: 5px;' name='radio_" . $product_row['id'] . "' id='radio_" . $product_row['id'] . "' value='" . $dish_attr_row['id'] . "'/>";
+                                                        if ($website_close == 0) {
+                                                            echo "<input type='radio' style='width: 16px;height: 12px;margin-right: 5px;margin-left: 5px;' name='radio_" . $product_row['id'] . "' id='radio_" . $product_row['id'] . "' value='" . $dish_attr_row['id'] . "'/>";
+                                                        
                                                         echo $dish_attr_row['attribute'];
                                                         echo "&nbsp;";
                                                         echo "&nbsp;";
@@ -99,20 +108,31 @@ $arrType = array("veg", "non-veg", "both");
                                                         }
                                                         echo "<span style='font-size: 12px;color:#e02c2b !important;' id='shop_added_msg_" . $dish_attr_row['id'] . "'>" . $added_msg . "</span>";
                                                     }
+                                                    }
                                                     ?>
                                                 </div>
-                                                <div class="product-price-wrapper">
-                                                    <select style=" height: 24px; width: 50%; border: 1px solid #626262; margin-top: 7px;" id="qty<?php echo $product_row['id'] ?>">
-                                                        <option value="0">Qty</option>
-                                                        <?php
-                                                        for ($i = 1; $i <= 15; $i++) {
-                                                            echo "<option value=" . $i . ">$i</option>";
-                                                        }
-                                                        ?>
+                                                <?php if ($website_close == 0) { ?>
+                                                    <div class="product-price-wrapper">
+                                                        <select style=" height: 24px; width: 50%; border: 1px solid #626262; margin-top: 7px;" id="qty<?php echo $product_row['id'] ?>">
+                                                            <option value="0">Qty</option>
+                                                            <?php
+                                                            for ($i = 1; $i <= 15; $i++) {
+                                                                echo "<option value=" . $i . ">$i</option>";
+                                                            }
+                                                            ?>
 
-                                                    </select>
-                                                    <i class="fa fa-cart-plus" aria-hidden="true" style="font-size: 25px;margin-left: 5px;cursor: pointer;" onclick="add_to_cart('<?php echo $product_row['id'] ?>','add')"></i>
-                                                </div>
+                                                        </select>
+                                                        <i class="fa fa-cart-plus" aria-hidden="true" style="font-size: 25px;margin-left: 5px;cursor: pointer;" onclick="add_to_cart('<?php echo $product_row['id'] ?>','add')"></i>
+                                                    </div>
+                                                <?php } else {
+                                                ?>
+                                                    <div class="product-price-wrapper">
+                                                        <strong><?php echo $website_close_msg ?>
+                                                        </strong>
+                                                    </div>
+                                                <?php
+                                                }
+                                                ?>
                                             </div>
                                         </div>
                                     </div>

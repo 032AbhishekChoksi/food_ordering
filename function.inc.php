@@ -253,7 +253,7 @@ function orderEmail($oid,$uid='')
 
   $order_id = $getOrderById[0]['id'];
   $total_amount = $getOrderById[0]['total_price'];
-
+  $final_price = $getOrderById[0]['final_price'];
   $getOrderDetails = getOrderDetails($oid);
 
   $html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -762,9 +762,14 @@ function orderEmail($oid,$uid='')
   $html .= '<tr>
                                   <td width="80%" class="purchase_footer" valign="middle" colspan="2">
                                     <p class="f-fallback purchase_total purchase_total--label">Total</p>
+                                    <p class="f-fallback purchase_total purchase_total--label">Discount</p>
+                                    <p class="f-fallback purchase_total purchase_total--label">Final</p>
                                   </td>
                                   <td width="20%" class="purchase_footer" valign="middle">
-                                    <p class="f-fallback purchase_total">' . $total_price . '</p>
+                                  <p class="f-fallback purchase_total">' . $total_price . '</p>
+                                  <p class="f-fallback purchase_total">- ' . $discount_price=$total_price-$final_price . '</p>
+                                  <hr>
+                                  <p class="f-fallback purchase_total">' . $final_price . '</p>
                                   </td>
                                 </tr>
                               </table>
@@ -804,4 +809,13 @@ function getDeliveryBoyNameById($id){
 		return 'Not Assign';
 	}
 }
+
+function getSetting(){
+	global $con;
+	$sql="select * from setting where id='1'";
+	$res=mysqli_query($con,$sql);
+	$row=mysqli_fetch_assoc($res);
+	return $row;
+}
+
 ?>

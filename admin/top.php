@@ -33,6 +33,9 @@ elseif($cur_path=='contact_us.php'){
 elseif($cur_path=='order.php' || $cur_path=='order_detail.php'){
 	$page_title='Order Master';
 }
+elseif($cur_path=='setting.php'){
+	$page_title='Setting';
+}
 
 ?>
 <!DOCTYPE html>
@@ -153,6 +156,12 @@ elseif($cur_path=='order.php' || $cur_path=='order_detail.php'){
             <a class="nav-link" href="contact_us.php">
               <i class="mdi mdi-view-headline menu-icon"></i>
               <span class="menu-title">Contact Us</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="setting.php">
+              <i class="mdi mdi-settings menu-icon"></i>
+              <span class="menu-title">Setting</span>
             </a>
           </li>
         </ul>

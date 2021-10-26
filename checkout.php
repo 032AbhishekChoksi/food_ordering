@@ -1,5 +1,8 @@
 <?php
 include("header.php");
+if ($website_close == 1) {
+	redirect(FRONT_SITE_PATH . 'shop');
+}
 $cartArr = getUserFullCart();
 if (count($cartArr) > 0) {
 } else {
@@ -18,41 +21,50 @@ if (isset($_SESSION['FOOD_USER_ID'])) {
 	$final_box_id = '';
 }
 $userArr = getUserDetailsByid();
+$is_error = '';
 // prx($userArr);
 if (isset($_POST['place_order'])) {
-	$checkout_name = get_safe_value($_POST['checkout_name']);
-	$checkout_email = get_safe_value($_POST['checkout_email']);
-	$checkout_mobile = get_safe_value($_POST['checkout_mobile']);
-	$checkout_zip = get_safe_value($_POST['checkout_zip']);
-	$checkout_address = get_safe_value($_POST['checkout_address']);
-	$payment_type = get_safe_value($_POST['payment_type']);
-
-	if(isset($_SESSION['COUPON_CODE']) && isset($_SESSION['FINAL_PRICE'])){
-		$coupon_code=get_safe_value($_SESSION['COUPON_CODE']);
-		$final_price=get_safe_value($_SESSION['FINAL_PRICE']);
-	}else{
-		$coupon_code='';
-		$final_price=$totalPrice;
+	if ($cart_min_price != '') {
+		if ($totalPrice >= $cart_min_price) {
+		} else {
+			$is_error = 'yes';
+		}
 	}
+	if ($is_error == '') {
+		$checkout_name = get_safe_value($_POST['checkout_name']);
+		$checkout_email = get_safe_value($_POST['checkout_email']);
+		$checkout_mobile = get_safe_value($_POST['checkout_mobile']);
+		$checkout_zip = get_safe_value($_POST['checkout_zip']);
+		$checkout_address = get_safe_value($_POST['checkout_address']);
+		$payment_type = get_safe_value($_POST['payment_type']);
+
+		if (isset($_SESSION['COUPON_CODE']) && isset($_SESSION['FINAL_PRICE'])) {
+			$coupon_code = get_safe_value($_SESSION['COUPON_CODE']);
+			$final_price = get_safe_value($_SESSION['FINAL_PRICE']);
+		} else {
+			$coupon_code = '';
+			$final_price = $totalPrice;
+		}
 
 
-	$added_on = date('Y-m-d h:i:s');
-	$sql = "insert into order_master(user_id,name,email,mobile,address,zipcode,total_price,final_price,coupon_code,order_status,payment_status,added_on) values('" . $_SESSION['FOOD_USER_ID'] . "','$checkout_name','$checkout_email','$checkout_mobile','$checkout_address','$checkout_zip','$totalPrice','$final_price','$coupon_code','1','pending','$added_on')";
-	mysqli_query($con, $sql);
-	$insert_id = mysqli_insert_id($con);
-	$_SESSION['ORDER_ID'] = $insert_id;
-	foreach ($cartArr as $key => $val) {
-		mysqli_query($con, "insert into order_detail(order_id,dish_details_id,price,qty) values('$insert_id','$key','" . $val['price'] . "','" . $val['qty'] . "')");
-		// echo "insert into order_detail(order_id,dish_details_id,price,qty) values('$insert_id','$key','" . $val['price'] . "','" . $val['qty'] . "')";
+		$added_on = date('Y-m-d h:i:s');
+		$sql = "insert into order_master(user_id,name,email,mobile,address,zipcode,total_price,final_price,coupon_code,order_status,payment_status,added_on) values('" . $_SESSION['FOOD_USER_ID'] . "','$checkout_name','$checkout_email','$checkout_mobile','$checkout_address','$checkout_zip','$totalPrice','$final_price','$coupon_code','1','pending','$added_on')";
+		mysqli_query($con, $sql);
+		$insert_id = mysqli_insert_id($con);
+		$_SESSION['ORDER_ID'] = $insert_id;
+		foreach ($cartArr as $key => $val) {
+			mysqli_query($con, "insert into order_detail(order_id,dish_details_id,price,qty) values('$insert_id','$key','" . $val['price'] . "','" . $val['qty'] . "')");
+			// echo "insert into order_detail(order_id,dish_details_id,price,qty) values('$insert_id','$key','" . $val['price'] . "','" . $val['qty'] . "')";
+		}
+		// die();
+		emptyCart();
+		$getUserDetailsBy = getUserDetailsByid();
+		$email = $getUserDetailsBy['email'];
+		$emailHTML = orderEmail($insert_id);
+		include('smtp/PHPMailerAutoload.php');
+		send_email($email, $emailHTML, 'Order Placed');
+		redirect(FRONT_SITE_PATH . 'success');
 	}
-	// die();
-	emptyCart();
-	$getUserDetailsBy = getUserDetailsByid();
-	$email = $getUserDetailsBy['email'];
-	$emailHTML = orderEmail($insert_id);
-	include('smtp/PHPMailerAutoload.php');
-	send_email($email, $emailHTML, 'Order Placed');
-	redirect(FRONT_SITE_PATH . 'success');
 }
 ?>
 
@@ -142,7 +154,7 @@ if (isset($_POST['place_order'])) {
 												<div class="col-lg-3 col-md-12">
 													<div class="billing-info">
 														<label>Coupon Code</label>
-														<input type="text" name="coupon_code" id="coupon_code" required>
+														<input type="text" name="coupon_code" id="coupon_code">
 													</div>
 													<div id="coupon_code_msg"></div>
 												</div>
@@ -169,6 +181,11 @@ if (isset($_POST['place_order'])) {
 													<button type="submit" name="place_order">Place Your Order</button>
 												</div>
 											</div>
+											<?php
+											if ($is_error == 'yes') {
+												echo "<div style='color:red;'>$cart_min_price_msg</div>";
+											}
+											?>
 										</div>
 									</form>
 								</div>
@@ -217,7 +234,7 @@ if (isset($_POST['place_order'])) {
 
 
 <?php
-if(isset($_SESSION['COUPON_CODE'])){
+if (isset($_SESSION['COUPON_CODE'])) {
 	unset($_SESSION['COUPON_CODE']);
 	unset($_SESSION['FINAL_PRICE']);
 }

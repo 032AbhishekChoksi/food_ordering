@@ -4,6 +4,13 @@ include('database.inc.php');
 include('function.inc.php');
 include('constant.inc.php');
 $totalPrice = 0;
+$getSetting=getSetting();
+
+// prx($getSetting);
+$website_close=$getSetting['website_close'];
+$website_close_msg=$getSetting['website_close_msg'];
+$cart_min_price=$getSetting['cart_min_price'];
+$cart_min_price_msg=$getSetting['cart_min_price_msg'];
 
 getDishCartStatus();
 

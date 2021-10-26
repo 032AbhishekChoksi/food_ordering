@@ -1,5 +1,8 @@
 <?php
 include ("header.php");
+if($website_close==1){
+	redirect(FRONT_SITE_PATH.'shop');
+}
 ?>
 
 <div class="cart-main-area pt-95 pb-100">
