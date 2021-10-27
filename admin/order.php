@@ -43,12 +43,12 @@ $res = mysqli_query($con, $sql);
 											<p><?php echo $row['address'] ?></p>
 											<p><?php echo $row['zipcode'] ?></p>
 										</td>
-										<td style="font-size:14px;"><?php echo $row['total_price'] ?><br />
+										<td style="font-size:14px;">₹ <?php echo $row['total_price'] ?><br />
 											<?php
 											if ($row['coupon_code'] != '') {
 											?>
 												<?php echo $row['coupon_code'] ?><br />
-												<?php echo $row['final_price'] ?>
+												₹ <?php echo $row['final_price'] ?>
 											<?php } ?>
 
 										</td>
