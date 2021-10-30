@@ -6411,3 +6411,27 @@ h5.panel-title span {
 .coupon_price_box{
 	display:none;
 }
+
+.div_order_id{
+    background-color: #999;
+    padding: 10px;
+    text-align: center;
+    width: 50%;
+    margin-left: 25%;
+}
+  
+.div_order_id a{
+    color: #fff;
+}
+
+.set_rating{
+	background-color: green;
+    height: 50px;
+    width: 80%;
+    text-align: center;
+    padding-top: 14px;
+    color: #fff;
+}
+.rating{
+	color:green;
+}

@@ -211,3 +211,22 @@ function apply_coupon(){
 		})
 	}
 }
+
+function updaterating(id,oid){
+	var rate=jQuery('#rate'+id).val();
+	var rate_str=jQuery('#rate'+id+' option:selected').text();
+	
+	if(rate==''){
+		//jQuery('#coupon_code_msg').html('Please enter coupon code');
+	}else{
+		jQuery.ajax({
+			url:FRONT_SITE_PATH+'updaterating',
+			type:'post',
+			data:'id='+id+'&rate='+rate+'&oid='+oid,
+			success:function(result){
+                // console.log(result);
+				jQuery('#rating'+id).html("<div class='set_rating'>"+rate_str+"</div>");
+			}
+		})
+	}
+}

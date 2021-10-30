@@ -86,7 +86,7 @@ $arrType = array("veg", "non-veg", "both");
                                                         echo "<img src='" . FRONT_SITE_PATH . "assets/img/icon-img/non-veg.png' style='height: 30px;'/>";
                                                     }
                                                     ?>
-                                                    <a href="javascript:void(0)"><?php echo $product_row['dish']; ?></a>
+                                                    <a href="javascript:void(0)"><?php echo $product_row['dish']; getRatingByDishId($product_row['id']);?></a>
                                                 </h4>
                                                 <?php
                                                 $dish_attr_res = mysqli_query($con, "select * from dish_details where status='1' and dish_id='" . $product_row['id'] . "' order by price asc");

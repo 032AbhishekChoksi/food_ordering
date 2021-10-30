@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 26, 2021 at 09:47 AM
+-- Generation Time: Oct 30, 2021 at 04:16 AM
 -- Server version: 8.0.21
 -- PHP Version: 7.4.9
 
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `category` (
   `status` int NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `category`
@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `contact_us` (
   `message` text NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `contact_us`
@@ -123,7 +123,8 @@ CREATE TABLE IF NOT EXISTS `contact_us` (
 
 INSERT INTO `contact_us` (`id`, `name`, `email`, `mobile`, `subject`, `message`, `added_on`) VALUES
 (1, 'Choksi Abhishek Premalkumar', '19bmiit032@gmail.com', '7874376579', 'Testing Subject', 'Testing Message', '2021-08-28 12:39:11'),
-(3, 'Parth Kher', '19bmiitbscit015@gmail.com', '9812575435', 'Demo Display', 'Helloooo.....', '2021-08-31 10:55:42');
+(3, 'Parth Kher', '19bmiitbscit015@gmail.com', '9812575435', 'Demo Display', 'Helloooo.....', '2021-08-31 10:55:42'),
+(4, 'Deep Shah', '19bmiit032@gmail.com', '7874376579', 'About Chinese', 'Veg or Non veg', '2021-10-27 05:42:38');
 
 -- --------------------------------------------------------
 
@@ -150,7 +151,7 @@ CREATE TABLE IF NOT EXISTS `coupon_code` (
 
 INSERT INTO `coupon_code` (`id`, `coupon_code`, `coupon_type`, `coupon_value`, `cart_min_value`, `expired_on`, `status`, `added_on`) VALUES
 (6, 'FIRST50', 'F', 50, 50, '2021-10-26', 1, '2021-10-25 17:52:44'),
-(7, 'Monday', 'P', 10, 60, '2021-10-27', 1, '2021-10-25 04:45:50');
+(7, 'Monday', 'P', 10, 60, '2021-10-26', 1, '2021-10-25 04:45:50');
 
 -- --------------------------------------------------------
 
@@ -223,7 +224,7 @@ CREATE TABLE IF NOT EXISTS `dish_cart` (
   `qty` int NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -274,7 +275,7 @@ CREATE TABLE IF NOT EXISTS `order_detail` (
   `price` float NOT NULL,
   `qty` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `order_detail`
@@ -290,7 +291,10 @@ INSERT INTO `order_detail` (`id`, `order_id`, `dish_details_id`, `price`, `qty`)
 (8, 6, 6, 40, 2),
 (9, 7, 10, 350, 2),
 (10, 8, 6, 40, 2),
-(11, 8, 13, 20, 2);
+(11, 8, 13, 20, 2),
+(12, 9, 7, 110, 2),
+(13, 10, 10, 350, 2),
+(14, 10, 7, 110, 2);
 
 -- --------------------------------------------------------
 
@@ -315,7 +319,7 @@ CREATE TABLE IF NOT EXISTS `order_master` (
   `order_status` int NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `order_master`
@@ -323,12 +327,14 @@ CREATE TABLE IF NOT EXISTS `order_master` (
 
 INSERT INTO `order_master` (`id`, `user_id`, `name`, `email`, `mobile`, `address`, `total_price`, `final_price`, `coupon_code`, `zipcode`, `delivery_boy_id`, `payment_status`, `order_status`, `added_on`) VALUES
 (1, 2, 'Abhishek', '19bmiit032@gmail.com', '9825445283', 'Bardoli', 140, 140, '', 390111, 1, 'success', 4, '2021-10-23 06:22:43'),
-(2, 2, 'Abhishek Choksi', '19bmiit032@gmail.com', '9825445283', 'Surat', 400, 400, '', 390190, 0, 'pending', 1, '2021-10-23 07:16:32'),
+(2, 2, 'Abhishek Choksi', '19bmiit032@gmail.com', '9825445283', 'Surat', 400, 400, '', 390190, 2, 'success', 4, '2021-10-23 07:16:32'),
 (3, 2, 'Abhishek Choksi', '19bmiit032@gmail.com', '9825445283', '348, Laxmi Villa Dhamdod Lumba Road, Opp. Rang Avdhut Temple Bardoli - 394355.', 260, 260, '', 394355, 1, 'success', 4, '2021-10-23 07:58:05'),
-(5, 6, 'Abhi Choksi', 'a.p.choksi420@gmail.com', '7874376579', 'Tetstststtstst', 80, 30, 'FIRST50', 395009, 0, 'pending', 1, '2021-10-25 05:04:10'),
+(5, 6, 'Abhi Choksi', 'a.p.choksi420@gmail.com', '7874376579', 'Tetstststtstst', 80, 30, 'FIRST50', 395009, 1, 'success', 4, '2021-10-25 05:04:10'),
 (6, 2, 'Abhishek Choksi', '19bmiit032@gmail.com', '9825445283', 'Vapi', 80, 30, 'FIRST50', 395009, 0, 'pending', 1, '2021-10-25 05:16:57'),
-(7, 6, 'Abhi Choksi', 'a.p.choksi420@gmail.com', '7874376579', 'UTU', 700, 700, '', 395009, 0, 'pending', 1, '2021-10-26 08:59:42'),
-(8, 6, 'Abhi Choksi', 'a.p.choksi420@gmail.com', '7874376579', 'BMIIT,UTU', 120, 120, '', 395555, 1, 'pending', 2, '2021-10-26 09:44:27');
+(7, 6, 'Abhi Choksi', 'a.p.choksi420@gmail.com', '7874376579', 'UTU', 700, 700, '', 395009, 2, 'success', 4, '2021-10-26 08:59:42'),
+(8, 6, 'Abhi Choksi', 'a.p.choksi420@gmail.com', '7874376579', 'BMIIT,UTU', 120, 120, '', 395555, 1, 'pending', 2, '2021-10-26 09:44:27'),
+(9, 2, 'Abhishek Choksi', '19bmiit032@gmail.com', '9825445283', 'BMIIT,UTU', 220, 170, 'FIRST50', 395009, 2, 'pending', 1, '2021-10-26 01:41:07'),
+(10, 2, 'Abhishek Choksi', '19bmiit032@gmail.com', '9825445283', 'BMIIT,UTU', 920, 920, '', 395009, 0, 'pending', 1, '2021-10-27 05:39:47');
 
 -- --------------------------------------------------------
 
@@ -353,6 +359,32 @@ INSERT INTO `order_status` (`id`, `order_status`) VALUES
 (3, 'On the Way'),
 (4, 'Delivered'),
 (5, 'Cancel');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rating`
+--
+
+DROP TABLE IF EXISTS `rating`;
+CREATE TABLE IF NOT EXISTS `rating` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `order_id` int NOT NULL,
+  `dish_detail_id` int NOT NULL,
+  `rating` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `rating`
+--
+
+INSERT INTO `rating` (`id`, `user_id`, `order_id`, `dish_detail_id`, `rating`) VALUES
+(1, 6, 7, 10, 5),
+(2, 6, 5, 13, 4),
+(3, 2, 3, 13, 4),
+(4, 2, 3, 7, 3);
 
 -- --------------------------------------------------------
 
@@ -402,10 +434,9 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `mobile`, `password`, `status`, `email_verify`, `rand_str`, `added_on`) VALUES
-(2, 'Abhishek Choksi', '19bmiit032@gmail.com', '9825445283', '$2y$10$nVtOuz1W3o0BLYegLIaRYe2GXHRNp9E7jTj7QRgBUfUy5RmDbJQpy', 1, 1, 'oruvcbmuekjpwms', '2021-10-03 08:58:30'),
-(3, 'harsh', '19bmiit103@gmail.com', '9512768979', '$2y$10$Oh0Qe.ncAWIbAF1sZB7QYONWOD4VLfmTKNcl7tfW0.xSFY.9oMGfS', 1, 1, 'mvedywkbetlgpxq', '2021-10-08 08:24:47'),
-(6, 'Abhi Choksi', 'a.p.choksi420@gmail.com', '7874376579', '$2y$10$HOvgg00N0vQNLmDGpgF.5./QRbmKMtx03RLLfh5dVd7q9tc.W8pgy', 1, 1, 'nstykrouydapbkw', '2021-10-08 02:55:54'),
-(7, 'Deep Patel', '19bmiit015@gmail.com', '7874376579', '$2y$10$NKF.nlrUblMdet2dah3UDO10fOnNKlFYLSnIvSWgyiRX9iMmDRPTq', 0, 0, 'cszkogcrejukhve', '2021-10-11 04:27:51');
+(2, 'Abhishek Choksi', '19bmiit032@gmail.com', '9825445283', '$2y$10$onnpLJBoZCHCZnbvOuTSs.9EkR1l/quAINci.mQZYfBQ0OugMj.Ry', 1, 1, 'oruvcbmuekjpwms', '2021-10-03 08:58:30'),
+(3, 'harsh', '19bmiit103@gmail.com', '9512768979', '$2y$10$Oh0Qe.ncAWIbAF1sZB7QYONWOD4VLfmTKNcl7tfW0.xSFY.9oMGfS', 0, 1, 'mvedywkbetlgpxq', '2021-10-08 08:24:47'),
+(6, 'Abhi Choksi', 'a.p.choksi420@gmail.com', '7874376579', '$2y$10$HOvgg00N0vQNLmDGpgF.5./QRbmKMtx03RLLfh5dVd7q9tc.W8pgy', 1, 1, 'nstykrouydapbkw', '2021-10-08 02:55:54');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

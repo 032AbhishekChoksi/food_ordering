@@ -19,9 +19,10 @@ function get_safe_value($str)
   return $str;
 }
 
-function dateFormat($date){
-	$str=strtotime($date);
-	return date('d-m-Y',$str);
+function dateFormat($date)
+{
+  $str = strtotime($date);
+  return date('d-m-Y', $str);
 }
 
 function redirect($link)
@@ -81,7 +82,7 @@ function getUserCart()
 }
 
 
-function getUserDetailsByid($uid='')
+function getUserDetailsByid($uid = '')
 {
   global $con;
   $data['name'] = '';
@@ -89,13 +90,13 @@ function getUserDetailsByid($uid='')
   $data['mobile'] = '';
 
   if (isset($_SESSION['FOOD_USER_ID'])) {
-    $uid=$_SESSION['FOOD_USER_ID'];
+    $uid = $_SESSION['FOOD_USER_ID'];
   }
-    $row = mysqli_fetch_assoc(mysqli_query($con, "select * from user where id='$uid'"));
-    $data['name'] = $row['name'];
-    $data['email'] = $row['email'];
-    $data['mobile'] = $row['mobile'];
-  
+  $row = mysqli_fetch_assoc(mysqli_query($con, "select * from user where id='$uid'"));
+  $data['name'] = $row['name'];
+  $data['email'] = $row['email'];
+  $data['mobile'] = $row['mobile'];
+
   return $data;
 }
 
@@ -113,47 +114,49 @@ function manageUserCart($uid, $qty, $attr)
   }
 }
 
-function getDishCartStatus(){
-	global $con;
-	$cartArr=array();
-	$dishDetailsID=array();
-	if(isset($_SESSION['FOOD_USER_ID'])){
-		$getUserCart=getUserCart();
-		$cartArr=array();
-		foreach($getUserCart as $list){
-			$dishDetailsID[]=$list['dish_detail_id'];
-		}
-	}else{
-		if(isset($_SESSION['cart']) && count($_SESSION['cart'])>0){
-			foreach($_SESSION['cart'] as $key=>$val){
-				$dishDetailsID[]=$key;
-			}
-		}
-	}
-	
-	foreach($dishDetailsID as $id){
-		$res=mysqli_query($con,"select dish_details.status,dish.status as dish_status,dish.id from dish_details,dish where dish_details.id='$id' and dish_details.dish_id=dish.id");
-		$row=mysqli_fetch_assoc($res);
-		if($row['dish_status']==0){
-			$id=$row['id'];
-			$res=mysqli_query($con,"select id from dish_details where dish_id='$id'");
-			while($row1=mysqli_fetch_assoc($res)){
-				removeDishFromCartByid($row1['id']);
-			}
-		}
-		if($row['status']==0){
-			removeDishFromCartByid($id);
-		}
-	}
+function getDishCartStatus()
+{
+  global $con;
+  $cartArr = array();
+  $dishDetailsID = array();
+  if (isset($_SESSION['FOOD_USER_ID'])) {
+    $getUserCart = getUserCart();
+    $cartArr = array();
+    foreach ($getUserCart as $list) {
+      $dishDetailsID[] = $list['dish_detail_id'];
+    }
+  } else {
+    if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
+      foreach ($_SESSION['cart'] as $key => $val) {
+        $dishDetailsID[] = $key;
+      }
+    }
+  }
+
+  foreach ($dishDetailsID as $id) {
+    $res = mysqli_query($con, "select dish_details.status,dish.status as dish_status,dish.id from dish_details,dish where dish_details.id='$id' and dish_details.dish_id=dish.id");
+    $row = mysqli_fetch_assoc($res);
+    if ($row['dish_status'] == 0) {
+      $id = $row['id'];
+      $res = mysqli_query($con, "select id from dish_details where dish_id='$id'");
+      while ($row1 = mysqli_fetch_assoc($res)) {
+        removeDishFromCartByid($row1['id']);
+      }
+    }
+    if ($row['status'] == 0) {
+      removeDishFromCartByid($id);
+    }
+  }
 }
 
-function getcartTotalPrice(){
-	$cartArr=getUserFullCart();
-	$totalPrice=0;
-	foreach($cartArr as $list){
-		$totalPrice=$totalPrice+($list['qty']*$list['price']);
-	}
-	return $totalPrice;
+function getcartTotalPrice()
+{
+  $cartArr = getUserFullCart();
+  $totalPrice = 0;
+  foreach ($cartArr as $list) {
+    $totalPrice = $totalPrice + ($list['qty'] * $list['price']);
+  }
+  return $totalPrice;
 }
 
 function getUserFullCart($attr_id = '')
@@ -217,7 +220,7 @@ function emptyCart()
 function getOrderDetails($oid)
 {
   global $con;
-  $sql = "select order_detail.price,order_detail.qty,dish_details.attribute,dish.dish
+  $sql="select order_detail.price,order_detail.qty,dish_details.attribute,dish.dish,order_detail.dish_details_id
 	from order_detail,dish_details,dish
 	WHERE
 	order_detail.order_id=$oid AND
@@ -243,7 +246,7 @@ function getOrderById($oid)
   return $data;
 }
 
-function orderEmail($oid,$uid='')
+function orderEmail($oid, $uid = '')
 {
   $getUserDetailsBy = getUserDetailsByid($uid);
   $name = $getUserDetailsBy['name'];
@@ -767,7 +770,7 @@ function orderEmail($oid,$uid='')
                                   </td>
                                   <td width="20%" class="purchase_footer" valign="middle">
                                   <p class="f-fallback purchase_total">' . $total_price . '</p>
-                                  <p class="f-fallback purchase_total">- ' . $discount_price=$total_price-$final_price . '</p>
+                                  <p class="f-fallback purchase_total">- ' . $discount_price = $total_price - $final_price . '</p>
                                   <hr>
                                   <p class="f-fallback purchase_total">' . $final_price . '</p>
                                   </td>
@@ -797,25 +800,74 @@ function orderEmail($oid,$uid='')
   return $html;
 }
 
-function getDeliveryBoyNameById($id){
-	global $con;
-	$sql="select name,mobile from delivery_boy where id='$id'";
-	$data=array();
-	$res=mysqli_query($con,$sql);
-	if(mysqli_num_rows($res)>0){
-		$row=mysqli_fetch_assoc($res);
-		return $row['name'].'('.$row['mobile'].')';	
-	}else{
-		return 'Not Assign';
-	}
+function getDeliveryBoyNameById($id)
+{
+  global $con;
+  $sql = "select name,mobile from delivery_boy where id='$id'";
+  $data = array();
+  $res = mysqli_query($con, $sql);
+  if (mysqli_num_rows($res) > 0) {
+    $row = mysqli_fetch_assoc($res);
+    return $row['name'] . '(' . $row['mobile'] . ')';
+  } else {
+    return 'Not Assign';
+  }
 }
 
-function getSetting(){
-	global $con;
-	$sql="select * from setting where id='1'";
-	$res=mysqli_query($con,$sql);
-	$row=mysqli_fetch_assoc($res);
-	return $row;
+function getSetting()
+{
+  global $con;
+  $sql = "select * from setting where id='1'";
+  $res = mysqli_query($con, $sql);
+  $row = mysqli_fetch_assoc($res);
+  return $row;
+}
+function getRatingList($did, $oid)
+{
+  $arr = array('Bad', 'Below Average', 'Average', 'Good', 'Very Good');
+  $html = '<select onchange=updaterating("' . $did . '","' . $oid . '") id="rate' . $did . '">';
+  $html .= '<option value="">Select Rating</option>';
+  foreach ($arr as $key => $val) {
+    $id = $key + 1;
+    $html .= "<option value='$id'>$val</option>";
+  }
+  $html .= '</select>';
+  return $html;
 }
 
+function getRating($did, $oid)
+{
+  global $con;
+  $sql = "select * from rating where order_id='$oid' and dish_detail_id='$did'";
+  $res = mysqli_query($con, $sql);
+  if (mysqli_num_rows($res) > 0) {
+    $row = mysqli_fetch_assoc($res);
+    $rating = $row['rating'];
+    $arr = array('', 'Bad', 'Below Average', 'Average', 'Good', 'Very Good');
+    echo "<div class='set_rating'>" . $arr[$rating] . "</div>";
+  } else {
+    echo getRatingList($did, $oid);
+  }
+}
+
+function getRatingByDishId($id)
+{
+  global $con;
+  $sql = "select id from dish_details where dish_id='$id'";
+  $res = mysqli_query($con, $sql);
+  $arr = array();
+  $str = '';
+  while ($row = mysqli_fetch_assoc($res)) {
+    $str .= "dish_detail_id='" . $row['id'] . "' or ";
+  }
+  $str = rtrim($str, " or");
+  $arr = array('', 'Bad', 'Below Average', 'Average', 'Good', 'Very Good');
+  $sql = "select sum(rating) as rating,count(*) as total from rating where $str";
+  $res = mysqli_query($con, $sql);
+  $row = mysqli_fetch_assoc($res);
+  if ($row['total'] > 0) {
+    $totalRate = $row['rating'] / $row['total'];
+    echo "<span class='rating'> (" . $arr[round($totalRate)] . " rated by " . $row['total'] . " users)</span>";
+  }
+}
 ?>
