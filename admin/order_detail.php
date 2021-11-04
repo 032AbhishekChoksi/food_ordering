@@ -95,9 +95,19 @@ if (isset($_GET['id']) && $_GET['id'] > 0) {
 					</div>
 				</div>
 				<div class="container-fluid mt-5 w-100">
-					<h4 class="text-right mb-5">Total : <?php echo $pp ?></h4>
-					<hr>
-				</div>
+					  <?php
+						if($orderRow['coupon_code']!=''){
+						?>
+						  <h6 class="text-right mb-5">Total : <?php echo $pp?></h6>
+						  <h5 class="text-right mb-5">Coupon Code : <?php echo $orderRow['coupon_code']?></h5>
+						  <h4 class="text-right mb-5">Final Total : <?php echo $orderRow['final_price']?></h4>
+						<?php
+						} else{
+						?>
+						 <h4 class="text-right mb-5">Total : <?php echo $pp?></h4>
+						<?php } ?>
+                      <hr>
+                    </div>
 				<div class="container-fluid w-100">
 					<a href="../download_invoice.php?id=<?php echo $id ?>" class="btn btn-primary float-right mt-4 ml-2"><i class="mdi mdi-printer mr-1"></i>PDF</a>
 				</div>

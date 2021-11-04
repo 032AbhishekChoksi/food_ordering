@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 30, 2021 at 04:16 AM
+-- Generation Time: Nov 04, 2021 at 10:19 AM
 -- Server version: 8.0.21
 -- PHP Version: 7.4.9
 
@@ -150,8 +150,8 @@ CREATE TABLE IF NOT EXISTS `coupon_code` (
 --
 
 INSERT INTO `coupon_code` (`id`, `coupon_code`, `coupon_type`, `coupon_value`, `cart_min_value`, `expired_on`, `status`, `added_on`) VALUES
-(6, 'FIRST50', 'F', 50, 50, '2021-10-26', 1, '2021-10-25 17:52:44'),
-(7, 'Monday', 'P', 10, 60, '2021-10-26', 1, '2021-10-25 04:45:50');
+(6, 'FIRST50', 'F', 50, 50, '2021-12-01', 1, '2021-10-25 17:52:44'),
+(7, 'Monday', 'P', 10, 60, '2021-10-20', 1, '2021-10-25 04:45:50');
 
 -- --------------------------------------------------------
 
@@ -168,7 +168,7 @@ CREATE TABLE IF NOT EXISTS `delivery_boy` (
   `status` int NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `delivery_boy`
@@ -176,7 +176,8 @@ CREATE TABLE IF NOT EXISTS `delivery_boy` (
 
 INSERT INTO `delivery_boy` (`id`, `name`, `mobile`, `password`, `status`, `added_on`) VALUES
 (1, 'Kevin Patel', '9825443278', 'kevin', 1, '2021-07-30 01:22:29'),
-(2, 'Deep Shah', '9681234561', 'deep', 1, '2021-07-30 02:01:41');
+(2, 'Deep Shah', '9681234561', 'deep', 1, '2021-07-30 02:01:41'),
+(3, 'ABHI CHOKSI', '7874376579', 'a', 1, '2021-10-30 02:01:43');
 
 -- --------------------------------------------------------
 
@@ -224,7 +225,7 @@ CREATE TABLE IF NOT EXISTS `dish_cart` (
   `qty` int NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -275,26 +276,15 @@ CREATE TABLE IF NOT EXISTS `order_detail` (
   `price` float NOT NULL,
   `qty` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `order_detail`
 --
 
 INSERT INTO `order_detail` (`id`, `order_id`, `dish_details_id`, `price`, `qty`) VALUES
-(1, 1, 6, 40, 3),
-(2, 1, 13, 20, 1),
-(3, 2, 12, 400, 1),
-(4, 3, 13, 20, 2),
-(5, 3, 7, 110, 2),
-(7, 5, 13, 20, 4),
-(8, 6, 6, 40, 2),
-(9, 7, 10, 350, 2),
-(10, 8, 6, 40, 2),
-(11, 8, 13, 20, 2),
-(12, 9, 7, 110, 2),
-(13, 10, 10, 350, 2),
-(14, 10, 7, 110, 2);
+(1, 1, 13, 20, 3),
+(2, 2, 1, 300, 1);
 
 -- --------------------------------------------------------
 
@@ -316,25 +306,20 @@ CREATE TABLE IF NOT EXISTS `order_master` (
   `zipcode` int NOT NULL,
   `delivery_boy_id` int NOT NULL,
   `payment_status` varchar(20) NOT NULL,
+  `payment_type` varchar(10) NOT NULL,
+  `payment_id` varchar(100) NOT NULL,
   `order_status` int NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `order_master`
 --
 
-INSERT INTO `order_master` (`id`, `user_id`, `name`, `email`, `mobile`, `address`, `total_price`, `final_price`, `coupon_code`, `zipcode`, `delivery_boy_id`, `payment_status`, `order_status`, `added_on`) VALUES
-(1, 2, 'Abhishek', '19bmiit032@gmail.com', '9825445283', 'Bardoli', 140, 140, '', 390111, 1, 'success', 4, '2021-10-23 06:22:43'),
-(2, 2, 'Abhishek Choksi', '19bmiit032@gmail.com', '9825445283', 'Surat', 400, 400, '', 390190, 2, 'success', 4, '2021-10-23 07:16:32'),
-(3, 2, 'Abhishek Choksi', '19bmiit032@gmail.com', '9825445283', '348, Laxmi Villa Dhamdod Lumba Road, Opp. Rang Avdhut Temple Bardoli - 394355.', 260, 260, '', 394355, 1, 'success', 4, '2021-10-23 07:58:05'),
-(5, 6, 'Abhi Choksi', 'a.p.choksi420@gmail.com', '7874376579', 'Tetstststtstst', 80, 30, 'FIRST50', 395009, 1, 'success', 4, '2021-10-25 05:04:10'),
-(6, 2, 'Abhishek Choksi', '19bmiit032@gmail.com', '9825445283', 'Vapi', 80, 30, 'FIRST50', 395009, 0, 'pending', 1, '2021-10-25 05:16:57'),
-(7, 6, 'Abhi Choksi', 'a.p.choksi420@gmail.com', '7874376579', 'UTU', 700, 700, '', 395009, 2, 'success', 4, '2021-10-26 08:59:42'),
-(8, 6, 'Abhi Choksi', 'a.p.choksi420@gmail.com', '7874376579', 'BMIIT,UTU', 120, 120, '', 395555, 1, 'pending', 2, '2021-10-26 09:44:27'),
-(9, 2, 'Abhishek Choksi', '19bmiit032@gmail.com', '9825445283', 'BMIIT,UTU', 220, 170, 'FIRST50', 395009, 2, 'pending', 1, '2021-10-26 01:41:07'),
-(10, 2, 'Abhishek Choksi', '19bmiit032@gmail.com', '9825445283', 'BMIIT,UTU', 920, 920, '', 395009, 0, 'pending', 1, '2021-10-27 05:39:47');
+INSERT INTO `order_master` (`id`, `user_id`, `name`, `email`, `mobile`, `address`, `total_price`, `final_price`, `coupon_code`, `zipcode`, `delivery_boy_id`, `payment_status`, `payment_type`, `payment_id`, `order_status`, `added_on`) VALUES
+(1, 6, 'Abhi Choksi', 'a.p.choksi420@gmail.com', '7874376579', 'BMIIT, UTU', 60, 60, '', 394006, 0, 'pending', 'cod', '', 1, '2021-11-04 10:10:35'),
+(2, 2, 'Abhishek Choksi', '19bmiit032@gmail.com', '9825445283', '348 Laxmi Villa, Opp. Rang Avdhut Temple, Dhamdod Road, Bardoli', 300, 250, 'FIRST50', 394005, 3, 'success', 'paytm', '20211104111212800110168734303146290', 4, '2021-11-04 10:13:51');
 
 -- --------------------------------------------------------
 
@@ -374,17 +359,14 @@ CREATE TABLE IF NOT EXISTS `rating` (
   `dish_detail_id` int NOT NULL,
   `rating` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `rating`
 --
 
 INSERT INTO `rating` (`id`, `user_id`, `order_id`, `dish_detail_id`, `rating`) VALUES
-(1, 6, 7, 10, 5),
-(2, 6, 5, 13, 4),
-(3, 2, 3, 13, 4),
-(4, 2, 3, 7, 3);
+(1, 2, 2, 1, 4);
 
 -- --------------------------------------------------------
 
@@ -407,7 +389,7 @@ CREATE TABLE IF NOT EXISTS `setting` (
 --
 
 INSERT INTO `setting` (`id`, `cart_min_price`, `cart_min_price_msg`, `website_close`, `website_close_msg`) VALUES
-(1, 50, 'Cart min price will be 50 Rs', 0, 'Website Closed for today');
+(1, 30, 'Cart min price will be 30 Rs', 0, 'Website Closed for today');
 
 -- --------------------------------------------------------
 

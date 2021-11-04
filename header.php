@@ -6,7 +6,6 @@ include('constant.inc.php');
 $totalPrice = 0;
 $getSetting=getSetting();
 
-// prx($getSetting);
 $website_close=$getSetting['website_close'];
 $website_close_msg=$getSetting['website_close_msg'];
 $cart_min_price=$getSetting['cart_min_price'];

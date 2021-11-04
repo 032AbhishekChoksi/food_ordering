@@ -88,8 +88,8 @@ function getUserDetailsByid($uid = '')
   $data['name'] = '';
   $data['email'] = '';
   $data['mobile'] = '';
-
-  if (isset($_SESSION['FOOD_USER_ID'])) {
+  
+  if (isset($_SESSION['FOOD_USER_ID']) || $_SESSION['FOOD_USER_ID'] >0) {
     $uid = $_SESSION['FOOD_USER_ID'];
   }
   $row = mysqli_fetch_assoc(mysqli_query($con, "select * from user where id='$uid'"));
@@ -220,7 +220,7 @@ function emptyCart()
 function getOrderDetails($oid)
 {
   global $con;
-  $sql="select order_detail.price,order_detail.qty,dish_details.attribute,dish.dish,order_detail.dish_details_id
+  $sql = "select order_detail.price,order_detail.qty,dish_details.attribute,dish.dish,order_detail.dish_details_id
 	from order_detail,dish_details,dish
 	WHERE
 	order_detail.order_id=$oid AND
@@ -256,7 +256,7 @@ function orderEmail($oid, $uid = '')
 
   $order_id = $getOrderById[0]['id'];
   $total_amount = $getOrderById[0]['total_price'];
-  $final_price = $getOrderById[0]['final_price'];
+
   $getOrderDetails = getOrderDetails($oid);
 
   $html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -762,20 +762,35 @@ function orderEmail($oid, $uid = '')
 									  <td class="align-right" width="20%" class="purchase_item"><span class="f-fallback">' . $item_price . '</span></td>
 									</tr>';
   }
+
   $html .= '<tr>
                                   <td width="80%" class="purchase_footer" valign="middle" colspan="2">
                                     <p class="f-fallback purchase_total purchase_total--label">Total</p>
-                                    <p class="f-fallback purchase_total purchase_total--label">Discount</p>
-                                    <p class="f-fallback purchase_total purchase_total--label">Final</p>
                                   </td>
                                   <td width="20%" class="purchase_footer" valign="middle">
-                                  <p class="f-fallback purchase_total">' . $total_price . '</p>
-                                  <p class="f-fallback purchase_total">- ' . $discount_price = $total_price - $final_price . '</p>
-                                  <hr>
-                                  <p class="f-fallback purchase_total">' . $final_price . '</p>
+                                    <p class="f-fallback purchase_total">' . $total_price . '</p>
                                   </td>
-                                </tr>
-                              </table>
+                                </tr>';
+
+  if ($getOrderById[0]['coupon_code'] != '') {
+    $html .= '<tr>
+                                  <td width="80%" class="purchase_footer" valign="middle" colspan="2">
+                                    <p class="f-fallback purchase_total purchase_total--label">Coupon Code</p>
+                                  </td>
+                                  <td width="20%" class="purchase_footer" valign="middle">
+                                    <p class="f-fallback purchase_total">' . $getOrderById[0]['coupon_code'] . '</p>
+                                  </td>
+                                </tr><tr>
+                                  <td width="80%" class="purchase_footer" valign="middle" colspan="2">
+                                    <p class="f-fallback purchase_total purchase_total--label">Final Total</p>
+                                  </td>
+                                  <td width="20%" class="purchase_footer" valign="middle">
+                                    <p class="f-fallback purchase_total">' . $getOrderById[0]['final_price'] . '</p>
+                                  </td>
+                                </tr>';
+  }
+
+  $html .= '</table>
                             </td>
                           </tr>
                         </table>
@@ -869,5 +884,45 @@ function getRatingByDishId($id)
     $totalRate = $row['rating'] / $row['total'];
     echo "<span class='rating'> (" . $arr[round($totalRate)] . " rated by " . $row['total'] . " users)</span>";
   }
+}
+
+
+function manageWallet($uid, $amt, $type, $msg, $payment_id = '')
+{
+  global $con;
+  $added_on = date('Y-m-d h:i:s');
+  $sql = "insert into wallet(user_id,amt,msg,type,added_on,payment_id) values('$uid','$amt','$msg','$type','$added_on','$payment_id')";
+  $res = mysqli_query($con, $sql);
+}
+
+
+function getWallet($uid)
+{
+  global $con;
+  $sql = "select * from wallet where user_id='$uid' order by id desc";
+  $res = mysqli_query($con, $sql);
+  $arr = array();
+  while ($row = mysqli_fetch_assoc($res)) {
+    $arr[] = $row;
+  }
+  return $arr;
+}
+
+function getWalletAmt($uid)
+{
+  global $con;
+  $sql = "select * from wallet where user_id='$uid'";
+  $res = mysqli_query($con, $sql);
+  $in = 0;
+  $out = 0;
+  while ($row = mysqli_fetch_assoc($res)) {
+    if ($row['type'] == 'in') {
+      $in = $in + $row['amt'];
+    }
+    if ($row['type'] == 'out') {
+      $out = $out + $row['amt'];
+    }
+  }
+  return $in - $out;
 }
 ?>

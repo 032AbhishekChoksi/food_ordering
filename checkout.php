@@ -46,24 +46,47 @@ if (isset($_POST['place_order'])) {
 			$final_price = $totalPrice;
 		}
 
-
 		$added_on = date('Y-m-d h:i:s');
-		$sql = "insert into order_master(user_id,name,email,mobile,address,zipcode,total_price,final_price,coupon_code,order_status,payment_status,added_on) values('" . $_SESSION['FOOD_USER_ID'] . "','$checkout_name','$checkout_email','$checkout_mobile','$checkout_address','$checkout_zip','$totalPrice','$final_price','$coupon_code','1','pending','$added_on')";
+		$sql = "insert into order_master(user_id,name,email,mobile,address,zipcode,total_price,final_price,coupon_code,order_status,payment_status,payment_type,added_on) values('" . $_SESSION['FOOD_USER_ID'] . "','$checkout_name','$checkout_email','$checkout_mobile','$checkout_address','$checkout_zip','$totalPrice','$final_price','$coupon_code','1','pending','$payment_type','$added_on')";
 		mysqli_query($con, $sql);
 		$insert_id = mysqli_insert_id($con);
 		$_SESSION['ORDER_ID'] = $insert_id;
 		foreach ($cartArr as $key => $val) {
 			mysqli_query($con, "insert into order_detail(order_id,dish_details_id,price,qty) values('$insert_id','$key','" . $val['price'] . "','" . $val['qty'] . "')");
-			// echo "insert into order_detail(order_id,dish_details_id,price,qty) values('$insert_id','$key','" . $val['price'] . "','" . $val['qty'] . "')";
 		}
-		// die();
 		emptyCart();
 		$getUserDetailsBy = getUserDetailsByid();
 		$email = $getUserDetailsBy['email'];
-		$emailHTML = orderEmail($insert_id);
-		include('smtp/PHPMailerAutoload.php');
-		send_email($email, $emailHTML, 'Order Placed');
-		redirect(FRONT_SITE_PATH . 'success');
+		if ($payment_type == 'cod') {
+			$emailHTML = orderEmail($insert_id);
+			include('smtp/PHPMailerAutoload.php');
+			send_email($email, $emailHTML, 'Order Placed');
+			redirect(FRONT_SITE_PATH . 'success');
+		}
+		
+		if($payment_type=='wallet'){
+			manageWallet($_SESSION['FOOD_USER_ID'],$final_price,'out','Order Id-'.$insert_id);
+			mysqli_query($con,"update  order_master set payment_status='success' where id='$insert_id'");
+			$emailHTML=orderEmail($insert_id);
+			include('smtp/PHPMailerAutoload.php');
+			send_email($email,$emailHTML,'Order Placed');
+			redirect(FRONT_SITE_PATH.'success');
+		}
+		
+		if($payment_type=='paytm'){
+			// $paytm_oid=$insert_id.'_'.$_SESSION['FOOD_USER_ID'];
+			$paytm_oid = "ORDS"."_". $insert_id . "_" . $_SESSION['FOOD_USER_ID'] . "_" . rand(100,999);
+			$html='<form method="post" action="pgRedirect.php" name="frmPayment" style="display:none;">
+					<input id="ORDER_ID" tabindex="1" maxlength="20" size="20"
+								name="ORDER_ID" autocomplete="off"
+								value="'.$paytm_oid.'">
+							<input id="CUST_ID" tabindex="2" maxlength="12" size="12" name="CUST_ID" autocomplete="off" value="'.$_SESSION['FOOD_USER_ID'].'"><input id="INDUSTRY_TYPE_ID" tabindex="4" maxlength="12" size="12" name="INDUSTRY_TYPE_ID" autocomplete="off" value="Retail"><input id="CHANNEL_ID" tabindex="4" maxlength="12" size="12" name="CHANNEL_ID" autocomplete="off" value="WEB"><input title="TXN_AMOUNT" tabindex="10"
+								type="text" name="TXN_AMOUNT"
+								value="'.$final_price.'"><input value="CheckOut" type="submit"	onclick=""></td></form><script type="text/javascript">document.frmPayment.submit();
+				
+			</script>';
+			echo $html;
+		}
 	}
 }
 ?>
@@ -170,6 +193,10 @@ if (isset($_POST['place_order'])) {
 												<div class="single-ship">
 													<input type="radio" name="payment_type" value="cod" checked="checked">
 													<label>Cash on Delivery(COD)</label>
+												</div>
+												<div class="single-ship">
+													<input type="radio" name="payment_type" value="paytm">
+													<label>PayTm</label>
 												</div>
 												<!--<div class="single-ship">
 															<input type="radio" name="address" value="address">

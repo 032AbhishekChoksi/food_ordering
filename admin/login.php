@@ -48,7 +48,8 @@ if (isset($_POST['submit'])) {
               <div class="brand-logo text-center">
                 <img src="assets/images/logo.png" alt="logo">
               </div>
-              <h6 class="font-weight-light">Sign in to continue.</h6>
+              <h4 class="font-weight-light" style="text-align: center;">Admin</h4>
+              <h6 class="font-weight-light" style="margin-top: 10px;">Sign in to continue.</h6>
               <form class="pt-3" method="post">
                 <div class="form-group">
                   <input type="textbox" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username" name="username" required>
