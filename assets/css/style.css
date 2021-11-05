@@ -6434,4 +6434,40 @@ h5.panel-title span {
 }
 .rating{
 	color:green;
+}  
+#wallet_top_box{
+    color: #fff;
+    display: inline-block;
+    line-height: 44px;
+}
+
+.wallet_loop .in{
+	color:green;
+}
+
+.wallet_loop .out{
+	color:red;
+}
+
+#add_money_box{
+	margin-bottom:50px;
+}
+
+#add_money_box .w150{
+	width:150px;
+}
+
+#add_money_box .btn{
+	background-color: #e02c2b;
+    border: medium none;
+    cursor: pointer;
+    color: #fff;
+    font-weight: 600;
+    height: 44px;
+    margin-top: 0px;
+}
+
+#error_msg{
+	margin-top: 10px;
+	color:red;
 }

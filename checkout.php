@@ -63,26 +63,26 @@ if (isset($_POST['place_order'])) {
 			send_email($email, $emailHTML, 'Order Placed');
 			redirect(FRONT_SITE_PATH . 'success');
 		}
-		
-		if($payment_type=='wallet'){
-			manageWallet($_SESSION['FOOD_USER_ID'],$final_price,'out','Order Id-'.$insert_id);
-			mysqli_query($con,"update  order_master set payment_status='success' where id='$insert_id'");
-			$emailHTML=orderEmail($insert_id);
+
+		if ($payment_type == 'wallet') {
+			manageWallet($_SESSION['FOOD_USER_ID'], $final_price, 'out', 'Order Id-' . $insert_id);
+			mysqli_query($con, "update  order_master set payment_status='success' where id='$insert_id'");
+			$emailHTML = orderEmail($insert_id);
 			include('smtp/PHPMailerAutoload.php');
-			send_email($email,$emailHTML,'Order Placed');
-			redirect(FRONT_SITE_PATH.'success');
+			send_email($email, $emailHTML, 'Order Placed');
+			redirect(FRONT_SITE_PATH . 'success');
 		}
-		
-		if($payment_type=='paytm'){
+
+		if ($payment_type == 'paytm') {
 			// $paytm_oid=$insert_id.'_'.$_SESSION['FOOD_USER_ID'];
-			$paytm_oid = "ORDS"."_". $insert_id . "_" . $_SESSION['FOOD_USER_ID'] . "_" . rand(100,999);
-			$html='<form method="post" action="pgRedirect.php" name="frmPayment" style="display:none;">
+			$paytm_oid = "ORDS" . "_" . $insert_id . "_" . $_SESSION['FOOD_USER_ID'] . "_" . rand(100, 999);
+			$html = '<form method="post" action="pgRedirect.php" name="frmPayment" style="display:none;">
 					<input id="ORDER_ID" tabindex="1" maxlength="20" size="20"
 								name="ORDER_ID" autocomplete="off"
-								value="'.$paytm_oid.'">
-							<input id="CUST_ID" tabindex="2" maxlength="12" size="12" name="CUST_ID" autocomplete="off" value="'.$_SESSION['FOOD_USER_ID'].'"><input id="INDUSTRY_TYPE_ID" tabindex="4" maxlength="12" size="12" name="INDUSTRY_TYPE_ID" autocomplete="off" value="Retail"><input id="CHANNEL_ID" tabindex="4" maxlength="12" size="12" name="CHANNEL_ID" autocomplete="off" value="WEB"><input title="TXN_AMOUNT" tabindex="10"
+								value="' . $paytm_oid . '">
+							<input id="CUST_ID" tabindex="2" maxlength="12" size="12" name="CUST_ID" autocomplete="off" value="' . $_SESSION['FOOD_USER_ID'] . '"><input id="INDUSTRY_TYPE_ID" tabindex="4" maxlength="12" size="12" name="INDUSTRY_TYPE_ID" autocomplete="off" value="Retail"><input id="CHANNEL_ID" tabindex="4" maxlength="12" size="12" name="CHANNEL_ID" autocomplete="off" value="WEB"><input title="TXN_AMOUNT" tabindex="10"
 								type="text" name="TXN_AMOUNT"
-								value="'.$final_price.'"><input value="CheckOut" type="submit"	onclick=""></td></form><script type="text/javascript">document.frmPayment.submit();
+								value="' . $final_price . '"><input value="CheckOut" type="submit"	onclick=""></td></form><script type="text/javascript">document.frmPayment.submit();
 				
 			</script>';
 			echo $html;
@@ -197,6 +197,24 @@ if (isset($_POST['place_order'])) {
 												<div class="single-ship">
 													<input type="radio" name="payment_type" value="paytm">
 													<label>PayTm</label>
+												</div>
+												<?php
+												$is_dis = '';
+												$low_msg = '';
+												if ($getWalletAmt >= $totalPrice) {
+												} else {
+													$is_dis = "disabled='disabled'";
+													$low_msg = "(Low Wallet Money)";
+												}
+												?>
+												<div class="single-ship">
+													<input type="radio" name="payment_type" value="wallet" <?php echo $is_dis ?>>
+													<label>Wallet</label>
+													<span style="color:red;font-size:12px;">
+														<?php
+														echo $low_msg;
+														?>
+													</span>
 												</div>
 												<!--<div class="single-ship">
 															<input type="radio" name="address" value="address">

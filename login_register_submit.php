@@ -24,8 +24,14 @@ if ($type == 'register') {
 
         $rand_str = rand_str();
         mysqli_query($con, "insert into user (name,email,mobile,password,status,email_verify,rand_str,added_on) values('$name','$email','$mobile','$new_password','0','0','$rand_str','$added_on')");
-
         $id = mysqli_insert_id($con);
+
+        $getSetting=getSetting();
+		$wallet_amt=$getSetting['wallet_amt'];
+		if($wallet_amt>0){
+				manageWallet($id,$wallet_amt,'in','Register');
+		}
+
         $html = FRONT_SITE_PATH . "verify?id=" . $rand_str;
         send_email($email, $html, 'Verify your email id');
 

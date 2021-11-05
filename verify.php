@@ -20,7 +20,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
         </div>
     </div>
 </div>
-<div class="contact-area pt-100 pb-100">
+<div class="contact-area pb-100">
     <div class="container">
         <div class="row">
             <div class="col-12">
