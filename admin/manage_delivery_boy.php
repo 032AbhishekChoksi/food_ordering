@@ -31,7 +31,7 @@ if(isset($_POST['submit'])){
 		if($id==''){
 			mysqli_query($con,"insert into delivery_boy(name,mobile,password,status,added_on) values('$name','$mobile','$password',1,'$added_on')");
 		}else{
-			mysqli_query($con,"update delivery_boy set name='$name', mobile='$mobile' where id='$id'");
+			mysqli_query($con,"update delivery_boy set name='$name', mobile='$mobile',password='$password' where id='$id'");
 		}
 		
 		redirect('delivery_boy.php');

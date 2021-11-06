@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 05, 2021 at 10:10 AM
+-- Generation Time: Nov 06, 2021 at 05:03 AM
 -- Server version: 8.0.21
 -- PHP Version: 7.4.9
 
@@ -175,8 +175,8 @@ CREATE TABLE IF NOT EXISTS `delivery_boy` (
 --
 
 INSERT INTO `delivery_boy` (`id`, `name`, `mobile`, `password`, `status`, `added_on`) VALUES
-(1, 'Kevin Patel', '9825443278', 'kevin', 1, '2021-07-30 01:22:29'),
-(2, 'Deep Shah', '9681234561', 'deep', 1, '2021-07-30 02:01:41'),
+(1, 'Kevin Patel', '9825443278', 'a', 1, '2021-07-30 01:22:29'),
+(2, 'Deep Shah', '9681234561', 'a', 1, '2021-07-30 02:01:41'),
 (3, 'ABHI CHOKSI', '7874376579', 'a', 1, '2021-10-30 02:01:43');
 
 -- --------------------------------------------------------
@@ -312,6 +312,7 @@ CREATE TABLE IF NOT EXISTS `order_master` (
   `payment_id` varchar(100) NOT NULL,
   `order_status` int NOT NULL,
   `added_on` datetime NOT NULL,
+  `delivered_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
@@ -319,11 +320,11 @@ CREATE TABLE IF NOT EXISTS `order_master` (
 -- Dumping data for table `order_master`
 --
 
-INSERT INTO `order_master` (`id`, `user_id`, `name`, `email`, `mobile`, `address`, `total_price`, `final_price`, `coupon_code`, `zipcode`, `delivery_boy_id`, `payment_status`, `payment_type`, `payment_id`, `order_status`, `added_on`) VALUES
-(1, 2, 'ABHI CHOKSI', 'a.p.choksi420@gmail.com', '9825445283', 'Surat', 120, 120, '', 395006, 0, 'success', 'paytm', '20211105111212800110168072503137332', 1, '2021-11-05 09:32:43'),
-(2, 2, 'ABHI CHOKSI', 'a.p.choksi420@gmail.com', '9825445283', 'Surat', 900, 900, '', 395006, 0, 'success', 'paytm', '20211105111212800110168670603134364', 1, '2021-11-05 09:34:18'),
-(3, 1, 'Abhishek Choksi', '19bmiit032@gmail.com', '7874376579', '348, Laxmi Villa, Opp. Rang Avdhut Temple, Dhamrod Lumbha road, Bardoli', 110, 110, '', 394096, 0, 'success', 'wallet', '', 1, '2021-11-05 10:00:10'),
-(4, 1, 'Abhishek Choksi', '19bmiit032@gmail.com', '7874376579', '348, Laxmi Villa, Opp. Rang Avdhut Temple, Dhamrod Lumbha road, Bardoli', 350, 350, '', 394096, 0, 'success', 'wallet', '', 1, '2021-11-05 10:09:13');
+INSERT INTO `order_master` (`id`, `user_id`, `name`, `email`, `mobile`, `address`, `total_price`, `final_price`, `coupon_code`, `zipcode`, `delivery_boy_id`, `payment_status`, `payment_type`, `payment_id`, `order_status`, `added_on`, `delivered_on`) VALUES
+(1, 2, 'ABHI CHOKSI', 'a.p.choksi420@gmail.com', '9825445283', 'Surat', 120, 120, '', 395006, 3, 'success', 'paytm', '20211105111212800110168072503137332', 4, '2021-11-05 09:32:43', '2021-11-06 04:47:39'),
+(2, 2, 'ABHI CHOKSI', 'a.p.choksi420@gmail.com', '9825445283', 'Surat', 900, 900, '', 395006, 2, 'success', 'paytm', '20211105111212800110168670603134364', 4, '2021-11-05 09:34:18', '2021-11-06 04:59:14'),
+(3, 1, 'Abhishek Choksi', '19bmiit032@gmail.com', '7874376579', '348, Laxmi Villa, Opp. Rang Avdhut Temple, Dhamrod Lumbha road, Bardoli', 110, 110, '', 394096, 0, 'success', 'wallet', '', 1, '2021-11-05 10:00:10', '0000-00-00 00:00:00'),
+(4, 1, 'Abhishek Choksi', '19bmiit032@gmail.com', '7874376579', '348, Laxmi Villa, Opp. Rang Avdhut Temple, Dhamrod Lumbha road, Bardoli', 350, 350, '', 394096, 0, 'success', 'wallet', '', 1, '2021-11-05 10:09:13', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
