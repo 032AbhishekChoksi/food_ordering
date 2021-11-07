@@ -1,5 +1,8 @@
 <?php
 include("header.php");
+if(isset($_GET['referral_code']) && $_GET['referral_code']!=''){
+	$_SESSION['FROM_REFERRAL_CODE']=get_safe_value($_GET['referral_code']);
+}
 ?>
 <div class="login-register-area pt-95 pb-100">
     <div class="container">

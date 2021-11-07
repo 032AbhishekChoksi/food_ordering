@@ -1,7 +1,7 @@
 <?php
 include("header.php");
-if(!isset($_SESSION['FOOD_USER_ID'])){
-	redirect(FRONT_SITE_PATH.'shop');
+if (!isset($_SESSION['FOOD_USER_ID'])) {
+    redirect(FRONT_SITE_PATH . 'shop');
 }
 $getUserDetailsByid = getUserDetailsByid();
 ?>
@@ -9,6 +9,11 @@ $getUserDetailsByid = getUserDetailsByid();
     <div class="container">
         <div class="row">
             <div class="ml-auto mr-auto col-lg-9">
+                <div>
+                    <h4>Referral Code: <?php echo $getUserDetailsByid['referral_code'] ?></h4><br />
+                    <h4>Referral Link: <?php echo FRONT_SITE_PATH ?>login_register?referral_code=<?php echo $getUserDetailsByid['referral_code'] ?></h4><br />
+
+                </div>
                 <div class="checkout-wrapper">
                     <div id="faq" class="panel-group">
                         <div class="panel panel-default">
@@ -90,7 +95,7 @@ $getUserDetailsByid = getUserDetailsByid();
                                                 </div>
                                                 <div class="billing-btn">
                                                     <button type="submit" id="password_submit">Save</button>
-                                                </div>                                               
+                                                </div>
                                             </div>
                                             <div id="password_form_msg" style="color: green;margin-top: 4px;"></div>
                                             <input type="hidden" name="type" value="password" />

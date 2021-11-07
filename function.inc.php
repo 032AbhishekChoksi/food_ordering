@@ -88,14 +88,16 @@ function getUserDetailsByid($uid = '')
   $data['name'] = '';
   $data['email'] = '';
   $data['mobile'] = '';
-  
-  if (isset($_SESSION['FOOD_USER_ID']) || $_SESSION['FOOD_USER_ID'] >0) {
+  $data['referral_code'] = '';
+
+  if (isset($_SESSION['FOOD_USER_ID']) || $_SESSION['FOOD_USER_ID'] > 0) {
     $uid = $_SESSION['FOOD_USER_ID'];
   }
   $row = mysqli_fetch_assoc(mysqli_query($con, "select * from user where id='$uid'"));
   $data['name'] = $row['name'];
   $data['email'] = $row['email'];
   $data['mobile'] = $row['mobile'];
+  $data['referral_code'] = $row['referral_code'];
 
   return $data;
 }
@@ -926,13 +928,14 @@ function getWalletAmt($uid)
   return $in - $out;
 }
 
-function getSale($start,$end){
-	global $con;
-	$sql="select sum(final_price) as final_price from order_master where added_on between '$start' and '$end' and order_status=4";
-	$res=mysqli_query($con,$sql);
-	// prx($sql);
-	while($row=mysqli_fetch_assoc($res)){
-		return $row['final_price'].' Rs';
-	}
+function getSale($start, $end)
+{
+  global $con;
+  $sql = "select sum(final_price) as final_price from order_master where added_on between '$start' and '$end' and order_status=4";
+  $res = mysqli_query($con, $sql);
+  // prx($sql);
+  while ($row = mysqli_fetch_assoc($res)) {
+    return $row['final_price'] . ' Rs';
+  }
 }
 ?>

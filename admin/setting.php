@@ -7,8 +7,8 @@ if (isset($_POST['submit'])) {
   $website_close = get_safe_value($_POST['website_close']);
   $website_close_msg = get_safe_value($_POST['website_close_msg']);
   $wallet_amt = get_safe_value($_POST['wallet_amt']);
-
-  mysqli_query($con, "update setting set cart_min_price='$cart_min_price', cart_min_price_msg='$cart_min_price_msg', website_close='$website_close', wallet_amt='$wallet_amt', website_close_msg='$website_close_msg' where id='1'");
+  $referral_amt=get_safe_value($_POST['referral_amt']);
+  mysqli_query($con, "update setting set cart_min_price='$cart_min_price', cart_min_price_msg='$cart_min_price_msg', website_close='$website_close', wallet_amt='$wallet_amt', website_close_msg='$website_close_msg', referral_amt='$referral_amt' where id='1'");
 }
 
 $row = mysqli_fetch_assoc(mysqli_query($con, "select * from setting where id='1'"));
@@ -17,7 +17,7 @@ $cart_min_price_msg = $row['cart_min_price_msg'];
 $website_close = $row['website_close'];
 $website_close_msg = $row['website_close_msg'];
 $wallet_amt = $row['wallet_amt'];
-
+$referral_amt=$row['referral_amt'];
 
 $websiteCloseArr = array('No', 'Yes');
 ?>
@@ -56,6 +56,10 @@ $websiteCloseArr = array('No', 'Yes');
           <div class="form-group">
             <label for="exampleInputEmail3" required>Wallet Amount</label>
             <input type="textbox" class="form-control" placeholder="Wallet Amount" name="wallet_amt" value="<?php echo $wallet_amt ?>">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail3" required>Referral Amt</label>
+            <input type="number" class="form-control" placeholder="Website close msg" name="referral_amt" value="<?php echo $referral_amt ?>">
           </div>
           <button type="submit" class="btn btn-primary mr-2" name="submit">Submit</button>
         </form>

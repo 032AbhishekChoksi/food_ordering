@@ -23,9 +23,16 @@ if ($type == 'register') {
         $new_password = password_hash($password, PASSWORD_BCRYPT);
 
         $rand_str = rand_str();
-        mysqli_query($con, "insert into user (name,email,mobile,password,status,email_verify,rand_str,added_on) values('$name','$email','$mobile','$new_password','0','0','$rand_str','$added_on')");
+        $referral_code=rand_str();
+        if(isset($_SESSION['FROM_REFERRAL_CODE']) && $_SESSION['FROM_REFERRAL_CODE']!=''){
+			$from_referral_code=$_SESSION['FROM_REFERRAL_CODE'];
+		}else{
+			$from_referral_code='';
+		}
+        mysqli_query($con, "insert into user (name,email,mobile,password,status,email_verify,rand_str,referral_code,from_referral_code,added_on) values('$name','$email','$mobile','$new_password','0','0','$rand_str','$referral_code','$from_referral_code','$added_on')");
         $id = mysqli_insert_id($con);
-
+        unset($_SESSION['FROM_REFERRAL_CODE']);
+        
         $getSetting=getSetting();
 		$wallet_amt=$getSetting['wallet_amt'];
 		if($wallet_amt>0){

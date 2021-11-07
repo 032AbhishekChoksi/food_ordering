@@ -6,6 +6,18 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
     $id = get_safe_value($_GET['id']);
     mysqli_query($con, "update user set email_verify=1 where rand_str='$id'");
     $msg = "Email ID Verify";
+    /*
+    $res=mysqli_query($con,"select from_referral_code,email from user where rand_str='$id'");
+	if(mysqli_num_rows($res)>0){
+		$row=mysqli_fetch_assoc($res);
+		$email=$row['email'];
+		$from_referral_code=$row['from_referral_code'];
+		$row=mysqli_fetch_assoc(mysqli_query($con,"select id from user where referral_code='$from_referral_code'"));
+		$uid=$row['id'];
+		$msg1='Referral Amt from '.$email;
+		manageWallet($uid,10,'in',$msg1);
+	}
+    */
 } else {
     redirect(FRONT_SITE_PATH);
 }
@@ -14,7 +26,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
     <div class="container">
         <div class="breadcrumb-content">
             <ul>
-                <li><a href="<?php echo FRONT_SITE_PATH?>shop">Home</a></li>
+                <li><a href="<?php echo FRONT_SITE_PATH ?>shop">Home</a></li>
                 <li class="active"> Email Verify </li>
             </ul>
         </div>
