@@ -14,27 +14,25 @@ if (isset($_GET['type']) && $_GET['type'] !== '' && isset($_GET['id']) && $_GET[
 	}
 }
 
-$sql = "select * from user where email_verify=1 order by id desc";
+$sql = "select order_master.user_id,order_master.name,order_master.email,order_master.mobile from user,order_master,order_status where order_master.order_status=order_status.id and order_master.user_id=user.id and order_status.id='5' and order_master.refund_status='0' group by order_master.name order by order_master.user_id";
 $res = mysqli_query($con, $sql);
 
 ?>
 <div class="card">
 	<div class="card-body">
-		<h1 class="grid_title">User Master</h1>
+		<h1 class="grid_title">Refund Money</h1>
 		<div class="row grid_box">
-
 			<div class="col-12">
 				<div class="table-responsive">
 					<table id="order-listing" class="table">
 						<thead>
 							<tr>
 								<th width="10%">S.No #</th>
-								<th width="17%">Name</th>
-								<th width="17%">Email</th>
-								<th width="13%">Mobile</th>
-								<th width="11%">Wallet</th>
-								<th width="14%">Added On</th>
-								<th width="18%">Actions</th>
+								<th width="25%">Name</th>
+								<th width="15%">Email</th>
+								<th width="15%">Mobile</th>
+								<th width="15%">Wallet</th>
+								<th width="20%">Actions</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -47,25 +45,9 @@ $res = mysqli_query($con, $sql);
 										<td><?php echo $row['name'] ?></td>
 										<td><?php echo $row['email'] ?></td>
 										<td><?php echo $row['mobile'] ?></td>
-										<td><?php echo getWalletAmt($row['id']) ?></td>
+										<td><?php echo getWalletAmt($row['user_id']) ?></td>
 										<td>
-											<?php
-											$dateStr = strtotime($row['added_on']);
-											echo date('d-m-Y', $dateStr)
-											?>
-										</td>
-										<td>
-											<?php
-											if ($row['status'] == 1) {
-											?>
-												<a href="?id=<?php echo $row['id'] ?>&type=deactive"><label class="badge badge-danger hand_cursor">Active</label></a>
-											<?php
-											} else {
-											?>
-												<a href="?id=<?php echo $row['id'] ?>&type=active"><label class="badge badge-info hand_cursor">Deactive</label></a>
-											<?php
-											}
-											?>
+											<a href="add_money.php?id=<?php echo $row['user_id'] ?>"><label class="badge badge-success hand_cursor">Refund Money</label></a>
 										</td>
 
 									</tr>
@@ -74,7 +56,7 @@ $res = mysqli_query($con, $sql);
 								}
 							} else { ?>
 								<tr>
-									<td colspan="5">No data found</td>
+									<td colspan="5">No Refund Available</td>
 								</tr>
 							<?php } ?>
 						</tbody>
@@ -84,5 +66,6 @@ $res = mysqli_query($con, $sql);
 		</div>
 	</div>
 </div>
+
 
 <?php include('footer.php'); ?>

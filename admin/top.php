@@ -32,8 +32,8 @@ if ($cur_path == '' || $cur_path == 'index.php') {
   $page_title = 'Order Master';
 } elseif ($cur_path == 'setting.php') {
   $page_title = 'Setting';
-} elseif ($cur_path == 'add_money.php') {
-  $page_title = 'Manage Money';
+} elseif ($cur_path == 'refund_money.php') {
+  $page_title = 'Refund Money';
 }
 ?>
 <!DOCTYPE html>
@@ -114,6 +114,12 @@ if ($cur_path == '' || $cur_path == 'index.php') {
             <a class="nav-link" href="order.php">
               <i class="mdi mdi-cart menu-icon"></i>
               <span class="menu-title">Order</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="refund_money.php">
+              <i class="mdi mdi-file-powerpoint-box menu-icon"></i>
+              <span class="menu-title">Refund Money</span>
             </a>
           </li>
           <li class="nav-item">

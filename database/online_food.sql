@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 07, 2021 at 04:19 AM
+-- Generation Time: Nov 07, 2021 at 09:32 AM
 -- Server version: 8.0.21
 -- PHP Version: 7.4.9
 
@@ -225,7 +225,7 @@ CREATE TABLE IF NOT EXISTS `dish_cart` (
   `qty` int NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -319,6 +319,7 @@ CREATE TABLE IF NOT EXISTS `order_master` (
   `cancel_at` datetime NOT NULL,
   `added_on` datetime NOT NULL,
   `delivered_on` datetime NOT NULL,
+  `refund_status` int NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
@@ -326,15 +327,15 @@ CREATE TABLE IF NOT EXISTS `order_master` (
 -- Dumping data for table `order_master`
 --
 
-INSERT INTO `order_master` (`id`, `user_id`, `name`, `email`, `mobile`, `address`, `total_price`, `final_price`, `coupon_code`, `zipcode`, `delivery_boy_id`, `payment_status`, `payment_type`, `payment_id`, `order_status`, `cancel_by`, `cancel_at`, `added_on`, `delivered_on`) VALUES
-(1, 2, 'ABHI CHOKSI', 'a.p.choksi420@gmail.com', '9825445283', 'Surat', 120, 120, '', 395006, 3, 'success', 'paytm', '20211105111212800110168072503137332', 4, 'user', '0000-00-00 00:00:00', '2021-11-05 09:32:43', '2021-11-06 04:47:39'),
-(2, 2, 'ABHI CHOKSI', 'a.p.choksi420@gmail.com', '9825445283', 'Surat', 900, 900, '', 395006, 2, 'success', 'paytm', '20211105111212800110168670603134364', 4, 'user', '0000-00-00 00:00:00', '2021-11-05 09:34:18', '2021-11-06 04:59:14'),
-(3, 1, 'Abhishek Choksi', '19bmiit032@gmail.com', '7874376579', '348, Laxmi Villa, Opp. Rang Avdhut Temple, Dhamrod Lumbha road, Bardoli', 110, 110, '', 394096, 2, 'success', 'wallet', '', 4, 'user', '0000-00-00 00:00:00', '2021-11-05 10:00:10', '0000-00-00 00:00:00'),
-(4, 1, 'Abhishek Choksi', '19bmiit032@gmail.com', '7874376579', '348, Laxmi Villa, Opp. Rang Avdhut Temple, Dhamrod Lumbha road, Bardoli', 350, 350, '', 394096, 2, 'success', 'wallet', '', 4, 'user', '0000-00-00 00:00:00', '2021-11-05 10:09:13', '0000-00-00 00:00:00'),
-(5, 1, 'Abhishek Choksi', '19bmiit032@gmail.com', '7874376579', '348 Laxmi Villa, Opp. Rang Avdhut Temple, Dhamdod Lumbha Road, Bardoli', 80, 80, '', 395006, 0, 'success', 'paytm', '20211106111212800110168933903142997', 5, 'admin', '2021-11-07 01:43:09', '2021-11-06 06:44:53', '0000-00-00 00:00:00'),
-(6, 1, 'Abhishek Choksi', '19bmiit032@gmail.com', '7874376579', '348 Laxmi Villa, Opp. Rang Avdhut Temple, Dhamdod Lumbha Road, Bardoli', 550, 550, '', 394096, 0, 'success', 'wallet', '', 1, 'user', '0000-00-00 00:00:00', '2021-11-06 06:48:08', '0000-00-00 00:00:00'),
-(7, 5, 'AMTechCorp', 'abhishekmeet3215@gmail.com', '9996668877', 'AMTechCorp Buisness Mall,Bardoli', 220, 220, '', 333999, 3, 'success', 'paytm', '20211107111212800110168672803139035', 4, 'user', '0000-00-00 00:00:00', '2021-11-07 04:09:07', '0000-00-00 00:00:00'),
-(8, 5, 'AMTechCorp', 'abhishekmeet3215@gmail.com', '9996668877', 'AMTechCorp Buisness Mall,Bardoli', 40, 40, '', 333999, 0, 'success', 'wallet', '', 1, 'user', '0000-00-00 00:00:00', '2021-11-07 04:16:07', '0000-00-00 00:00:00');
+INSERT INTO `order_master` (`id`, `user_id`, `name`, `email`, `mobile`, `address`, `total_price`, `final_price`, `coupon_code`, `zipcode`, `delivery_boy_id`, `payment_status`, `payment_type`, `payment_id`, `order_status`, `cancel_by`, `cancel_at`, `added_on`, `delivered_on`, `refund_status`) VALUES
+(1, 2, 'ABHI CHOKSI', 'a.p.choksi420@gmail.com', '9825445283', 'Surat', 120, 120, '', 395006, 3, 'success', 'paytm', '20211105111212800110168072503137332', 5, 'user', '0000-00-00 00:00:00', '2021-11-05 09:32:43', '2021-11-06 04:47:39', 1),
+(2, 2, 'ABHI CHOKSI', 'a.p.choksi420@gmail.com', '9825445283', 'Surat', 900, 900, '', 395006, 2, 'success', 'paytm', '20211105111212800110168670603134364', 4, 'user', '0000-00-00 00:00:00', '2021-11-05 09:34:18', '2021-11-06 04:59:14', 0),
+(3, 1, 'Abhishek Choksi', '19bmiit032@gmail.com', '7874376579', '348, Laxmi Villa, Opp. Rang Avdhut Temple, Dhamrod Lumbha road, Bardoli', 110, 110, '', 394096, 2, 'success', 'wallet', '', 4, 'user', '0000-00-00 00:00:00', '2021-11-05 10:00:10', '0000-00-00 00:00:00', 0),
+(4, 1, 'Abhishek Choksi', '19bmiit032@gmail.com', '7874376579', '348, Laxmi Villa, Opp. Rang Avdhut Temple, Dhamrod Lumbha road, Bardoli', 350, 350, '', 394096, 2, 'success', 'wallet', '', 5, 'user', '0000-00-00 00:00:00', '2021-11-05 10:09:13', '0000-00-00 00:00:00', 1),
+(5, 1, 'Abhishek Choksi', '19bmiit032@gmail.com', '7874376579', '348 Laxmi Villa, Opp. Rang Avdhut Temple, Dhamdod Lumbha Road, Bardoli', 80, 80, '', 395006, 0, 'success', 'paytm', '20211106111212800110168933903142997', 5, 'admin', '2021-11-07 01:43:09', '2021-11-06 06:44:53', '0000-00-00 00:00:00', 1),
+(6, 1, 'Abhishek Choksi', '19bmiit032@gmail.com', '7874376579', '348 Laxmi Villa, Opp. Rang Avdhut Temple, Dhamdod Lumbha Road, Bardoli', 550, 550, '', 394096, 0, 'success', 'wallet', '', 1, 'user', '0000-00-00 00:00:00', '2021-11-06 06:48:08', '0000-00-00 00:00:00', 0),
+(7, 5, 'AMTechCorp', 'abhishekmeet3215@gmail.com', '9996668877', 'AMTechCorp Buisness Mall,Bardoli', 220, 220, '', 333999, 3, 'success', 'paytm', '20211107111212800110168672803139035', 4, 'user', '0000-00-00 00:00:00', '2021-11-07 04:09:07', '0000-00-00 00:00:00', 0),
+(8, 5, 'AMTechCorp', 'abhishekmeet3215@gmail.com', '9996668877', 'AMTechCorp Buisness Mall,Bardoli', 40, 40, '', 333999, 2, 'success', 'wallet', '', 4, 'user', '0000-00-00 00:00:00', '2021-11-07 04:16:07', '2021-11-07 09:25:00', 0);
 
 -- --------------------------------------------------------
 
@@ -449,7 +450,7 @@ CREATE TABLE IF NOT EXISTS `wallet` (
   `payment_id` varchar(100) NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `wallet`
@@ -473,7 +474,11 @@ INSERT INTO `wallet` (`id`, `user_id`, `amt`, `msg`, `type`, `payment_id`, `adde
 (15, 5, 50, 'Register', 'in', '', '2021-11-07 03:42:18'),
 (16, 6, 50, 'Register', 'in', '', '2021-11-07 03:43:07'),
 (18, 1, 10, 'Referral Amt from abhishekmeet3215@gmail.com', 'in', '', '2021-11-07 04:14:09'),
-(19, 5, 40, 'Order Id-8', 'out', '', '2021-11-07 04:16:07');
+(19, 5, 40, 'Order Id-8', 'out', '', '2021-11-07 04:16:07'),
+(20, 1, 10, 'Refund', 'in', '', '2021-11-07 06:45:09'),
+(21, 1, 10, 'Added', 'in', '20211107111212800110168227603177994', '2021-11-07 06:47:18'),
+(22, 1, 430, 'Refund', 'in', '', '2021-11-07 09:02:16'),
+(23, 2, 120, 'Refund', 'in', '', '2021-11-07 09:15:32');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
