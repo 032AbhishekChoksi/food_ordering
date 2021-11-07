@@ -6471,3 +6471,23 @@ h5.panel-title span {
 	margin-top: 10px;
 	color:red;
 }
+
+.cancel_btn{
+	background-color: red;
+    padding: 5px 10px 5px 10px;
+    color: #fff;
+}
+
+.search_box_main{
+	width:50%;
+}
+.search_box{
+	width:150px;
+    height: 40px;
+}
+
+.seahc_box_btn{
+	background-color:#e02c2b;
+	color:#fff;
+	border:0px;
+}

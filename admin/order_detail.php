@@ -7,7 +7,15 @@ if (isset($_GET['id']) && $_GET['id'] > 0) {
 
 	if (isset($_GET['order_status'])) {
 		$order_status = get_safe_value($_GET['order_status']);
-		mysqli_query($con, "update order_master set order_status='$order_status' where id='$id'");
+
+		if ($order_status == 5) {
+			$cancel_at = date('Y-m-d h:i:s');
+			$sql = "update order_master set order_status='$order_status',cancel_by='admin',cancel_at='$cancel_at' where id='$id'";
+		} else {
+			$sql = "update order_master set order_status='$order_status' where id='$id'";
+		}
+
+		mysqli_query($con, $sql);
 		redirect(FRONT_SITE_PATH . 'admin/order_detail.php?id=' . $id);
 	}
 
@@ -95,19 +103,19 @@ if (isset($_GET['id']) && $_GET['id'] > 0) {
 					</div>
 				</div>
 				<div class="container-fluid mt-5 w-100">
-					  <?php
-						if($orderRow['coupon_code']!=''){
-						?>
-						  <h6 class="text-right mb-5">Total : <?php echo $pp?></h6>
-						  <h5 class="text-right mb-5">Coupon Code : <?php echo $orderRow['coupon_code']?></h5>
-						  <h4 class="text-right mb-5">Final Total : <?php echo $orderRow['final_price']?></h4>
-						<?php
-						} else{
-						?>
-						 <h4 class="text-right mb-5">Total : <?php echo $pp?></h4>
-						<?php } ?>
-                      <hr>
-                    </div>
+					<?php
+					if ($orderRow['coupon_code'] != '') {
+					?>
+						<h6 class="text-right mb-5">Total : <?php echo $pp ?></h6>
+						<h5 class="text-right mb-5">Coupon Code : <?php echo $orderRow['coupon_code'] ?></h5>
+						<h4 class="text-right mb-5">Final Total : <?php echo $orderRow['final_price'] ?></h4>
+					<?php
+					} else {
+					?>
+						<h4 class="text-right mb-5">Total : <?php echo $pp ?></h4>
+					<?php } ?>
+					<hr>
+				</div>
 				<div class="container-fluid w-100">
 					<a href="../download_invoice.php?id=<?php echo $id ?>" class="btn btn-primary float-right mt-4 ml-2"><i class="mdi mdi-printer mr-1"></i>PDF</a>
 				</div>

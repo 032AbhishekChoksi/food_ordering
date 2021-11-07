@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 06, 2021 at 06:19 AM
+-- Generation Time: Nov 07, 2021 at 03:04 AM
 -- Server version: 8.0.21
 -- PHP Version: 7.4.9
 
@@ -225,7 +225,7 @@ CREATE TABLE IF NOT EXISTS `dish_cart` (
   `qty` int NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -276,7 +276,7 @@ CREATE TABLE IF NOT EXISTS `order_detail` (
   `price` float NOT NULL,
   `qty` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `order_detail`
@@ -286,7 +286,9 @@ INSERT INTO `order_detail` (`id`, `order_id`, `dish_details_id`, `price`, `qty`)
 (1, 1, 6, 40, 3),
 (2, 2, 1, 300, 3),
 (3, 3, 7, 110, 1),
-(4, 4, 10, 350, 1);
+(4, 4, 10, 350, 1),
+(5, 5, 6, 40, 2),
+(6, 6, 7, 110, 5);
 
 -- --------------------------------------------------------
 
@@ -316,7 +318,7 @@ CREATE TABLE IF NOT EXISTS `order_master` (
   `added_on` datetime NOT NULL,
   `delivered_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `order_master`
@@ -326,7 +328,9 @@ INSERT INTO `order_master` (`id`, `user_id`, `name`, `email`, `mobile`, `address
 (1, 2, 'ABHI CHOKSI', 'a.p.choksi420@gmail.com', '9825445283', 'Surat', 120, 120, '', 395006, 3, 'success', 'paytm', '20211105111212800110168072503137332', 4, 'user', '0000-00-00 00:00:00', '2021-11-05 09:32:43', '2021-11-06 04:47:39'),
 (2, 2, 'ABHI CHOKSI', 'a.p.choksi420@gmail.com', '9825445283', 'Surat', 900, 900, '', 395006, 2, 'success', 'paytm', '20211105111212800110168670603134364', 4, 'user', '0000-00-00 00:00:00', '2021-11-05 09:34:18', '2021-11-06 04:59:14'),
 (3, 1, 'Abhishek Choksi', '19bmiit032@gmail.com', '7874376579', '348, Laxmi Villa, Opp. Rang Avdhut Temple, Dhamrod Lumbha road, Bardoli', 110, 110, '', 394096, 2, 'success', 'wallet', '', 4, 'user', '0000-00-00 00:00:00', '2021-11-05 10:00:10', '0000-00-00 00:00:00'),
-(4, 1, 'Abhishek Choksi', '19bmiit032@gmail.com', '7874376579', '348, Laxmi Villa, Opp. Rang Avdhut Temple, Dhamrod Lumbha road, Bardoli', 350, 350, '', 394096, 2, 'success', 'wallet', '', 4, 'user', '0000-00-00 00:00:00', '2021-11-05 10:09:13', '0000-00-00 00:00:00');
+(4, 1, 'Abhishek Choksi', '19bmiit032@gmail.com', '7874376579', '348, Laxmi Villa, Opp. Rang Avdhut Temple, Dhamrod Lumbha road, Bardoli', 350, 350, '', 394096, 2, 'success', 'wallet', '', 4, 'user', '0000-00-00 00:00:00', '2021-11-05 10:09:13', '0000-00-00 00:00:00'),
+(5, 1, 'Abhishek Choksi', '19bmiit032@gmail.com', '7874376579', '348 Laxmi Villa, Opp. Rang Avdhut Temple, Dhamdod Lumbha Road, Bardoli', 80, 80, '', 395006, 0, 'success', 'paytm', '20211106111212800110168933903142997', 5, 'admin', '2021-11-07 01:43:09', '2021-11-06 06:44:53', '0000-00-00 00:00:00'),
+(6, 1, 'Abhishek Choksi', '19bmiit032@gmail.com', '7874376579', '348 Laxmi Villa, Opp. Rang Avdhut Temple, Dhamdod Lumbha Road, Bardoli', 550, 550, '', 394096, 0, 'success', 'wallet', '', 1, 'user', '0000-00-00 00:00:00', '2021-11-06 06:48:08', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -436,7 +440,7 @@ CREATE TABLE IF NOT EXISTS `wallet` (
   `payment_id` varchar(100) NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `wallet`
@@ -451,7 +455,10 @@ INSERT INTO `wallet` (`id`, `user_id`, `amt`, `msg`, `type`, `payment_id`, `adde
 (6, 1, 100, 'Added', 'in', '20211105111212800110168993903142139', '2021-11-05 09:31:46'),
 (7, 1, 110, 'Order Id-3', 'out', '', '2021-11-05 10:00:10'),
 (8, 1, 300, 'Added', 'in', '20211105111212800110168196103160171', '2021-11-05 10:08:42'),
-(9, 1, 350, 'Order Id-4', 'out', '', '2021-11-05 10:09:13');
+(9, 1, 350, 'Order Id-4', 'out', '', '2021-11-05 10:09:13'),
+(10, 1, 530, 'Added', 'in', '20211106111212800110168843203129448', '2021-11-06 06:46:53'),
+(11, 1, 550, 'Order Id-6', 'out', '', '2021-11-06 06:48:08'),
+(12, 1, 80, 'Refund', 'in', '', '2021-11-07 02:11:14');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

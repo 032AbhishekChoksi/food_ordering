@@ -3,6 +3,7 @@ include("header.php");
 $cat_dish = '';
 $cat_dish_arr = array();
 $dish_type = '';
+$search_str = '';
 if (isset($_GET['cat_dish'])) {
     $cat_dish = get_safe_value($_GET['cat_dish']);
     $cat_dish_arr = array_filter(explode(':', $cat_dish));
@@ -11,6 +12,10 @@ if (isset($_GET['cat_dish'])) {
 
 if (isset($_GET['dish_type'])) {
     $dish_type = get_safe_value($_GET['dish_type']);
+}
+
+if (isset($_GET['search_str'])) {
+    $search_str = get_safe_value($_GET['search_str']);
 }
 
 $arrType = array("veg", "non-veg", "both");
@@ -25,12 +30,12 @@ $arrType = array("veg", "non-veg", "both");
     </div>
 </div>
 <?php
-		if($website_close==1){
-			echo '<div style="text-align: center;margin-top: 50px;"><h3>';
-			echo $website_close_msg;
-			echo '</h3></div>';
-		}
-		?>
+if ($website_close == 1) {
+    echo '<div style="text-align: center;margin-top: 50px;"><h3>';
+    echo $website_close_msg;
+    echo '</h3></div>';
+}
+?>
 <div class="shop-page-area pt-25 pb-25">
     <div class="container">
         <div class="row flex-row-reverse">
@@ -47,6 +52,8 @@ $arrType = array("veg", "non-veg", "both");
                             ?>
                                 <?php echo strtoupper($list) ?> <input type="radio" name="dish_type" <?php echo  $type_radio_selected ?> value="veg" style='width: 16px;height: 12px;margin-right: 5px;margin-left: 5px;' onclick="setFoodType('<?php echo $list ?>')" />&nbsp;&nbsp;
                             <?php } ?>
+                            <input class="search_box" type="textbox" id="search" value="<?php echo $search_str ?>" />
+                            <input class="search_box seahc_box_btn" type="button" class="submit btn-style" value="Search" onclick="setSearch()" />
                         </div>
                     </div>
                 </div>
@@ -59,6 +66,11 @@ $arrType = array("veg", "non-veg", "both");
                 if ($dish_type != '' && $dish_type != 'both') {
                     $product_sql .= " and dish.type ='$dish_type'";
                 }
+
+                if($search_str!=''){		
+                    $product_sql.=" and (dish like '%$search_str%' or dish_detail like '%$search_str%') ";
+                }
+
                 $product_sql .= " order by dish.dish desc";
                 $product_res = mysqli_query($con, $product_sql);
                 $product_count = mysqli_num_rows($product_res);
@@ -86,7 +98,8 @@ $arrType = array("veg", "non-veg", "both");
                                                         echo "<img src='" . FRONT_SITE_PATH . "assets/img/icon-img/non-veg.png' style='height: 30px;'/>";
                                                     }
                                                     ?>
-                                                    <a href="javascript:void(0)"><?php echo $product_row['dish']; getRatingByDishId($product_row['id']);?></a>
+                                                    <a href="javascript:void(0)"><?php echo $product_row['dish'];
+                                                                                    getRatingByDishId($product_row['id']); ?></a>
                                                 </h4>
                                                 <?php
                                                 $dish_attr_res = mysqli_query($con, "select * from dish_details where status='1' and dish_id='" . $product_row['id'] . "' order by price asc");
@@ -96,18 +109,18 @@ $arrType = array("veg", "non-veg", "both");
                                                     while ($dish_attr_row = mysqli_fetch_assoc($dish_attr_res)) {
                                                         if ($website_close == 0) {
                                                             echo "<input type='radio' style='width: 16px;height: 12px;margin-right: 5px;margin-left: 5px;' name='radio_" . $product_row['id'] . "' id='radio_" . $product_row['id'] . "' value='" . $dish_attr_row['id'] . "'/>";
-                                                        
-                                                        echo $dish_attr_row['attribute'];
-                                                        echo "&nbsp;";
-                                                        echo "&nbsp;";
-                                                        echo "<span>(₹" . $dish_attr_row['price'] . ")</span>";
-                                                        $added_msg = "";
-                                                        if (array_key_exists($dish_attr_row['id'], $cartArr)) {
-                                                            $added_qty = getUserFullCart($dish_attr_row['id']);
-                                                            $added_msg = "(Added - $added_qty)";
+
+                                                            echo $dish_attr_row['attribute'];
+                                                            echo "&nbsp;";
+                                                            echo "&nbsp;";
+                                                            echo "<span>(₹" . $dish_attr_row['price'] . ")</span>";
+                                                            $added_msg = "";
+                                                            if (array_key_exists($dish_attr_row['id'], $cartArr)) {
+                                                                $added_qty = getUserFullCart($dish_attr_row['id']);
+                                                                $added_msg = "(Added - $added_qty)";
+                                                            }
+                                                            echo "<span style='font-size: 12px;color:#e02c2b !important;' id='shop_added_msg_" . $dish_attr_row['id'] . "'>" . $added_msg . "</span>";
                                                         }
-                                                        echo "<span style='font-size: 12px;color:#e02c2b !important;' id='shop_added_msg_" . $dish_attr_row['id'] . "'>" . $added_msg . "</span>";
-                                                    }
                                                     }
                                                     ?>
                                                 </div>
@@ -179,6 +192,7 @@ $arrType = array("veg", "non-veg", "both");
 <form method="get" id="frmCatDish">
     <input type="hidden" name="cat_dish" id="cat_dish" value='<?php echo  $cat_dish; ?>' />
     <input type="hidden" name="dish_type" id="dish_type" value='<?php echo  $dish_type; ?>' />
+    <input type="hidden" name="search_str" id="search_str" value='<?php echo $search_str ?>' />
 </form>
 <script>
     function set_checkbox(id) {
@@ -198,6 +212,11 @@ $arrType = array("veg", "non-veg", "both");
         jQuery('#dish_type').val(dish_type);
         jQuery('#frmCatDish')[0].submit();
 
+    }
+
+    function setSearch() {
+        jQuery('#search_str').val(jQuery('#search').val());
+        jQuery('#frmCatDish')[0].submit();
     }
 </script>
 <?php

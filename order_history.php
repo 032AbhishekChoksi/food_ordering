@@ -4,6 +4,13 @@ if (!isset($_SESSION['FOOD_USER_ID'])) {
 	redirect(FRONT_SITE_PATH . 'shop');
 }
 $uid = $_SESSION['FOOD_USER_ID'];
+
+if (isset($_GET['cancel_id'])) {
+	$cancel_id = get_safe_value($_GET['cancel_id']);
+	$cancel_at = date('Y-m-d h:i:s');
+	mysqli_query($con, "update order_master set order_status='5',cancel_by='user',cancel_at='$cancel_at' where id='$cancel_id' and order_status='1' and user_id='$uid'");
+}
+
 $sql = "select order_master.*,order_status.order_status as order_status_str from order_master,order_status where order_master.order_status=order_status.id and order_master.user_id='$uid' order by order_master.id desc";
 
 $res = mysqli_query($con, $sql);
@@ -22,9 +29,9 @@ $res = mysqli_query($con, $sql);
 								<tr>
 									<th>Order No</th>
 									<th>Price</th>
-									<th>Coupon Code</th>
+									<th>Coupon</th>
 									<th>Address</th>
-									<th>zip code</th>
+									<th>Zipcode</th>
 									<th>Order Status</th>
 									<th>Payment Status</th>
 								</tr>
@@ -38,7 +45,7 @@ $res = mysqli_query($con, $sql);
 											<td>
 												<div class="div_order_id">
 													<a href="<?php echo FRONT_SITE_PATH ?>order_detail.php?id=<?php echo $row['id'] ?>"><?php echo $row['id'] ?></a>
-												</div><br/>
+												</div><br />
 												<a href="<?php echo FRONT_SITE_PATH ?>download_invoice?id=<?php echo $row['id'] ?>"><img src='<?php echo FRONT_SITE_PATH ?>assets/img/icon-img/pdf.png' width="20px" title="Download Invoice" /></a>
 											</td style="font-size:14px;">
 											<td><?php echo $row['total_price'] ?> Rs
@@ -54,7 +61,16 @@ $res = mysqli_query($con, $sql);
 											</td>
 											<td><?php echo $row['address'] ?></td>
 											<td><?php echo $row['zipcode'] ?></td>
-											<td><?php echo $row['order_status_str'] ?></td>
+											<td>
+												<?php
+												echo $row['order_status_str'];
+
+												if ($row['order_status'] == 1) {
+													echo "<br/>";
+													echo "<div style='margin-top:10px;'><a href='?cancel_id=" . $row['id'] . "' class='cancel_btn'>Cancel</a></div>";
+												}
+												?>
+											</td>
 											<td>
 												<div class="payment_status payment_status_<?php echo $row['payment_status'] ?>"><?php echo ucfirst($row['payment_status']) ?></div>
 											</td>

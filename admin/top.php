@@ -4,47 +4,46 @@ include('../database.inc.php');
 include('../function.inc.php');
 include('../constant.inc.php');
 
-$curStr=$_SERVER['REQUEST_URI'];
-$curArr=explode('/',$curStr);
-$cur_path=$curArr[count($curArr)-1];
+$curStr = $_SERVER['REQUEST_URI'];
+$curArr = explode('/', $curStr);
+$cur_path = $curArr[count($curArr) - 1];
 
-if(!isset($_SESSION['IS_LOGIN'])){
-	redirect('login.php');
+if (!isset($_SESSION['IS_LOGIN'])) {
+  redirect('login.php');
 }
-$page_title='';
-if($cur_path=='' || $cur_path=='index.php'){
-	$page_title='Dashboard';
-}elseif($cur_path=='category.php' || $cur_path=='manage_category.php'){
-	$page_title='Manage Category';
-}elseif($cur_path=='user.php' || $cur_path=='manage_user.php'){
-	$page_title='Manage User';
-}elseif($cur_path=='delivery_boy.php' || $cur_path=='manage_delivery_boy.php'){
-	$page_title='Manage Delivery Boy';
-}elseif($cur_path=='coupon_code.php' || $cur_path=='manage_coupon_code.php'){
-	$page_title='Manage Coupon Code';
-}elseif($cur_path=='dish.php' || $cur_path=='manage_dish.php'){
-	$page_title='Manage Dish';
-}elseif($cur_path=='banner.php' || $cur_path=='manage_banner.php'){
-	$page_title='Manage Banner';
+$page_title = '';
+if ($cur_path == '' || $cur_path == 'index.php') {
+  $page_title = 'Dashboard';
+} elseif ($cur_path == 'category.php' || $cur_path == 'manage_category.php') {
+  $page_title = 'Manage Category';
+} elseif ($cur_path == 'user.php' || $cur_path == 'manage_user.php') {
+  $page_title = 'Manage User';
+} elseif ($cur_path == 'delivery_boy.php' || $cur_path == 'manage_delivery_boy.php') {
+  $page_title = 'Manage Delivery Boy';
+} elseif ($cur_path == 'coupon_code.php' || $cur_path == 'manage_coupon_code.php') {
+  $page_title = 'Manage Coupon Code';
+} elseif ($cur_path == 'dish.php' || $cur_path == 'manage_dish.php') {
+  $page_title = 'Manage Dish';
+} elseif ($cur_path == 'banner.php' || $cur_path == 'manage_banner.php') {
+  $page_title = 'Manage Banner';
+} elseif ($cur_path == 'contact_us.php') {
+  $page_title = 'Contact Us';
+} elseif ($cur_path == 'order.php' || $cur_path == 'order_detail.php') {
+  $page_title = 'Order Master';
+} elseif ($cur_path == 'setting.php') {
+  $page_title = 'Setting';
+} elseif ($cur_path == 'add_money.php') {
+  $page_title = 'Manage Money';
 }
-elseif($cur_path=='contact_us.php'){
-	$page_title='Contact Us';
-}
-elseif($cur_path=='order.php' || $cur_path=='order_detail.php'){
-	$page_title='Order Master';
-}
-elseif($cur_path=='setting.php'){
-	$page_title='Setting';
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title><?php echo $page_title?></title>
+  <title><?php echo $page_title ?></title>
   <!-- plugins:css -->
   <!-- https://pictogrammers.github.io/@mdi/font/1.0.62/ -->
   <link rel="stylesheet" href="assets/css/materialdesignicons.min.css">
@@ -57,6 +56,7 @@ elseif($cur_path=='setting.php'){
   <!-- inject:css -->
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
+
 <body class="sidebar-light">
   <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
@@ -68,14 +68,14 @@ elseif($cur_path=='setting.php'){
               <span class="mdi mdi-menu"></span>
             </button>
           </li>
-          
+
         </ul>
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-          <a class="navbar-brand brand-logo" href="index.php"><img src="http://127.0.0.1/food_ordering/assets/img/logo/logo.png" alt="logo" style="height: 35px;width: 118px;"/></a>
-          <a class="navbar-brand brand-logo-mini" href="index.php"><img src="http://127.0.0.1/food_ordering/assets/img/logo/logo.png" alt="logo" style="height: 35px;width: 118px;"/></a>
+          <a class="navbar-brand brand-logo" href="index.php"><img src="http://127.0.0.1/food_ordering/assets/img/logo/logo.png" alt="logo" style="height: 35px;width: 118px;" /></a>
+          <a class="navbar-brand brand-logo-mini" href="index.php"><img src="http://127.0.0.1/food_ordering/assets/img/logo/logo.png" alt="logo" style="height: 35px;width: 118px;" /></a>
         </div>
         <ul class="navbar-nav navbar-nav-right">
-          
+
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
               <span class="nav-profile-name"><?php echo $_SESSION['ADMIN_USER'] ?></span>
@@ -88,7 +88,7 @@ elseif($cur_path=='setting.php'){
               </a>
             </div>
           </li>
-          
+
           <li class="nav-item nav-toggler-item-right d-lg-none">
             <button class="navbar-toggler align-self-center" type="button" data-toggle="offcanvas">
               <span class="mdi mdi-menu"></span>
@@ -118,7 +118,7 @@ elseif($cur_path=='setting.php'){
           </li>
           <li class="nav-item">
             <a class="nav-link" href="category.php">
-            <i class="mdi mdi-view-headline menu-icon"></i>  
+              <i class="mdi mdi-view-headline menu-icon"></i>
               <span class="menu-title">Category</span>
             </a>
           </li>

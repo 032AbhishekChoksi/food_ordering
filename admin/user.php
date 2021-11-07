@@ -29,12 +29,13 @@ $res=mysqli_query($con,$sql);
                     <table id="order-listing" class="table">
                       <thead>
                         <tr>
-                            <th width="10%">S.No #</th>
-                            <th width="20%">Name</th>
-                            <th width="20%">Email</th>
-                            <th width="20%">Mobile</th>
-							<th width="15%">Added On</th>
-							<th width="15%">Actions</th>
+						<th width="10%">S.No #</th>
+                            <th width="12%">Name</th>
+                            <th width="12%">Email</th>
+							<th width="12%">Mobile</th>
+							<th width="10%">Wallet</th>
+                            <th width="14%">Added On</th>
+							<th width="28%">Actions</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -47,6 +48,7 @@ $res=mysqli_query($con,$sql);
                             <td><?php echo $row['name']?></td>
 							<td><?php echo $row['email']?></td>
 							<td><?php echo $row['mobile']?></td>
+							<td><?php echo getWalletAmt($row['id'])?></td>
 							<td>
 								<?php
 								 $dateStr=strtotime($row['added_on']);
@@ -65,6 +67,7 @@ $res=mysqli_query($con,$sql);
 								<?php
 								}								
 								?>
+								<a href="add_money.php?id=<?php echo $row['id']?>"><label class="badge badge-success hand_cursor">Add Money</label></a>
 							</td>
                            
                         </tr>
