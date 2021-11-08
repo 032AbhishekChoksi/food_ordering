@@ -112,7 +112,7 @@ jQuery('#frmPassword').on('submit', function (e) {
                 swal("Success Message", data.msg, "success");
             }
             if (data.status == 'error') {
-                swal("Error Message", data.msg, "error");
+                swal("Warning Message", data.msg, "warning");
                 // jQuery('#password_form_msg').html(data.msg);
             }
         }
@@ -154,7 +154,7 @@ function add_to_cart(id, type) {
             }
         });
     } else {
-        swal("Error", "Please select qty and dish item", "error");
+        swal("Info", "Please select qty and dish item", "info");
     }
     // alert(attr);
 }
@@ -205,7 +205,7 @@ function apply_coupon(){
 					jQuery('.final_price').html(data.coupon_code_apply+' Rs');
 				}
 				if(data.status=='error'){
-					swal("Error Message", data.msg, "error");
+					swal("Warning Message", data.msg, "warning");
 				}
 			}
 		})

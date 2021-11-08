@@ -7,14 +7,18 @@ if (!isset($_SESSION['DELIVERY_BOY_USER_LOGIN'])) {
    redirect('login.php');
 }
 
+if (isset($_GET['set_payment'])) {
+   $set_payment = get_safe_value($_GET['set_payment']);
+   mysqli_query($con, "update order_master set payment_status='success' where id='$set_payment' and delivery_boy_id='" . $_SESSION['DELIVERY_BOY_ID'] . "'");
+}
+
 if (isset($_GET['set_order_id'])) {
-   // prx($_GET);
    $set_order_id = get_safe_value($_GET['set_order_id']);
    $delivered_on = date('Y-m-d h:i:s');
    mysqli_query($con, "update order_master set order_status=4,delivered_on='$delivered_on' where id='$set_order_id' and delivery_boy_id='" . $_SESSION['DELIVERY_BOY_ID'] . "'");
 }
 
-$sql = "select order_master.*,order_status.order_status as order_status_str from order_master,order_status where order_master.order_status=order_status.id and order_master.delivery_boy_id='" . $_SESSION['DELIVERY_BOY_ID'] . "' and order_master.order_status!=4 order by order_master.id desc";
+$sql = "select order_master.*,order_status.order_status as order_status_str from order_master,order_status where order_master.order_status=order_status.id and order_master.delivery_boy_id='" . $_SESSION['DELIVERY_BOY_ID'] . "' and order_master.order_status  not in (4,5) order by order_master.id desc";
 $res = mysqli_query($con, $sql);
 ?>
 <!DOCTYPE html>
@@ -24,7 +28,7 @@ $res = mysqli_query($con, $sql);
    <!-- Required meta tags -->
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-   <title></title>
+   <title>Delivery Boy</title>
    <!-- plugins:css -->
    <!-- https://pictogrammers.github.io/@mdi/font/1.0.62/ -->
    <link rel="stylesheet" href="../admin/assets/css/materialdesignicons.min.css">
@@ -43,22 +47,22 @@ $res = mysqli_query($con, $sql);
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
          <div class="navbar-menu-wrapper d-flex align-items-stretch justify-content-between">
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-            <a class="navbar-brand brand-logo" href="index.php"><img src="http://127.0.0.1/food_ordering/assets/img/logo/logo.png" alt="logo" style="height: 35px;width: 118px;"/></a>
-          <a class="navbar-brand brand-logo-mini" href="index.php"><img src="http://127.0.0.1/food_ordering/assets/img/logo/logo.png" alt="logo" style="height: 35px;width: 118px;"/></a>
+               <a class="navbar-brand brand-logo" href="index.php"><img src="http://127.0.0.1/food_ordering/assets/img/logo/logo.png" alt="logo" style="height: 35px;width: 118px;" /></a>
+               <a class="navbar-brand brand-logo-mini" href="index.php"><img src="http://127.0.0.1/food_ordering/assets/img/logo/logo.png" alt="logo" style="height: 35px;width: 118px;" /></a>
             </div>
             <ul class="navbar-nav navbar-nav-right">
-            <li class="nav-item nav-profile dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-              <span class="nav-profile-name"><?php echo $_SESSION['DELIVERY_BOY_USER'] ?></span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="logout.php">
-                <i class="mdi mdi-logout text-primary"></i>
-                Logout
-              </a>
-            </div>
-          </li>
+               <li class="nav-item nav-profile dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                     <span class="nav-profile-name"><?php echo $_SESSION['DELIVERY_BOY_USER'] ?></span>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                     <div class="dropdown-divider"></div>
+                     <a class="dropdown-item" href="logout.php">
+                        <i class="mdi mdi-logout text-primary"></i>
+                        Logout
+                     </a>
+                  </div>
+               </li>
             </ul>
          </div>
       </nav>
@@ -109,13 +113,20 @@ $res = mysqli_query($con, $sql);
                                              </td>
                                              <td><?php echo $row['payment_type'] ?></td>
                                              <td>
-                                                <div class="payment_status payment_status_<?php echo $row['payment_status'] ?>"><?php echo ucfirst($row['payment_status']) ?></div>
+                                                <?php if ($row['payment_type'] == 'cod') { ?>
+                                                   <div class="payment_status payment_status_<?php echo $row['payment_status'] ?>"><a href="?set_payment=<?php echo $row['id'] ?>" style="text-decoration: none;color:white;">
+                                                         <?php
+                                                         echo ucfirst($row['payment_status']);
+                                                         ?></a></div>
+                                                <?php } else { ?>
+                                                   <div class="payment_status payment_status_<?php echo $row['payment_status'] ?>"><?php echo ucfirst($row['payment_status']) ?></div>
+                                                <?php } ?>
                                              </td>
                                              <td><a href="?set_order_id=<?php echo $row['id'] ?>">Set Delivered</a></td>
                                              <td>
                                                 <?php
                                                 $dateStr = strtotime($row['added_on']);
-                                                echo date('d-m-Y h:s', $dateStr);
+                                                echo date('d-m-Y', $dateStr);
                                                 ?>
                                              </td>
 

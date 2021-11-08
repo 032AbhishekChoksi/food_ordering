@@ -1,6 +1,6 @@
 <?php
 include('top.php');
-
+$select_disabled = '';
 if (isset($_GET['id']) && $_GET['id'] > 0) {
 
 	$id = get_safe_value($_GET['id']);
@@ -15,7 +15,7 @@ if (isset($_GET['id']) && $_GET['id'] > 0) {
 			$sql = "update order_master set order_status='$order_status' where id='$id'";
 		}
 		mysqli_query($con, $sql);
-		$getSetting=getSetting();
+		$getSetting = getSetting();
 		$referral_amt = $getSetting['referral_amt'];
 		if ($referral_amt > 0) {
 			if ($order_status == 4) {
@@ -150,12 +150,19 @@ if (isset($_GET['id']) && $_GET['id'] > 0) {
 				<div>
 					<?php
 					echo "<h4>Order Status:- " . $orderRow['order_status_str'] . "</h4>";
+					if ($orderRow['order_status_str'] == 'Cancel' || $orderRow['order_status_str'] == 'Delivered') {
+						$select_disabled = 'disabled';
+					}
 					?>
-					<select class="form-control wSelect200" name="order_status" id="order_status" onchange="updateOrderStatus()">
+					<select class="form-control wSelect200" name="order_status" id="order_status" onchange="updateOrderStatus()" <?php echo $select_disabled ?>>
 						<option val=''>Update Order Status</option>
 						<?php
 						while ($orderStatusRow = mysqli_fetch_assoc($orderStatusRes)) {
-							echo "<option value=" . $orderStatusRow['id'] . ">" . $orderStatusRow['order_status'] . "</option>";
+							if ($orderRow['order_status_str'] == $orderStatusRow['order_status']) {
+								echo "<option value=" . $orderStatusRow['id'] . " selected>" . $orderStatusRow['order_status'] . "</option>";
+							} else {
+								echo "<option value=" . $orderStatusRow['id'] . ">" . $orderStatusRow['order_status'] . "</option>";
+							}
 						}
 						?>
 					</select>
@@ -164,7 +171,7 @@ if (isset($_GET['id']) && $_GET['id'] > 0) {
 					$did = $orderRow['delivery_boy_id'];
 					echo "<h4>Delivery Boy:- " . getDeliveryBoyNameById($orderRow['delivery_boy_id']) . "</h4>";
 					?>
-					<select class="form-control wSelect200" name="delivery_boy" id="delivery_boy" onchange="updateDeliveryBoy()">
+					<select class="form-control wSelect200" name="delivery_boy" id="delivery_boy" onchange="updateDeliveryBoy()"<?php echo $select_disabled ?>>
 						<option val=''>Assign Delivery Boy</option>
 						<?php
 						while ($orderDeliveryBoyRow = mysqli_fetch_assoc($orderDeliveryBoyRes)) {

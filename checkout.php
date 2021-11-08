@@ -1,5 +1,8 @@
 <?php
 include("header.php");
+if (isset($_SESSION['FOOD_USER_ID'])) {
+	$userArr = getUserDetailsByid();
+} 
 if ($website_close == 1) {
 	redirect(FRONT_SITE_PATH . 'shop');
 }
@@ -20,7 +23,7 @@ if (isset($_SESSION['FOOD_USER_ID'])) {
 	$final_show = '';
 	$final_box_id = '';
 }
-$userArr = getUserDetailsByid();
+
 $is_error = '';
 // prx($userArr);
 if (isset($_POST['place_order'])) {

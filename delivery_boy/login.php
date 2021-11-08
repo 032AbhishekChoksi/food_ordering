@@ -1,5 +1,6 @@
 <?php
 session_start();
+include('../constant.inc.php');
 include('../database.inc.php');
 include('../function.inc.php');
 $msg="";
@@ -26,7 +27,7 @@ if(isset($_POST['submit'])){
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Delivery Boy - Login</title>
+  <title><?php echo FRONT_SITE_NAME; ?> Delivery Boy Login</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="../admin/assets/css/style.css">
 </head>
