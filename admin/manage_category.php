@@ -2,19 +2,16 @@
 include 'top.php';
 $msg = "";
 $category = "";
-$order_number = "";
 $id = "";
 
 if (isset($_GET['id']) && $_GET['id'] > 0) {
 	$id = get_safe_value($_GET['id']);
 	$row = mysqli_fetch_assoc(mysqli_query($con, "select * from category where id='$id'"));
 	$category = $row['category'];
-	$order_number = $row['order_number'];
 }
 
 if (isset($_POST['submit'])) {
 	$category = get_safe_value($_POST['category']);
-	$order_number = get_safe_value($_POST['order_number']);
 	$added_on = date('Y-m-d h:i:s');
 
 	if ($id == '') {
@@ -26,9 +23,9 @@ if (isset($_POST['submit'])) {
 		$msg = "Category already added";
 	} else {
 		if ($id == '') {
-			mysqli_query($con, "insert into category(category,order_number,status,added_on) values('$category','$order_number',1,'$added_on')");
+			mysqli_query($con, "insert into category(category,status,added_on) values('$category',1,'$added_on')");
 		} else {
-			mysqli_query($con, "update category set category='$category', order_number='$order_number' where id='$id'");
+			mysqli_query($con, "update category set category='$category' where id='$id'");
 		}
 
 		redirect('category.php');
@@ -46,11 +43,6 @@ if (isset($_POST['submit'])) {
 						<input type="text" class="form-control" placeholder="Category" name="category" required value="<?php echo $category ?>">
 						<div class="error mt8"><?php echo $msg ?></div>
 					</div>
-					<div class="form-group">
-						<label for="exampleInputEmail3" required>Order Number</label>
-						<input type="textbox" class="form-control" placeholder="Order Number" name="order_number" value="<?php echo $order_number ?>">
-					</div>
-
 					<button type="submit" class="btn btn-primary mr-2" name="submit">Submit</button>
 				</form>
 			</div>

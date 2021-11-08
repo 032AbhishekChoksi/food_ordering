@@ -23,3 +23,8 @@ $html = "<b>Hello Abhishek</b>";
 send_email($email, $html, $subject);
 echo "Successfully";
 */
+session_start();
+include('database.inc.php');
+include('function.inc.php');
+include('constant.inc.php');
+echo couponEmail(6);

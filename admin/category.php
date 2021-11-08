@@ -19,7 +19,7 @@ if(isset($_GET['type']) && $_GET['type']!=='' && isset($_GET['id']) && $_GET['id
 
 }
 
-$sql="select * from category order by order_number";
+$sql="select * from category order by id";
 $res=mysqli_query($con,$sql);
 
 ?>
@@ -34,10 +34,9 @@ $res=mysqli_query($con,$sql);
                     <table id="order-listing" class="table">
                       <thead>
                         <tr>
-                            <th width="10%">S.No #</th>
-                            <th width="50%">Category</th>
-                            <th width="15%">Order Number</th>
-                            <th width="25%">Actions</th>
+                            <th width="15%">S.No #</th>
+                            <th width="55%">Category</th>
+                            <th width="30%">Actions</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -48,7 +47,6 @@ $res=mysqli_query($con,$sql);
 						<tr>
                             <td><?php echo $i?></td>
                             <td><?php echo $row['category']?></td>
-							<td><?php echo $row['order_number']?></td>
 							<td>
 								<a href="manage_category.php?id=<?php echo $row['id']?>"><label class="badge badge-success hand_cursor">Edit</label></a>&nbsp;
 								<?php

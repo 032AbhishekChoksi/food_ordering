@@ -159,7 +159,7 @@ if ($website_close == 1) {
                 </div>
             </div>
             <?php
-            $cat_res = mysqli_query($con, "select * from category where status=1 order by order_number desc");
+            $cat_res = mysqli_query($con, "select * from category where status=1 order by id desc");
             ?>
             <div class="col-lg-3">
                 <div class="shop-sidebar-wrapper gray-bg-7 shop-sidebar-mrg">
