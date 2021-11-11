@@ -71,8 +71,8 @@ if ($cur_path == '' || $cur_path == 'index.php') {
 
         </ul>
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-          <a class="navbar-brand brand-logo" href="index.php"><img src="http://127.0.0.1/food_ordering/assets/img/logo/logo.png" alt="logo" style="height: 35px;width: 118px;" /></a>
-          <a class="navbar-brand brand-logo-mini" href="index.php"><img src="http://127.0.0.1/food_ordering/assets/img/logo/logo.png" alt="logo" style="height: 35px;width: 118px;" /></a>
+          <a class="navbar-brand brand-logo" href="index.php"><img src="<?php echo FRONT_SITE_PATH ?>assets/img/logo/logo.png" alt="logo" style="height: 35px;width: 118px;" /></a>
+          <a class="navbar-brand brand-logo-mini" href="index.php"><img src="<?php echo FRONT_SITE_PATH ?>assets/img/logo/logo.png" alt="logo" style="height: 35px;width: 118px;" /></a>
         </div>
         <ul class="navbar-nav navbar-nav-right">
 
