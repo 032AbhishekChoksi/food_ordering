@@ -28,7 +28,7 @@ $paramList["TXN_AMOUNT"] = $TXN_AMOUNT;
 $paramList["EMAIL"] = $_SESSION['FOOD_USER_EMAIL']; //Email ID of customer
 $paramList["VERIFIED_BY"] = "EMAIL"; //
 $paramList["WEBSITE"] = PAYTM_MERCHANT_WEBSITE;
-$paramList["CALLBACK_URL"] = FRONT_SITE_PATH ."food_ordering/pgResponse.php";
+$paramList["CALLBACK_URL"] = FRONT_SITE_PATH ."pgResponse.php";
 
 /*
 $paramList["CALLBACK_URL"] = "http://localhost/PaytmKit/pgResponse.php";

@@ -49,7 +49,7 @@ $res = mysqli_query($con, $sql);
          <div class="navbar-menu-wrapper d-flex align-items-stretch justify-content-between">
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
                <a class="navbar-brand brand-logo" href="index.php"><img src="<?php echo FRONT_SITE_PATH ?>assets/img/logo/logo.png" alt="logo" style="height: 35px;width: 118px;" /></a>
-               <a class="navbar-brand brand-logo-mini" href="index.php"><img src="<?php echo FRONT_SITE_PATH ?>food_ordering/assets/img/logo/logo.png" alt="logo" style="height: 35px;width: 118px;" /></a>
+               <a class="navbar-brand brand-logo-mini" href="index.php"><img src="<?php echo FRONT_SITE_PATH ?>assets/img/logo/logo.png" alt="logo" style="height: 35px;width: 118px;" /></a>
             </div>
             <ul class="navbar-nav navbar-nav-right">
                <li class="nav-item nav-profile dropdown">
@@ -114,7 +114,7 @@ $res = mysqli_query($con, $sql);
                                              </td>
                                              <td><?php echo $row['payment_type'] ?></td>
                                              <td>
-                                                <?php if ($row['payment_type'] == 'cod') { ?>
+                                                <?php if ($row['payment_status'] == 'pending') { ?>
                                                    <div class="payment_status payment_status_<?php echo $row['payment_status'] ?>"><a href="?set_payment=<?php echo $row['id'] ?>" style="text-decoration: none;color:white;">
                                                          <?php
                                                          echo ucfirst($row['payment_status']);

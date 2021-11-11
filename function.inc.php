@@ -45,7 +45,7 @@ function send_email($email, $html, $subject)
   $mail->SMTPSecure = "tls";
   $mail->SMTPAuth = true;
   $mail->Username = "abhishekmeet3215@gmail.com";
-  $mail->Password = "abhishek3215meet";
+  $mail->Password = "meet1532abhishek";
   $mail->SetFrom("abhishekmeet3215@gmail.com");
   $mail->addAddress($email);
   $mail->IsHTML(true);
