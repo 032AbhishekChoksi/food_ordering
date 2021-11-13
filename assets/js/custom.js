@@ -17,6 +17,7 @@ jQuery('#frmRegister').on('submit', function (e) {
             if (data.status == 'success') {
                 jQuery('#' + data.field).html(data.msg);
                 jQuery('#frmRegister')[0].reset();
+                grecaptcha.reset();
             }
         }
     });

@@ -48,6 +48,7 @@ if(isset($_GET['referral_code']) && $_GET['referral_code']!=''){
                                         <div id="email_error" style="margin-top: -27px; margin-bottom: 3px; color: #e02c2b;font: bolder;"></div>
                                         <input type="password" name="password" id="password" placeholder="Password" required>
                                         <input name="mobile" id="mobile" placeholder="Mobile" type="tel" required>
+                                        <div class="g-recaptcha" data-sitekey="6LdoQi8dAAAAAEHhF2q4BP-TTtaSh2vkAs85om4I"></div><br/>
                                         <div class="button-box">
                                             <button type="submit" id="register_submit"><span>Register</span></button>
                                         </div>

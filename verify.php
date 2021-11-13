@@ -1,11 +1,19 @@
 <?php
 include("header.php");
 $msg = "";
+$style_msg = "";
 // Email ID Verify
 if (isset($_GET['id']) && $_GET['id'] != '') {
     $id = get_safe_value($_GET['id']);
-    mysqli_query($con, "update user set email_verify=1 where rand_str='$id'");
-    $msg = "Email ID Verify";
+    $res = mysqli_query($con, "select rand_str from user where rand_str='$id'");
+    if (mysqli_num_rows($res) > 0) {
+        mysqli_query($con, "update user set email_verify=1 where rand_str='$id'");
+        $msg = "Email ID Verify";
+    } else {
+        $msg = "Email ID Not Verify";
+        $style_msg = 'style="color: #e02c2b;"';
+    }
+
     /*
     $res=mysqli_query($con,"select from_referral_code,email from user where rand_str='$id'");
 	if(mysqli_num_rows($res)>0){
@@ -37,7 +45,7 @@ if (isset($_GET['id']) && $_GET['id'] != '') {
         <div class="row">
             <div class="col-12">
                 <div class="contact-message-wrapper">
-                    <h4 class="contact-title">
+                    <h4 class="contact-title" <?php echo $style_msg; ?>>
                         <?php
                         echo $msg;
                         ?>

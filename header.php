@@ -65,6 +65,7 @@ if(isset($_SESSION['FOOD_USER_ID'])){
     <link rel="stylesheet" href="<?php echo FRONT_SITE_PATH ?>assets/css/style.css">
     <link rel="stylesheet" href="<?php echo FRONT_SITE_PATH ?>assets/css/responsive.css">
     <script src="<?php echo FRONT_SITE_PATH ?>assets/js/vendor/modernizr-2.8.3.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script
 </head>
 
 <body>
