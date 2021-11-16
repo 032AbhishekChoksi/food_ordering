@@ -13,6 +13,7 @@ jQuery('#frmRegister').on('submit', function (e) {
             var data = jQuery.parseJSON(result);
             if (data.status == 'error') {
                 jQuery('#' + data.field).html(data.msg);
+                grecaptcha.reset();
             }
             if (data.status == 'success') {
                 jQuery('#' + data.field).html(data.msg);

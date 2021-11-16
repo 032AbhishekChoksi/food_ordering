@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 08, 2021 at 02:21 PM
+-- Generation Time: Nov 16, 2021 at 10:07 AM
 -- Server version: 8.0.21
 -- PHP Version: 7.4.9
 
@@ -225,7 +225,7 @@ CREATE TABLE IF NOT EXISTS `dish_cart` (
   `qty` int NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -276,18 +276,7 @@ CREATE TABLE IF NOT EXISTS `order_detail` (
   `price` float NOT NULL,
   `qty` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `order_detail`
---
-
-INSERT INTO `order_detail` (`id`, `order_id`, `dish_details_id`, `price`, `qty`) VALUES
-(1, 1, 7, 110, 2),
-(2, 2, 15, 450, 1),
-(3, 3, 6, 40, 1),
-(4, 3, 15, 450, 1),
-(5, 4, 13, 20, 3);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -318,17 +307,7 @@ CREATE TABLE IF NOT EXISTS `order_master` (
   `delivered_on` datetime NOT NULL,
   `refund_status` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `order_master`
---
-
-INSERT INTO `order_master` (`id`, `user_id`, `name`, `email`, `mobile`, `address`, `total_price`, `final_price`, `coupon_code`, `zipcode`, `delivery_boy_id`, `payment_status`, `payment_type`, `payment_id`, `order_status`, `cancel_by`, `cancel_at`, `added_on`, `delivered_on`, `refund_status`) VALUES
-(1, 2, 'APChoksi', 'a.p.choksi420@gmail.com', '9681234561', 'AMTechCorp Buisness Mall,Bardoli', 220, 220, '', 333999, 3, 'success', 'cod', '', 4, 'user', '0000-00-00 00:00:00', '2021-11-08 08:21:23', '2021-11-08 08:43:48', 0),
-(2, 1, 'Abhishek Choksi', '19bmiit032@gmail.com', '7874376579', 'BMIIT,UTU', 450, 450, '', 333999, 3, 'success', 'paytm', '20211108111212800110168102503135629', 5, 'user', '2021-11-08 08:37:01', '2021-11-08 08:34:35', '0000-00-00 00:00:00', 1),
-(3, 1, 'Abhishek Choksi', '19bmiit032@gmail.com', '7874376579', 'BMIIT,UTU', 490, 490, '', 333999, 2, 'success', 'wallet', '', 4, 'user', '0000-00-00 00:00:00', '2021-11-08 09:00:41', '2021-11-08 09:01:45', 0),
-(4, 1, 'Abhishek Choksi', '19bmiit032@gmail.com', '7874376579', 'AMTechCorp Buisness Mall,Bardoli', 60, 60, '', 333999, 0, 'pending', 'cod', '', 1, 'user', '0000-00-00 00:00:00', '2021-11-08 01:18:06', '0000-00-00 00:00:00', 0);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -415,15 +394,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `from_referral_code` varchar(20) NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`id`, `name`, `email`, `mobile`, `password`, `status`, `email_verify`, `rand_str`, `referral_code`, `from_referral_code`, `added_on`) VALUES
-(1, 'Abhishek Choksi', '19bmiit032@gmail.com', '7874376579', '$2y$10$msm6t7/dWgt6r.bz/6iZ6eztosCrJrPWLJRce1kztRWmyFQastcjC', 1, 1, 'sbqtdnozbgkwawl', 'rghwuqhlcdlenav', '', '2021-11-08 08:16:46'),
-(2, 'APChoksi', 'a.p.choksi420@gmail.com', '9681234561', '$2y$10$ADks3Ub270WrSBszVmgDRedGW2ifTYvZngepTmFauBRIx1KESr8sK', 1, 1, 'gffovttxiqimkcm', 'mtzmerdyczsuvrx', 'rghwuqhlcdlenav', '2021-11-08 08:18:37');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -441,18 +412,14 @@ CREATE TABLE IF NOT EXISTS `wallet` (
   `payment_id` varchar(100) NOT NULL,
   `added_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `wallet`
 --
 
 INSERT INTO `wallet` (`id`, `user_id`, `amt`, `msg`, `type`, `payment_id`, `added_on`) VALUES
-(1, 1, 30, 'Register', 'in', '', '2021-11-08 08:16:46'),
-(2, 2, 30, 'Register', 'in', '', '2021-11-08 08:18:37'),
-(3, 1, 450, 'Refund', 'in', '', '2021-11-08 08:44:47'),
-(4, 1, 10, 'Referral Amt from a.p.choksi420@gmail.com', 'in', '', '2021-11-08 08:57:03'),
-(5, 1, 490, 'Order Id-3', 'out', '', '2021-11-08 09:00:41');
+(1, 1, 30, 'Register', 'in', '', '2021-11-14 02:21:59');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
